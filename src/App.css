@@ -8,11 +8,3 @@
   box-sizing: border-box;
 }
 
-body{
-  background-color: #892a27;
-  display: flex;
-  justify-content: center;
-}
-.container-color{
-  width: 95%;
-}
