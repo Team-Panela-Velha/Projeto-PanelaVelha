@@ -5,12 +5,12 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 function Aside() {
     return (
         <>
-            <aside className='flex flex-col w-1/5 bg-redwood h-screen'>
-                <div className='flex justify-center gap-3 items-center w-full h-1/6 m-3'>
-                    <img className="rounded-full w-12 h-12" src="src/assets/img/logo.png" alt="Logo Panela Velha" />
-                    <h1 className='font-black text-jet text-3xl'>PANELA VELHA</h1>
+            <aside className='flex flex-col w-1/4 bg-redwood h-screen'>
+                <div className='flex justify-center items-center gap-5 pt-6'>
+                    <img className="rounded-full w-12 h-12 border-2 border-chocolate-cosmos" src="src/assets/img/logo.png" alt="Logo Panela Velha" />
+                    <h1 className='font-black text-jet text-3xl w-1/2'>PANELA VELHA</h1>
                 </div>
-                <div className="px-3 pb-9 w-full">
+                <div className="flex justify-center pt-6 pb-6 w-full">
                     <Searchbar />
                 </div>
                 <nav className='flex justify-start pl-4 w-full'>
