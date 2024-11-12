@@ -1,10 +1,12 @@
 
 import React from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Aside from './components/Aside';
 import Slider from "./components/Slider";
 
 function App() {
+
     return (
         <div className="flex min-h-screen bg-peaches">
             <Aside />
