@@ -6,11 +6,13 @@ import Slider from "./components/Slider";
 
 function App() {
     return (
-        <div className="flex min-h-screen">
+        <div className="flex min-h-screen bg-peaches">
             <Aside />
-            <main className='flex flex-col w-[80%] ml-[20%] bg-peaches'>
+            <main className='flex flex-col w-[80%] ml-[21%] bg-peaches'>
                 <div className="w-full h-screen">
-                    <Slider />
+                    <div className='mt-6'>
+                        <Slider />
+                    </div>
                 </div>
             </main>
         </div>
