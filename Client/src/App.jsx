@@ -1,22 +1,19 @@
 
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import Aside from './components/Aside';
-import Slider from "./components/Slider";
+import Aside from './components/layouts/Aside';
+import Content from "./components/layouts/Content"
 
 function App() {
 
     return (
-        <div className="flex min-h-screen bg-peaches">
-            <Aside />
-            <main className='flex flex-col w-[80%] ml-[21%] bg-peaches'>
-                <div className="w-full h-screen">
-                    <div className='mt-6'>
-                        <Slider />
-                    </div>
-                </div>
-            </main>
+        <div className="flex min-h-screen bg-peaches overflow-x-hidden">
+            <BrowserRouter>
+                <Aside />
+                <Content />
+            </BrowserRouter>
         </div>
     );
 }

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Searchbar from './Searchbar';
-import './css/Aside.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom"
+import Searchbar from '../Searchbar'
+import '../css/Aside.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 function Aside() {
 
@@ -32,8 +33,8 @@ function Aside() {
                 </div>
                 <nav className='flex justify-start pl-7 w-full'>
                     <ul className='flex flex-col items-start uppercase text-sm font-semibold text-snow'>
-                        <li className='pb-2'>home</li>
-                        <li className='pb-2'>receitas</li>
+                        <li className='pb-2'><Link to="/">Home</Link></li>
+                        <li className='pb-2'><Link to="/teste">receitas</Link></li>
                         <li className='pb-2'>prateleira</li>
                         <li className='pb-2'>salvas</li>
                         <li className='pb-2'>cadastro</li>
