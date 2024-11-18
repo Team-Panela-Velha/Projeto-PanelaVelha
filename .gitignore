@@ -1,3 +1,15 @@
+# Ignorar arquivos de ambiente virtual
+.venv
+venv/
+.env
+.env.local
+.env.*.local
+
+# Ignorar arquivos de cache
+__pycache__/
+*.pyc
+*.pyo
+
 # Logs
 logs
 *.log
@@ -22,3 +34,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Ignorar arquivos temporários
+*.tmp
+*.temp
+
+# Ignorar arquivos de backup
+*~
+*.bak
+*.ini
