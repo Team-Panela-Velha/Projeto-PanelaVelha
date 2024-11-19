@@ -4,6 +4,10 @@ from flask_cors import CORS # Precisei instalar e importar o cors para transefer
 app = Flask(__name__)
 CORS(app) 
 
+@app.route('/')
+def home():
+    return "Welcome to the Home Page!"
+
 @app.route('/membros')
 def membros():
     return {"membros": ["João", "Lucas", "Matheus", "Paulo"]}
