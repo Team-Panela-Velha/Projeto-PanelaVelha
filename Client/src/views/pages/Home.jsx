@@ -9,8 +9,9 @@ const Home = () => (
                 <Slider />
             </div>
             <div>
-            <Receita/>
-        </div>
+                <h1>Receitas aí</h1>
+                <Receita/>
+            </div>
         </div>
     </>
 )

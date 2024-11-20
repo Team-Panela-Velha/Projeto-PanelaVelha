@@ -16,10 +16,7 @@ function App() {
                 <Aside />
                 <Content />
             </BrowserRouter>
-            
         </div>
-       
-        
     );
 }
 
