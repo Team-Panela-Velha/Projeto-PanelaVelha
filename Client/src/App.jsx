@@ -6,6 +6,8 @@ import './App.css';
 import Aside from './components/layouts/Aside';
 import Content from "./components/layouts/Content"
 
+
+
 function App() {
 
     return (
@@ -14,7 +16,10 @@ function App() {
                 <Aside />
                 <Content />
             </BrowserRouter>
+            
         </div>
+       
+        
     );
 }
 

@@ -1,4 +1,6 @@
+import Receita from "../../components/Receita";
 import Slider from "../../components/Slider";
+import Title from "../../components/Title";
 
 const Home = () => (
     <>
@@ -6,6 +8,9 @@ const Home = () => (
             <div className='mt-6 mr-[3%]'>
                 <Slider />
             </div>
+            <div>
+            <Receita/>
+        </div>
         </div>
     </>
 )
