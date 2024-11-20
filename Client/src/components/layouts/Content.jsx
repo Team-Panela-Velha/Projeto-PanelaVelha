@@ -1,5 +1,6 @@
 import Home from "../../views/pages/Home"
 import Teste from "../../views/pages/Teste"
+import Login from "../../views/pages/Login"
 import { Routes, Route } from "react-router-dom"
 
 const Content = props => (
@@ -8,6 +9,7 @@ const Content = props => (
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/teste" element={<Teste />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </main>
     </>

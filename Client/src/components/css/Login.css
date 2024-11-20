@@ -1,0 +1,4 @@
+.tela-login{
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), /* Sombra mais leve */
+                0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra ainda mais leve */
+}

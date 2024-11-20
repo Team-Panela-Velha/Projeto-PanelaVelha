@@ -33,11 +33,11 @@ function Aside() {
                 </div>
                 <nav className='flex justify-start pl-7 w-full'>
                     <ul className='flex flex-col items-start uppercase text-sm font-semibold text-snow'>
-                        <li className='pb-2'><Link to="/">Home</Link></li>
+                        <li className='pb-2'><Link to="/">Início</Link></li>
                         <li className='pb-2'><Link to="/teste">receitas</Link></li>
                         <li className='pb-2'>prateleira</li>
                         <li className='pb-2'>salvas</li>
-                        <li className='pb-2'>cadastro</li>
+                        <li className='pb-2'><Link to="/login">Login</Link></li>
                     </ul>
                 </nav>
                 <div>
