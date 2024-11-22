@@ -3,7 +3,7 @@ from flask import Flask, session, render_template, request, g, jsonify
 # from dotenv import load_dotenv
 from flask_cors import CORS
 
-from mainData import Usuario
+from Database import Usuario
 
 app = Flask(__name__)
 app.secret_key = "chave_secreta_padrao"
@@ -45,16 +45,17 @@ class CriarDB:
         self.conexao.close()
 
 # ----------------------------------
-mainDB = CriarDB("PanelaVelha.db")
+criar_tabela = CriarDB("PanelaVelha.db")
 
-mainDB.cursor.execute("""
+criar_tabela.cursor.execute("""
     CREATE TABLE if not exists usuarios(
         id integer primary key autoincrement, 
         nome text not null,
         senha text not null
     )
 """)
-mainDB.conexao.commit()
+criar_tabela.conexao.commit()
+criar_tabela.fechar_conexao()
 # ----------------------------------
 
 @app.route('/api/login', methods=["POST"])
@@ -64,20 +65,22 @@ def login():
 @app.route("/api/cadastro", methods=["POST"])
 def cadastro():
     data = request.get_json()
-    
-    if not data:
-        return jsonify({"error": "Dados inválidos ou ausentes"}), 400
-    
     nome = data.get("nome")
     senha = data.get("senha")
+    
+    if not nome or not senha:
+        return jsonify({"error": "Dados inválidos ou ausentes"}), 400
 
-    usuario = Usuario(nome, senha, mainDB)
+    db = CriarDB("PanelaVelha.db")
+    usuario = Usuario(nome, senha, db)
     
     try:
         usuario.cadastrar()
         return jsonify({"sucesso": "Cadastro realizado com sucesso!"}), 201
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
 
 # @app.route('/membros')
 # def membros():
