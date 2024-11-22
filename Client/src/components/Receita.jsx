@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom"
 
 const Receita = () => {
     return (
@@ -8,7 +9,7 @@ const Receita = () => {
 
                 </div>
                 <div className="pt-4">
-                    <p className="font-bold text-lg leading-tight">Product title</p>
+                    <p className="font-bold text-lg leading-tight"><Link to="/ReceitaPage">Product title</Link></p>
                 </div>
             </div>
         </div>
