@@ -6,18 +6,18 @@ import "../../components/css/Login.css"
 
 const Login = () => {
 
-    // const [nome, setNome] = useState("");
-    // const [senha, setSenha] = useState("");
+    const [nome, setNome] = useState("");
+    const [senha, setSenha] = useState("");
 
-    // const enviarDados = async(e) => {
-    //     e.preventDefault();
+    const enviarDados = async(e) => {
+        e.preventDefault();
 
-    //     try{
-    //         const response = await axios.post("http://127.0.0.1:5000/api/login", {nome, senha,});
-    //     } catch (error) {
-    //         console.error("Erro ao enviar dados: ", error);
-    //     }
-    // };
+        try{
+            const response = await axios.post("http://127.0.0.1:5000/api/login", {nome, senha,});
+        } catch (error) {
+            console.error("Erro ao enviar dados: ", error);
+        }
+    };
     
     return (
 

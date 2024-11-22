@@ -6,7 +6,7 @@ from flask_cors import CORS
 from mainData import Usuario
 
 app = Flask(__name__)
-# app.secret_key = "chave_secreta_padrao"
+app.secret_key = "chave_secreta_padrao"
 CORS(app)
 
 # @app.route('/ingredientes')
@@ -57,13 +57,17 @@ mainDB.cursor.execute("""
 mainDB.conexao.commit()
 # ----------------------------------
 
-# @app.route('/api/login', methods=["POST"])
-# def login():
-#     ...
+@app.route('/api/login', methods=["POST"])
+def login():
+    ...
 
 @app.route("/api/cadastro", methods=["POST"])
 def cadastro():
     data = request.get_json()
+    
+    if not data:
+        return jsonify({"error": "Dados inválidos ou ausentes"}), 400
+    
     nome = data.get("nome")
     senha = data.get("senha")
 

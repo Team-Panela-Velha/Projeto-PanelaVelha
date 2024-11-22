@@ -11,18 +11,9 @@ const Cadastro = () => {
     const enviarDados = async(e) => {
         e.preventDefault();
 
-        try{
-            const response = await axios.post("http://127.0.0.1:5000/api/cadastro", {nome, senha,});
-
-            if (response.status === 201) {
-                alert('Cadastro realizado com sucesso!');
-                // Ou atualize um estado para exibir uma mensagem na interface
-            }
-
-        } catch (error) {
-            console.error("Erro ao enviar dados: ", error);
-            alert('Erro ao cadastrar. Tente novamente.');
-        }
+        axios.post("http://127.0.0.1:5000/api/cadastro", {"nome": nome, "senha": senha})
+        .then(response => console.log(response))
+        .catch(err => console.log(err))
 
         setNome("");
         setSenha("");

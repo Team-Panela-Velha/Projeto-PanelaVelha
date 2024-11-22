@@ -7,5 +7,8 @@ class Usuario:
         self.db = db
 
     def cadastrar(self):
-        self.db.cursor.execute("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.nome, self.senha))
-        self.db.conexao.commit()
+        try:
+            self.db.cursor.execute("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.nome, self.senha))
+            self.db.conexao.commit()
+        except sqlite3.Error as e:
+            raise Exception(f"Erro ao cadastrar usuário no banco: {e}")
