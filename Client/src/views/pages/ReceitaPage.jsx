@@ -7,7 +7,7 @@ const ReceitaPage = () => (
         <div className="w-full h-screen">
             <div className="flex flex-col justify-center">
                 <div className="text-5xl text-center mt-5 font-semibold">
-                    <h1>Caipirinha</h1>
+                    <h1>Caipirinha de Morango</h1>
                     <hr className="border-[1.5px] border-black mt-7 mr-3" />
                 </div>
                 <div className="flex justify-between mr-3">
@@ -56,7 +56,7 @@ const ReceitaPage = () => (
                     </div>
                 </div>
                 <div className="flex justify-between mr-3 mt-3">
-                    <div className="flex flex-col border-r-2 border-r-jet w-1/2 font-semibold">
+                    <div className="flex flex-col border-r-2 border-r-jet mb-1 w-1/2 font-semibold">
                         <h2 className="uppercase">igredientes</h2>
                         <div>
                             <ul className="list-disc ml-5 mt-4 font-normal text-jet">
