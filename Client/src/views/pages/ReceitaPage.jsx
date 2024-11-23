@@ -56,14 +56,36 @@ const ReceitaPage = () => (
                     </div>
                 </div>
                 <div className="flex justify-between mr-3 mt-3">
-                    <div className="border-r-2">
-                        <h1>igredientes</h1>
+                    <div className="flex flex-col border-r-2 border-r-jet w-1/2 font-semibold">
+                        <h2 className="uppercase">igredientes</h2>
+                        <div>
+                            <ul className="list-disc ml-5 mt-4 font-normal text-jet">
+                                <li className="mb-2">5 morangos maduros e frescos;</li>
+                                <li className="mb-2">1 limão (opcional, para equilibrar o sabor);</li>
+                                <li className="mb-2">2 colheres de sopa de açúcar (ou a gosto);</li>
+                                <li className="mb-2">50 ml de cachaça de boa qualidade;</li>
+                                <li className="mb-2">Gelo a gosto.</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div>
-                        modo de preparo
-                    </div>
-                </div>
+                    <div className=" flex flex-col w-1/2 mx-3">
+                        <h2 className=" uppercase font-semibold">modo de preparo</h2>
+                        <div className="flex flex-col">
+                            <ul className="font-normal text-jet mt-3 list-decimal ml-5 ">
+                                <li className="border-b-black border-b-2 m-2 pb-2 "><b>Prepare os ingredientes:</b> Lave bem os morangos e o limão. Corte os morangos em pedaços e, se desejar usar o limão, corte-o em fatias ou pedaços pequenos, removendo as sementes.</li>
+                                <li className="border-b-black border-b-2 m-2 pb-2" ><b>Macere as frutas:</b> Em um copo ou recipiente, coloque os morangos (e o limão, se usar) e o açúcar. Use um socador para macerar as frutas delicadamente, liberando o suco, mas sem amassar demais.</li>
+                                <li className="border-b-black border-b-2 m-2 pb-2"><b>Adicione a cachaça:</b> Despeje a cachaça sobre a mistura de frutas e mexa bem para misturar os sabores.</li>
+                                <li className="border-b-black border-b-2 m-2 pb-2"><b>Complete com gelo:</b> Encha o copo com gelo. Mexa levemente para resfriar a bebida.</li>
+                                <li className="border-b-black border-b-2 m-2 pb-2"><b>Decore e sirva:</b> Se quiser, decore com um morango inteiro ou uma fatia de limão na borda do copo. Sirva imediatamente e aproveite!</li>
+                                
+                            </ul>
+                        </div>
 
+                        
+                    </div>
+                    
+                </div>
+                
             </div>
         </div>
 
