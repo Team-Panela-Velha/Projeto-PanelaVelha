@@ -8,6 +8,8 @@ const FormAvaliacao = () => {
         avaliacao: 0, // Armazena a avaliação por estrelas
     });
 
+    const [comentarioPostado, setComentarioPostado] = useState(""); // Estado para armazenar o comentário postado
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -19,6 +21,7 @@ const FormAvaliacao = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setComentarioPostado(formData.comentario);
         alert(
             `Avaliação enviada por ${formData.nome} com ${formData.avaliacao} estrelas!`
         );
@@ -26,11 +29,11 @@ const FormAvaliacao = () => {
     };
 
     return (
-        <div className="flex flex-col mt-5 mr-3 bg-red-100">
+        <div className="flex flex-col mt-5 mr-3">
 
             <form
                 onSubmit={handleSubmit}
-                className="w-full h-full"
+                className="w-full h-full bg-red-100"
             >
                 <h1 className="text-center w-full uppercase">Comentarios</h1>
                 <div className="m-6 w-[30%]">
@@ -112,7 +115,7 @@ const FormAvaliacao = () => {
                             <div className="w-full text-center">
                             <button
                                 type="submit"
-                                className="w-44 text-center bg-redwood text-white py-2 px-4 rounded-full shadow hover:bg-butterscotch focus:outline-none focus:ring-2 focus:ring-redwood"
+                                className="w-44 text-center bg-redwood text-white py-2 px-4 mb-10 rounded-full shadow hover:bg-butterscotch focus:outline-none focus:ring-2 focus:ring-redwood"
                             >
                                 Enviar Avaliação
                             </button>
@@ -123,6 +126,13 @@ const FormAvaliacao = () => {
                 </div>
 
             </form>
+            {/* Exibindo o comentário postado, caso exista */}
+            {comentarioPostado && (
+                <div className="mt-6">
+                    <h3 className="text-lg font-semibold">Comentário Postado:</h3>
+                    <p>{comentarioPostado}</p>
+                </div>
+            )}
         </div>
 
     );
