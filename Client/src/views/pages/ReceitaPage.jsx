@@ -2,6 +2,8 @@ import Garfo from "../../assets/img/garfo-e-faca.png";
 import Relogio from "../../assets/img/despertar.png";
 import Chefe from "../../assets/img/chefe-de-cozinha.png";
 import Nivel from "../../assets/img/elevacao.png";
+import FormAvaliacao from "../../components/FormAvaliacao";
+
 const ReceitaPage = () => (
     <>
         <div className="w-full h-screen">
@@ -85,6 +87,10 @@ const ReceitaPage = () => (
                     </div>
                     
                 </div>
+                    
+                    <div>
+                        <FormAvaliacao/>
+                    </div>
                 
             </div>
         </div>
