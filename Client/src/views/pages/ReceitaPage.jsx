@@ -20,7 +20,7 @@ const ReceitaPage = () => (
                         <i class="bi bi-star-fill"></i>
                     </div>
                 </div>
-                <div className="flex mt-5 mr-3 bg-red-100">
+                <div className="flex mt-5 mb-10 mr-3 bg-red-100 shadow-xl">
                     <div className="flex flex-col m-2" >
                         <div>
                             <img className="w-[30rem] h-[20rem]" src="https://images.pexels.com/photos/27626304/pexels-photo-27626304/free-photo-of-comida-alimento-refeicao-frio.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
@@ -57,7 +57,7 @@ const ReceitaPage = () => (
 
                     </div>
                 </div>
-                <div className="flex justify-between mr-3 mt-3">
+                <div className="flex justify-between mr-3 ml-3 mt-3">
                     <div className="flex flex-col border-r-2 border-r-jet mb-1 w-1/2 font-semibold">
                         <h2 className="uppercase">igredientes</h2>
                         <div>
@@ -88,7 +88,7 @@ const ReceitaPage = () => (
                     
                 </div>
                     
-                    <div>
+                    <div  className="mt-16">
                         <FormAvaliacao/>
                     </div>
                 
