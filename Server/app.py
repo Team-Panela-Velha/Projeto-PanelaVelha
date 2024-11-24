@@ -54,6 +54,14 @@ criar_tabela.cursor.execute("""
         senha text not null
     )
 """)
+
+criar_tabela.cursor.execute("""
+    CREATE TABLE IF NOT EXISTS ingredientes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT
+    )
+""")
+
 criar_tabela.conexao.commit()
 criar_tabela.fechar_conexao()
 # ----------------------------------
@@ -82,9 +90,18 @@ def cadastro():
     finally:
         db.fechar_conexao()
 
-# @app.route('/membros')
-# def membros():
-#     return {"membros": ["João", "Lucas", "Matheus", "Paulo"]}
+@app.route("/api/ingredientes", methods=["GET"])
+def ingredientes():
+    try:
+        db = CriarDB("PanelaVelha.db")
+        db.cursor.execute("SELECT name FROM ingredientes")  # Consulta os ingredientes existentes
+        rows = db.cursor.fetchall()
+        ingredientes = [row[0] for row in rows]  # Extrai apenas os nomes
+        return jsonify(ingredientes), 200
+    except sqlite3.Error as e:
+        return jsonify({"erro": f"Erro ao buscar ingredientes: {e}"}), 500
+    finally:
+        db.fechar_conexao()
 
 if __name__ == "__main__":
     app.run(debug=True)
