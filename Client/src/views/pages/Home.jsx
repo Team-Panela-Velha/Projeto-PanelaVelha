@@ -2,6 +2,7 @@ import Receita_Populares from "../../components/Receita_Populares";
 import Regioes from "../../components/Regioes";
 import Searchbar from "../../components/Searchbar";
 import Slider from "../../components/Slider";
+import SliderCard from "../../components/SliderCard";
 
 const Home = () => (
     <>
@@ -19,8 +20,8 @@ const Home = () => (
             </div>
             <div>
                 <h1>oq deseja cozinhar hoje??</h1>
-                <div className="flex justify-center">
-                    <Searchbar/>
+                <div className="flex w-full mr-[3%] justify-center">
+                    
                 </div>
             </div>
         </div>

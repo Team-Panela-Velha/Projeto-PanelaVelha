@@ -6,7 +6,7 @@ const Card_Regiao = ({ title, link, image }) => {
     return (
         <div className="flex flex-col items-center">
             <div 
-                className="h-[10rem] w-[12vw] rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg flex justify-start items-end text-white uppercase relative overflow-hidden"
+                className="h-[11rem] w-[14vw] rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg flex justify-start items-end text-white uppercase relative overflow-hidden"
             >
                
                 <div 
@@ -40,7 +40,7 @@ const Regioes = () => {
     ];
 
     return (
-        <div className="flex flex-wrap justify-center gap-5 w-[97%] h-[13rem] p-3">
+        <div className="flex flex-wrap justify-between w-[97%] h-[13rem] p-3">
             {receitas.map((receita) => (
                 <Card_Regiao
                     key={receita.id} 
