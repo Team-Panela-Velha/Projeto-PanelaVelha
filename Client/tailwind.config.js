@@ -14,7 +14,8 @@ export default {
         "snow": "#FBF5F8ff",
         "russet": "#854426ff",
         "chocolate-cosmos": " #490007ff",
-        "peaches":"#eed4c1"
+        "peaches":"#eed4c1",
+        "redwoodOP":"#b3404457"
       },
       boxShadow: {
         'right-only': '4px 0 8px rgba(0, 0, 0, 0.2)', // ajuste o valor conforme necessário

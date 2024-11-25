@@ -1,6 +1,8 @@
-import Receita from "../../components/Receita";
+import Receita_Populares from "../../components/Receita_Populares";
+import Regioes from "../../components/Regioes";
+import Searchbar from "../../components/Searchbar";
 import Slider from "../../components/Slider";
-import Title from "../../components/Title";
+import SliderCard from "../../components/SliderCard";
 
 const Home = () => (
     <>
@@ -9,8 +11,18 @@ const Home = () => (
                 <Slider />
             </div>
             <div>
-                <h1>Receitas aí</h1>
-                <Receita/>
+                <h1>As mais requisitadas</h1>
+                <Receita_Populares/>
+            </div>
+            <div className="mt-12">
+                <h1>Experimente o melhor de cada região</h1>
+                <Regioes/>
+            </div>
+            <div>
+                <h1>oq deseja cozinhar hoje??</h1>
+                <div className="flex w-full mr-[3%] justify-center">
+                    
+                </div>
             </div>
         </div>
     </>
