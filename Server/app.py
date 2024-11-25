@@ -7,7 +7,7 @@ from Database import Usuario
 
 app = Flask(__name__)
 app.secret_key = "chave_secreta_padrao"
-CORS(app)
+CORS(app)             # necessario por conta da interaçao entre react e flask
 
 # @app.route('/ingredientes')
 # def index():
@@ -36,7 +36,7 @@ CORS(app)
 
 
 
-class CriarDB:
+class CriarDB:                    # classe usada para estabelecer conexao com um bd e fecha-lo quando necessario
     def __init__(self, nome):
         self.conexao = sqlite3.connect(nome)
         self.cursor = self.conexao.cursor()
@@ -45,7 +45,7 @@ class CriarDB:
         self.conexao.close()
 
 # ----------------------------------
-criar_tabela = CriarDB("PanelaVelha.db")
+criar_tabela = CriarDB("PanelaVelha.db")              # criando o banco de dados principal do sistema
 
 criar_tabela.cursor.execute("""
     CREATE TABLE if not exists usuarios(
@@ -58,9 +58,11 @@ criar_tabela.conexao.commit()
 criar_tabela.fechar_conexao()
 # ----------------------------------
 
+
 @app.route('/api/login', methods=["POST"])
 def login():
     ...
+
 
 @app.route("/api/cadastro", methods=["POST"])
 def cadastro():
@@ -81,6 +83,31 @@ def cadastro():
         return jsonify({"erro": str(e)}), 500
     finally:
         db.fechar_conexao()
+
+
+@app.route("/api/mostrar_receitas", methods=["GET"])      # Para a pag inicial ou pag qualquer outra pag q mostre varias receitas
+def mostrar_receitas():
+    ...
+
+
+@app.route("/api/receita/<nome_receita>", methods=["GET"])
+def receita(nome_receita):
+    ...  # buscar os dados da receita pelo nome
+
+
+@app.route("/api/postar_receita", methods=["POST"])
+def postar_receita():
+    ...
+
+
+@app.route("/api/editar_receita", methods=["PUT"])
+def editar_receita():
+    ...
+
+
+@app.route("/api/favorito", methods=["POST"])
+def favorito():
+    ...
 
 # @app.route('/membros')
 # def membros():
