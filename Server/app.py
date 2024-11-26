@@ -1,4 +1,6 @@
 import sqlite3
+
+import datetime
 from flask import Flask, session, render_template, request, g, jsonify
 # from dotenv import load_dotenv
 from flask_cors import CORS
@@ -69,7 +71,34 @@ criar_tabela.fechar_conexao()
 
 @app.route('/api/login', methods=["POST"])
 def login():
-    ...
+    data = request.get_json()
+    nome = data.get("nome")
+    senha = data.get("senha")
+    
+    if not nome or not senha:
+        return jsonify({"mensagem": "Username and password are required"}), 400
+    
+    db = CriarDB("PanelaVelha.db")
+    usuario = Usuario(nome, senha, db)
+
+    try:
+        user = usuario.logar()
+        
+        if not user:
+            return jsonify({"mensagem": "Usuário não encontrado"}), 404
+        if usuario.senha != user[2]:
+            return jsonify({"mensagem": "Senha incorreta"}), 401
+        
+        token = jwt.encode({
+            'user_id': user.id,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Expira em 1 hora
+        }, app.config['SECRET_KEY'], algorithm='HS256')
+
+        return jsonify({"token": token}), 200
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
 
 
 @app.route("/api/cadastro", methods=["POST"])

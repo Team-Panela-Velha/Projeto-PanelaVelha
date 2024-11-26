@@ -10,9 +10,20 @@ class Usuario:
         try:
             self.db.cursor.execute("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.nome, self.senha))
             self.db.conexao.commit()
+            
+            self.db.cursor.execute("SELECT id from usuarios where nome = ?", (self.nome))
+            
         except sqlite3.Error as e:
             raise Exception(f"Erro ao cadastrar usuário no banco: {e}")
         
+    def logar(self):
+        try:
+            user = self.db.cursor.execute("SELECT * from usuarios where nome = ?", (self.nome,)).fetchone()
+            return user
+        except sqlite3.Error as e:
+            raise Exception(f"Erro no login: {e}")
+        
+
 class Ingredientes:  # Renomeando a classe para seguir a convenção
     def __init__(self, db):
         self.db = db
