@@ -1,5 +1,5 @@
 import sqlite3
-
+import jwt
 import datetime
 from flask import Flask, session, render_template, request, g, jsonify
 # from dotenv import load_dotenv
@@ -8,7 +8,10 @@ from flask_cors import CORS
 from Database import Usuario
 
 app = Flask(__name__)
+
 app.secret_key = "chave_secreta_padrao"
+app.config["SECRET_KEY"] = "chave_secreta_padrao"
+
 CORS(app)             # necessario por conta da interaçao entre react e flask
 
 # @app.route('/ingredientes')
@@ -90,7 +93,7 @@ def login():
             return jsonify({"mensagem": "Senha incorreta"}), 401
         
         token = jwt.encode({
-            'user_id': user.id,
+            'user_id': user[0],
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Expira em 1 hora
         }, app.config['SECRET_KEY'], algorithm='HS256')
 

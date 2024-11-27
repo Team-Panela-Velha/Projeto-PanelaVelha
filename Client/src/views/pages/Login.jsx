@@ -15,15 +15,15 @@ const Login = () => {
         setIsLoaging(true);
         
         axios.post("http://127.0.0.1:5000/api/login", {"nome": nome, "senha": senha,})
-        .then(response => console.log(response))
+        .then(response => {
+            if (response.data) {
+                console.log(response.data.token)
+                localStorage.setItem("jwtToken", response.data.token)
+            } else {
+                console.log("Erro ao autenticar");
+            }
+        })
         .catch(err => console.log(err))
-        
-        // if (response.data.token) {
-        //     localStorage.setItem("token", response.data.token); // Armazenando o token
-        //     console.log("Login bem-sucedido");
-        // } else {
-        //     console.log("Falha no login");
-        // }
 
         setIsLoaging(false);
         
