@@ -12,16 +12,16 @@ const Home = () => (
             </div>
             <div>
                 <h1>As mais requisitadas</h1>
-                <Receita_Populares/>
+                <Receita_Populares />
             </div>
             <div className="mt-12">
                 <h1>Experimente o melhor de cada região</h1>
-                <Regioes/>
+                <Regioes />
             </div>
             <div>
                 <h1>oq deseja cozinhar hoje??</h1>
                 <div className="flex w-full mr-[3%] justify-center">
-                    
+                    <SliderCard/>
                 </div>
             </div>
         </div>
