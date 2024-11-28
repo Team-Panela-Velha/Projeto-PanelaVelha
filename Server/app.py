@@ -76,8 +76,8 @@ def login():
             return jsonify({"mensagem": "Senha incorreta"}), 401
         
         token = jwt.encode({
-            'user_id': user[0],
-            'user_name': user[1],
+            'usuario_id': user[0],
+            'usuario_nome': user[1],
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Expira em 1 hora
         }, app.config['SECRET_KEY'], algorithm='HS256')
 
@@ -107,6 +107,21 @@ def cadastro():
         return jsonify({"erro": str(e)}), 500
     finally:
         db.fechar_conexao()
+
+
+@app.route("/api/verificar_usuario", methods=["GET"])
+def get_usuario():
+    token = request.headers.get('Authorization')
+    if not token:
+        return jsonify({"message": "Token is missing"}), 401
+
+    try:
+        decoded = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+        return jsonify({"usuario": decoded["usuario_nome"]})
+    except jwt.ExpiredSignatureError:
+        return jsonify({"message": "Token expired"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"message": "Invalid token"}), 401
 
 
 @app.route("/api/mostrar_receitas", methods=["GET"])      # Para a pag inicial ou pag qualquer outra pag q mostre varias receitas
@@ -168,19 +183,19 @@ def favorito():
 
 
 # testando
-@app.route("/api/teste", methods=["GET"])
-def teste():
-    token = request.headers.get('Authorization')
-    if not token:
-        return jsonify({"message": "Token is missing"}), 401
+# @app.route("/api/teste", methods=["GET"])
+# def teste():
+#     token = request.headers.get('Authorization')
+#     if not token:
+#         return jsonify({"message": "Token is missing"}), 401
 
-    try:
-        decoded = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-        return jsonify({"message": "Welcome!", "user_name": decoded["user_name"]})
-    except jwt.ExpiredSignatureError:
-        return jsonify({"message": "Token expired"}), 401
-    except jwt.InvalidTokenError:
-        return jsonify({"message": "Invalid token"}), 401
+#     try:
+#         decoded = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+#         return jsonify({"Welcome": decoded["user_name"], "id": decoded["user_id"]})
+#     except jwt.ExpiredSignatureError:
+#         return jsonify({"message": "Token expired"}), 401
+#     except jwt.InvalidTokenError:
+#         return jsonify({"message": "Invalid token"}), 401
 
 
 if __name__ == "__main__":
