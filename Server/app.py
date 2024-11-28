@@ -38,6 +38,7 @@ criar_tabela.cursor.execute("""
     CREATE TABLE if not exists receitas(
         id integer primary key autoincrement,
         nome_receita text not null,
+        imagem_receita text not null,
         id_usuario integer not null,
         FOREIGN KEY (id_usuario) references usuarios(id)
     )
@@ -117,7 +118,7 @@ def get_usuario():
 
     try:
         decoded = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-        return jsonify({"usuario": decoded["usuario_nome"]})
+        return jsonify({"usuario": decoded["usuario_nome"], "id": decoded["usuario_id"]})
     except jwt.ExpiredSignatureError:
         return jsonify({"message": "Token expired"}), 401
     except jwt.InvalidTokenError:
@@ -141,13 +142,14 @@ def receita(id_receita):
 def postar_receita():
     data = request.get_json()
     nome = data.get("nome_receita")
+    imagem = data.get("imagem_receita")
     id_usuario = data.get("id_usuario")
 
-    if not nome or not id_usuario:
-        return jsonify({"error": "Dados insuficientes"}), 400
+    if not nome or not id_usuario or not imagem:
+        return jsonify({"error": "Dados insuficientes"}), 450
     
     db = CriarDB("PanelaVelha.db")
-    receita = Receita(nome, id_usuario, db)
+    receita = Receita(nome, imagem, id_usuario, db)
 
     try:
         receita.postar_receita()

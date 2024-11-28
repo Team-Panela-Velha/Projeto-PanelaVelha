@@ -1,7 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// obs: talvez seja melhor separar os componentes
+
 const Card = ({ title, link, image }) => {
+
+    const receitas = [
+        { id: 1, title: "Caipirinha de Morango", link: "/ReceitaPage", image: "https://images.pexels.com/photos/27626304/pexels-photo-27626304/free-photo-of-comida-alimento-refeicao-frio.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" },
+        { id: 2, title: "Fricassê de Frango", link: "/receita/torta-limao", image: "https://www.receitasnestle.com.br/sites/default/files/styles/recipe_detail_desktop/public/srh_recipes/06a057b345a11916c7f5027c96cf43d1.webp?itok=4qbztB4j" },
+        { id: 3, title: "Brigadeiro", link: "/receita/brigadeiro", image: "https://example.com/brigadeiro.jpg" },
+        { id: 4, title: "Pão de Queijo", link: "/receita/pao-queijo", image: "https://example.com/pao-queijo.jpg" },
+        { id: 5, title: "Moqueca", link: "/receita/moqueca", image: "https://example.com/moqueca.jpg" },
+        { id: 6, title: "Bolo Gelado de Coco", link: "/receita/Bolo-gelado-de-coco", image: "https://catracalivre.com.br/cdn-cgi/image/f=auto,q=60,width=1080,height=99999,fit=scale-down/wp-content/uploads/2021/02/img-5469.jpg" },
+    ];
+    
     return (
         <div className="flex flex-col items-center">
             <div 
@@ -14,7 +26,7 @@ const Card = ({ title, link, image }) => {
             ></div>
             <div className="pt-4 ">
                 <p className="font-bold text-sm leading-tight text-center">
-                    <Link to={link}>{title}</Link>
+                    <Link to={`/receitas/${receitas.id}`}>{title}</Link>
                 </p>
             </div>
         </div>
@@ -22,6 +34,7 @@ const Card = ({ title, link, image }) => {
 };
 
 const Receita_Populares = () => {
+
     const receitas = [
         { id: 1, title: "Caipirinha de Morango", link: "/ReceitaPage", image: "https://images.pexels.com/photos/27626304/pexels-photo-27626304/free-photo-of-comida-alimento-refeicao-frio.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" },
         { id: 2, title: "Fricassê de Frango", link: "/receita/torta-limao", image: "https://www.receitasnestle.com.br/sites/default/files/styles/recipe_detail_desktop/public/srh_recipes/06a057b345a11916c7f5027c96cf43d1.webp?itok=4qbztB4j" },

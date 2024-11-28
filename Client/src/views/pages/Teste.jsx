@@ -2,34 +2,23 @@
 // import axios from "axios";
 
 // const Teste = () => {
-//     const [userData, setUserData] = useState(null);
+//     const [receitaData, setReceitaData] = useState(null);
 
-//     async function fetchUserData(){
-//         const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
-    
-//         axios.get('http://127.0.0.1:5000/api/teste', {
-//             headers: {
-//             "Authorization": token, // Passa o token no cabeçalho Authorization
-//             },
-//         })
+//     async function fetchReceitaData(){    
+//         axios.get('http://127.0.0.1:5000/api/receitas/<id_receita>')
 //         .then(response => {
-//             setUserData(response.data);
+//             setReceitaData(response.data);
 //         })
-//         .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
+//         .catch(err => console.error("Erro ao buscar receita: ", err))
 //     }
 
-
 //     useEffect(() => {
-//         fetchUserData();
+//         fetchReceitaData();
 //     }, []);
     
 //     return (
 //         <div>
-//             {userData ? (
-//                 <pre>{JSON.stringify(userData, null, 2)}</pre> // Exibe os dados formatados
-//             ) : (
-//                 <p>Carregando...</p>
-//             )}
+//             <h1>{receitaData}</h1>
 //         </div>
 //     );
 // };
