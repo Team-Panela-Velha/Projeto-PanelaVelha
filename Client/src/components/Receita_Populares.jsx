@@ -28,7 +28,7 @@ const Receita_Populares = () => {
         { id: 3, title: "Brigadeiro", link: "/receita/brigadeiro", image: "https://example.com/brigadeiro.jpg" },
         { id: 4, title: "Pão de Queijo", link: "/receita/pao-queijo", image: "https://example.com/pao-queijo.jpg" },
         { id: 5, title: "Moqueca", link: "/receita/moqueca", image: "https://example.com/moqueca.jpg" },
-        { id: 6, title: "Feijoada", link: "/receita/feijoada", image: "https://example.com/feijoada.jpg" },
+        { id: 6, title: "Bolo Gelado de Coco", link: "/receita/Bolo-gelado-de-coco", image: "https://catracalivre.com.br/cdn-cgi/image/f=auto,q=60,width=1080,height=99999,fit=scale-down/wp-content/uploads/2021/02/img-5469.jpg" },
     ];
 
     return (

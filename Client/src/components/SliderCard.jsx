@@ -40,7 +40,7 @@ const SliderCard = () => {
     <div className="relative w-full mx-3">
       <div className="flex overflow-hidden ">
         <div
-          className="flex transition-transform duration-500 mr-10"
+          className="flex transition-transform duration-1000 mr-10"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {cards.map((card, index) => (
