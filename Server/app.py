@@ -5,7 +5,7 @@ from flask import Flask, session, render_template, request, g, jsonify
 # from dotenv import load_dotenv
 from flask_cors import CORS
 
-from Database import Usuario
+from Database import Usuario, Receita
 
 app = Flask(__name__)
 
@@ -13,32 +13,6 @@ app.secret_key = "chave_secreta_padrao"
 app.config["SECRET_KEY"] = "chave_secreta_padrao"
 
 CORS(app)             # necessario por conta da interaçao entre react e flask
-
-# @app.route('/ingredientes')
-# def index():
-#     data = get_db()
-#     return jsonify(data)
-
-# def get_db():
-#     try:
-#         db = getattr(g, '_database', None)
-#         if db is None:
-#             db = g._database = sqlite3.connect('ingredientes.db')
-#             db.row_factory = sqlite3.Row  # Permite acessar colunas por nome
-#             cursor = db.cursor()
-#             cursor.execute("select * from ingredientes")
-#         rows = cursor.fetchall()
-#         return [dict(row) for row in rows]
-#     except sqlite3.Error as e:
-#         print(f"Erro no banco de dados: {e}")
-#         return []
-
-# @app.teardown_appcontext
-# def close_connection(exception):
-#     db = getattr(g, '_database', None)
-#     if db is not None:
-#         db.close()
-
 
 
 class CriarDB:                    # classe usada para estabelecer conexao com um bd e fecha-lo quando necessario
@@ -57,6 +31,15 @@ criar_tabela.cursor.execute("""
         id integer primary key autoincrement, 
         nome text not null,
         senha text not null
+    )
+""")
+
+criar_tabela.cursor.execute("""
+    CREATE TABLE if not exists receitas(
+        id integer primary key autoincrement,
+        nome_receita text not null,
+        id_usuario integer not null,
+        FOREIGN KEY (id_usuario) references usuarios(id)
     )
 """)
 
@@ -131,14 +114,33 @@ def mostrar_receitas():
     ...
 
 
-@app.route("/api/receita/<nome_receita>", methods=["GET"])
-def receita(nome_receita):
-    ...  # buscar os dados da receita pelo nome
+@app.route("/api/receita/<id_receita>", methods=["GET"])
+def receita(id_receita):
+    db = CriarDB("PanelaVelha.db")
+    receita = db.cursor.execute("SELECT * from receitas where id = ?", (id_receita)).fetchone()
+
+    return jsonify({"receita": receita})
 
 
 @app.route("/api/postar_receita", methods=["POST"])
 def postar_receita():
-    ...
+    data = request.get_json()
+    nome = data.get("nome_receita")
+    id_usuario = data.get("id_usuario")
+
+    if not nome or not id_usuario:
+        return jsonify({"error": "Dados insuficientes"}), 400
+    
+    db = CriarDB("PanelaVelha.db")
+    receita = Receita(nome, id_usuario, db)
+
+    try:
+        receita.postar_receita()
+        return jsonify({"sucesso": "Receita postada com sucesso!"}), 201
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
 
 
 @app.route("/api/editar_receita", methods=["PUT"])

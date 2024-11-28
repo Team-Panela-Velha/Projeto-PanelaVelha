@@ -11,8 +11,6 @@ class Usuario:
             self.db.cursor.execute("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.nome, self.senha))
             self.db.conexao.commit()
             
-            self.db.cursor.execute("SELECT id from usuarios where nome = ?", (self.nome))
-            
         except sqlite3.Error as e:
             raise Exception(f"Erro ao cadastrar usuário no banco: {e}")
         
@@ -22,6 +20,20 @@ class Usuario:
             return user
         except sqlite3.Error as e:
             raise Exception(f"Erro no login: {e}")
+        
+
+class Receita:
+    def __init__(self, nome, id_usuario, db):
+        self.nome = nome
+        self.id_usuario = id_usuario
+        self.db = db
+
+    def postar_receita(self):
+        try:
+            self.db.cursor.execute("INSERT INTO receitas (nome_receita, id_usuario) values (?, ?)", (self.nome, self.id_usuario))
+            self.db.conexao.commit()
+        except sqlite3.Error as e:
+            raise Exception(f"Erro ao tentar postar receita: {e}")
         
 
 class Ingredientes:  # Renomeando a classe para seguir a convenção
