@@ -127,15 +127,33 @@ def get_usuario():
 
 @app.route("/api/mostrar_receitas", methods=["GET"])      # Para a pag inicial ou pag qualquer outra pag q mostre varias receitas
 def mostrar_receitas():
-    ...
+    try:
+        db = CriarDB("PanelaVelha.db")
+        receitas_array = db.cursor.execute("SELECT id, nome_receita, imagem_receita from receitas").fetchmany(6)
+
+        receitas = [
+            {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
+            for row in receitas_array
+        ]
+
+        return jsonify({"receitas": receitas})
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
 
 
 @app.route("/api/receita/<id_receita>", methods=["GET"])
 def receita(id_receita):
-    db = CriarDB("PanelaVelha.db")
-    receita = db.cursor.execute("SELECT * from receitas where id = ?", (id_receita)).fetchone()
+    try:
+        db = CriarDB("PanelaVelha.db")
+        receita = db.cursor.execute("SELECT * from receitas where id = ?", (id_receita)).fetchone()
 
-    return jsonify({"receita": receita})
+        return jsonify({"receita": receita}), 201
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
 
 
 @app.route("/api/postar_receita", methods=["POST"])
@@ -146,7 +164,7 @@ def postar_receita():
     id_usuario = data.get("id_usuario")
 
     if not nome or not id_usuario or not imagem:
-        return jsonify({"error": "Dados insuficientes"}), 450
+        return jsonify({"error": "Dados insuficientes"}), 400
     
     db = CriarDB("PanelaVelha.db")
     receita = Receita(nome, imagem, id_usuario, db)
