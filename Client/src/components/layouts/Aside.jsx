@@ -24,6 +24,9 @@ function Aside() {
         .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
     }
 
+    function reload() {
+        window.location.reload();
+    }
 
     useEffect(() => {
         fetchUser();
@@ -48,7 +51,7 @@ function Aside() {
                         <li className='pb-2'>salvas</li>
                         <li className='pb-2'>
                             {user ? (
-                                <p>{user}</p>
+                                <Link to="/usuario">{user}</Link>
                             ) : (
                                 <Link to="/login">Login</Link>
                             )}

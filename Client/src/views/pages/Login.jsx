@@ -6,7 +6,7 @@ import "../../components/css/Login.css"
 
 const Login = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [nome, setNome] = useState("");
     const [senha, setSenha] = useState("");
     const [isLoading, setIsLoaging] = useState(false);
@@ -30,8 +30,7 @@ const Login = () => {
         
         setNome("");
         setSenha("");
-        navigate("/");
-        window.location.reload();
+        window.location.href = "/";
     };
     
     return (
