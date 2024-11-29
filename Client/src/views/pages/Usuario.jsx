@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Usuario = () => {
@@ -6,18 +6,23 @@ const Usuario = () => {
     const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
     const [usuario, setUsuario] = useState(null);
 
-    axios.get('http://127.0.0.1:5000/api/verificar_usuario', {       //usando essa rota apenas como teste
-        headers: {
-        "Authorization": token, // Passa o token no cabeçalho Authorization
-        },
-    })
-    .then(response => {
-        setUsuario(response.data.usuario);
-        console.log(response.data.usuario);
-    })
-    .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
-    
+    async function fetchUsuario(){
+        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {       //usando essa rota apenas como teste
+            headers: {
+            "Authorization": token, // Passa o token no cabeçalho Authorization
+            },
+        })
+        .then(response => {
+            setUsuario(response.data);
+            console.log(response.data);
+        })
+        .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
+    };    
 
+    useEffect(() => {
+        fetchUsuario();
+    }, []);
+    
     function logout() { 
         localStorage.removeItem("jwtToken");
         window.location.href = "/";
@@ -34,7 +39,7 @@ const Usuario = () => {
             {
                 "nome_receita": nome, 
                 "imagem_receita": imagem, 
-                "id_usuario": usuario
+                "id_usuario": usuario.id
             })
         .then(response => console.log(response))
         .catch(err => console.log(err))
@@ -43,7 +48,7 @@ const Usuario = () => {
     return (
         <div className="w-full h-screen">
             <div>
-                <h1 className="text-5xl text-chocolate-cosmos">Bem vindo, {usuario}</h1>
+                <h1 className="text-5xl text-chocolate-cosmos">Bem vindo, {usuario.usuario}</h1>
             </div>
             <div>
                 <button onClick={criarReceita}>criar receita</button>

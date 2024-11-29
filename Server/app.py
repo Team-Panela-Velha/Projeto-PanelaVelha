@@ -26,6 +26,8 @@ class CriarDB:                    # classe usada para estabelecer conexao com um
 # ----------------------------------
 criar_tabela = CriarDB("PanelaVelha.db")              # criando o banco de dados principal do sistema
 
+criar_tabela.cursor.execute("PRAGMA foreign_keys = ON;")
+
 criar_tabela.cursor.execute("""
     CREATE TABLE if not exists usuarios(
         id integer primary key autoincrement, 
@@ -34,9 +36,9 @@ criar_tabela.cursor.execute("""
     )
 """)
 
-criar_tabela.cursor.execute("""
+criar_tabela.cursor.execute("""                     
     CREATE TABLE if not exists receitas(
-        id integer primary key autoincrement,
+        id_receita integer primary key autoincrement,
         nome_receita text not null,
         imagem_receita text not null,
         id_usuario integer not null,
@@ -46,7 +48,7 @@ criar_tabela.cursor.execute("""
 
 criar_tabela.cursor.execute("""
     CREATE TABLE IF NOT EXISTS ingredientes (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_ingrediente INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT
     )
 """)
@@ -129,7 +131,7 @@ def get_usuario():
 def mostrar_receitas():
     try:
         db = CriarDB("PanelaVelha.db")
-        receitas_array = db.cursor.execute("SELECT id, nome_receita, imagem_receita from receitas").fetchmany(6)
+        receitas_array = db.cursor.execute("SELECT id_receita, nome_receita, imagem_receita from receitas").fetchmany(6)
 
         receitas = [
             {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
@@ -148,18 +150,21 @@ def receita(id_receita):
     try:
         db = CriarDB("PanelaVelha.db")
         receita_array = db.cursor.execute(
-            """SELECT r.id_usuario, r.nome_receita, r.imagem_receita, u.nome from receitas r 
-               join usuarios u on r.id_usuario = u.id_usuario                       
-               where id = ?""", (id_receita,)).fetchone()
-        print(receita_array)
+            """SELECT r.id_receita, r.nome_receita, r.imagem_receita, u.id, u.nome from receitas r
+               inner join usuarios u on r.id_usuario = u.id
+               where r.id_receita = ?""", (id_receita)
+        ).fetchone()
+
         receita = {
-            "id_usuario": receita_array[0],               # so da para acessor por indice. n sei pq
-            "nome_receita": receita_array[1], 
+            "id_receita": receita_array[0],
+            "nome_receita": receita_array[1],
             "imagem_receita": receita_array[2],
-            "nome": receita_array[3]
-            }
+            "id_usuario": receita_array[3],
+            "nome_usuario": receita_array[4]
+        }
 
         return jsonify({"receita": receita}), 201
+        
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
     finally:

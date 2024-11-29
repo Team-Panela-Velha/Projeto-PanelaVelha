@@ -30,7 +30,7 @@ const ReceitaPage = () => {
         <div className="w-full h-screen">
             <div className="flex flex-col justify-center">
                 <div className="text-5xl text-center mt-5 font-semibold">
-                    <h1></h1>
+                    <h1>{receitaData.nome_receita}</h1>
                     <hr className="border-[1.5px] border-black mt-7 mr-3" />
                 </div>
                 <div className="flex justify-between mr-3">
@@ -44,7 +44,7 @@ const ReceitaPage = () => {
                 <div className="flex mt-5 mb-10 mr-3 bg-red-100 shadow-xl">
                     <div className="flex flex-col m-2" >
                         <div>
-                            <img className="w-[30rem] h-[20rem]" src="" alt="" />
+                            <img className="w-[30rem] h-[20rem]" src={receitaData.imagem_receita} alt="" />
                         </div>
                     </div>
                     <div className="flex flex-col w-[35rem]">
@@ -52,7 +52,7 @@ const ReceitaPage = () => {
                             <img className="w-16 h-16 justify-self-center mt-5 " src={Garfo} alt="" />
                         </div>
                         <div className="w-full text-xs text-center">
-                            <p className="text-sm font-semibold mt-3">Enviado por Matheus</p>
+                            <p className="text-sm font-semibold mt-3">Enviado por {receitaData.nome_usuario}</p>
                             <p className="w-96 justify-self-center mt-2">
                                 " Feita com morangos frescos e cachaça, essa variação doce e equilibrada da caipirinha tradicional é perfeita para festas ou momentos de relaxamento. Experimente e encante seus convidados! "
                             </p>
