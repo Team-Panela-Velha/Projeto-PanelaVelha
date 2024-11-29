@@ -3,13 +3,34 @@ import Relogio from "../../assets/img/despertar.png";
 import Chefe from "../../assets/img/chefe-de-cozinha.png";
 import Nivel from "../../assets/img/elevacao.png";
 import FormAvaliacao from "../../components/FormAvaliacao";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const ReceitaPage = () => (
-    <>
+const ReceitaPage = () => {
+
+    const[receitaData, setReceitaData] = useState(null);
+    const { id } = useParams();
+    
+    async function fetchReceita() {
+        axios.get(`http://127.0.0.1:5000/api/receita/${id}`)
+        .then(response => {
+            setReceitaData(response.data.receita);
+            console.log(response.data.receita);
+        })
+        .catch(err => console.log(err));
+    };
+
+    useEffect(() => {
+        fetchReceita();
+    }, []);
+    
+
+    return (
         <div className="w-full h-screen">
             <div className="flex flex-col justify-center">
                 <div className="text-5xl text-center mt-5 font-semibold">
-                    <h1>Caipirinha de Morango</h1>
+                    <h1></h1>
                     <hr className="border-[1.5px] border-black mt-7 mr-3" />
                 </div>
                 <div className="flex justify-between mr-3">
@@ -23,7 +44,7 @@ const ReceitaPage = () => (
                 <div className="flex mt-5 mb-10 mr-3 bg-red-100 shadow-xl">
                     <div className="flex flex-col m-2" >
                         <div>
-                            <img className="w-[30rem] h-[20rem]" src="https://images.pexels.com/photos/27626304/pexels-photo-27626304/free-photo-of-comida-alimento-refeicao-frio.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+                            <img className="w-[30rem] h-[20rem]" src="" alt="" />
                         </div>
                     </div>
                     <div className="flex flex-col w-[35rem]">
@@ -94,8 +115,8 @@ const ReceitaPage = () => (
                 
             </div>
         </div>
+    );
+};
 
-    </>
-)
 
 export default ReceitaPage;

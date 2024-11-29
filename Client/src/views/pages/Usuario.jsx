@@ -12,9 +12,11 @@ const Usuario = () => {
         },
     })
     .then(response => {
-        setUsuario(response.data.id);
+        setUsuario(response.data.usuario);
+        console.log(response.data.usuario);
     })
     .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
+    
 
     function logout() { 
         localStorage.removeItem("jwtToken");

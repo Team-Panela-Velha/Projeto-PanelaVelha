@@ -147,7 +147,17 @@ def mostrar_receitas():
 def receita(id_receita):
     try:
         db = CriarDB("PanelaVelha.db")
-        receita = db.cursor.execute("SELECT * from receitas where id = ?", (id_receita)).fetchone()
+        receita_array = db.cursor.execute(
+            """SELECT r.id_usuario, r.nome_receita, r.imagem_receita, u.nome from receitas r 
+               join usuarios u on r.id_usuario = u.id_usuario                       
+               where id = ?""", (id_receita,)).fetchone()
+        print(receita_array)
+        receita = {
+            "id_usuario": receita_array[0],               # so da para acessor por indice. n sei pq
+            "nome_receita": receita_array[1], 
+            "imagem_receita": receita_array[2],
+            "nome": receita_array[3]
+            }
 
         return jsonify({"receita": receita}), 201
     except Exception as e:
