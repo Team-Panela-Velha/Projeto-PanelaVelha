@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import Garfo from "../../src/assets/img/garfo-e-faca.png";
 
 const SliderCard = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const cards = [
     {
-      title: "Card 1",
-      description: "Descrição do Card 1",
+      title: "Fondue de Queijo: A Receita Perfeita para Momentos Especiais",
+      description: "Cremoso, aromático e irresistível, o fondue de queijo é a escolha ideal para reunir pessoas queridas ao redor de uma deliciosa experiência compartilhada. Simples de preparar e cheio de sabor, ele transforma qualquer ocasião em um momento inesquecível!",
       imgUrl: "https://www.receiteria.com.br/wp-content/uploads/fondue-de-queijo-simples-1.jpg",
     },
     {
@@ -40,7 +41,7 @@ const SliderCard = () => {
     <div className="relative w-full mx-3">
       <div className="flex overflow-hidden ">
         <div
-          className="flex transition-transform duration-500 mr-10"
+          className="flex transition-transform duration-1000 mr-10"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {cards.map((card, index) => (
@@ -54,8 +55,16 @@ const SliderCard = () => {
                 className="w-1/2 h-80 object-cover rounded-l-lg mb-4"
               />
               <div className='w-1/2 h-80 bg-red-100'>
-                <h2 className="text-xl font-semibold">{card.title}</h2>
-                <p className="text-gray-600">{card.description}</p>
+                <div className='flex flex-col justify-center items-center w-full h-full gap-2'>
+                  <div className="w-full">
+                    <img className="w-16 h-16 justify-self-center " src={Garfo} alt="" />
+                  </div>
+                  <h2 className="text-lg text-center w-4/5 font-semibold">{card.title}</h2>
+                  <p className="text-jet text-sm text-center w-5/6">"{card.description}"</p>
+                  <button className='bg-redwoodOP w-28 rounded-2xl h-8 font-medium text-sm text-jet uppercase'>
+                    Ver Receita
+                  </button>
+                </div>
               </div>
             </div>
           ))}
