@@ -24,10 +24,6 @@ function Aside() {
         .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
     }
 
-    function reload() {
-        window.location.reload();
-    }
-
     useEffect(() => {
         fetchUser();
     }, []);

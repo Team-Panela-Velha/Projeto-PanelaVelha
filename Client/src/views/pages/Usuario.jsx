@@ -47,15 +47,23 @@ const Usuario = () => {
 
     return (
         <div className="w-full h-screen">
-            <div>
-                <h1 className="text-5xl text-chocolate-cosmos">Bem vindo, {usuario.usuario}</h1>
-            </div>
-            <div>
-                <button onClick={criarReceita}>criar receita</button>
-            </div>
-            <div>
-                <button onClick={logout}>Sair</button>
-            </div>
+            {usuario ? (              // as vezes a pag carregava antes de processar os dados, e n gerava o usuario no fetchUsuario
+                <div className="flex flex-col items-center gap-10 mt-12">
+                    <div className="w-11/12 relative left-3">
+                        <h1 className="text-5xl text-chocolate-cosmos">Bem vindo, {usuario.usuario}</h1>  
+                    </div>
+                    <div className="bg-white w-11/12 h-96">
+
+                    </div>
+                    <div className="">
+                        <button onClick={logout} className="text-slate-100 text-lg bg-redwood pt-1 pb-1 pl-4 pr-4">Sair</button>
+                    </div>
+                </div>
+            ) : (
+                <div className="flex justify-center items-center mt-12">
+                    <h1 className="text-5xl text-chocolate-cosmos">Carregando...</h1>
+                </div>
+            )}
         </div>
     );
 };
