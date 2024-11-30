@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import Searchbar from '../Searchbar'
+import axios from "axios"
+
 import '../css/Aside.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 function Aside() {
 
-    // const [data, setData] = useState({});
-    // // Essa função busca os dados no local host do flask e os adiciona às variáveis
-    // useEffect(() => {
-    //     fetch("http://127.0.0.1:5000/membros").then(
-    //         res => res.json()
-    //     ).then(
-    //         data => {
-    //             setData(data)
-    //             console.log(data)
-    //         }
-    //     )
-    // }, [])
-    // // Adicionei uma div para mostrar a lista de membros abaixo da lista de paginas
+    const[user, setUser] = useState(null);
+    
+    async function fetchUser(){
+        const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
+    
+        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
+            headers: {
+            "Authorization": token, // Passa o token no cabeçalho Authorization
+            },
+        })
+        .then(response => {
+            setUser(response.data.usuario);
+        })
+        .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
+    }
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
 
     return (
         <>
@@ -34,21 +42,18 @@ function Aside() {
                 <nav className='flex justify-start pl-7 w-full'>
                     <ul className='flex flex-col items-start uppercase text-sm font-semibold text-snow'>
                         <li className='pb-2'><Link to="/">Início</Link></li>
-                        <li className='pb-2'><Link to="/teste">receitas</Link></li>
+                        <li className='pb-2'>receitas</li>
                         <li className='pb-2'>prateleira</li>
                         <li className='pb-2'>salvas</li>
-                        <li className='pb-2'><Link to="/login">Login</Link></li>
+                        <li className='pb-2'>
+                            {user ? (
+                                <Link to="/usuario">{user}</Link>
+                            ) : (
+                                <Link to="/login">Login</Link>
+                            )}
+                        </li>
                     </ul>
                 </nav>
-                {/* <div>
-                    {(typeof data.membros === 'undefined') ? (
-                        <p>Carregando...</p>
-                    ) : (
-                        data.membros.map((membros, i) => (
-                            <p key={i}>{membros}</p>
-                        ))
-                    )}
-                </div> */}
                 <div className='flex flex-col justify-end items-start pl-7 pb-5 w-full h-full'>
                     <div className='flex'>
                         <a href='#'><i className="icons bi bi-instagram pr-2 text-jet"></i></a>
