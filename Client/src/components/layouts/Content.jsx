@@ -6,6 +6,7 @@ import Usuario from "../../views/pages/Usuario"
 
 import { Routes, Route } from "react-router-dom"
 import ReceitaPage from "../../views/pages/ReceitaPage"
+import CriarReceita from "../../views/pages/CriarReceita"
 
 const Content = props => (
     <>
@@ -16,6 +17,7 @@ const Content = props => (
                 <Route path="/usuario" element={<Usuario />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
+                <Route path="/CriarReceita" element={<CriarReceita />} />
             </Routes>
         </main>
     </>

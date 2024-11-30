@@ -45,6 +45,7 @@ function Aside() {
                         <li className='pb-2'>receitas</li>
                         <li className='pb-2'>prateleira</li>
                         <li className='pb-2'>salvas</li>
+                        <li className='pb-2'><Link to="/CriarReceita">CriarReceita</Link></li>
                         <li className='pb-2'>
                             {user ? (
                                 <Link to="/usuario">{user}</Link>
