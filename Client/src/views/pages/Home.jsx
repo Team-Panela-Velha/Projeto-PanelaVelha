@@ -13,28 +13,24 @@ const Home = () => (
             </div>
             <div>
                 <SectionTitle
-                text="receitas mais requisitadas"
+                    text="receitas mais requisitadas"
                 />
-                <Receita_Populares/>
+                <Receita_Populares />
             </div>
             <div className="mt-12">
-            <SectionTitle
-                text="Experimente o melhor de cada Região"
+                <SectionTitle
+                    text="Experimente o melhor de cada Região"
                 />
-                <Regioes/>
+                <Regioes />
             </div>
-            <div>
-            <SectionTitle
-                text="O que deseja coxinhar hoje"
+            <div className='my-6 mr-[3%]'>
+                <SectionTitle
+                    text="O que deseja coxinhar hoje"
                 />
-
-                <div>
-                    <Categoria/>
-                </div>
-                <div className="flex w-full mr-[3%] justify-center">
-                    <SliderCard/>
-                </div>
-                
+                <Categoria />
+            </div>
+            <div className="flex w-full mr-[3%] justify-center">
+                <SliderCard />
             </div>
         </div>
     </>

@@ -1,18 +1,68 @@
-import React from "react";
+import { Link } from "react-router-dom";
+
+const CardCategoria = ({ receita }) => {
+  const { id, imagem_categoria, nome_categoria } = receita;
+
+  return (
+    <div className="flex flex-col items-center justify-center bg-red-100 w-48 h-40 rounded-md">
+      <div className="rounded-full overflow-hidden shadow-2xl shadow-red-300">
+        <img
+          className="object-cover w-24 h-24 rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
+          src={imagem_categoria}
+          alt={nome_categoria}
+        />
+      </div>
+      <div className="pt-4">
+        <p className="font-bold text-sm leading-tight text-center">
+          <Link to={`/receitas/${id}`}>{nome_categoria}</Link>
+        </p>
+      </div>
+    </div>
+  );
+};
 
 const Categoria = () => {
+ 
+  const receitas = [
+    {
+      id: 1,
+      imagem_categoria: "https://www.receiteria.com.br/wp-content/uploads/receitas-de-massas-0.jpg",
+      nome_categoria: "Massas",
+    },
+    {
+      id: 2,
+      imagem_categoria: "https://st2.depositphotos.com/3833507/7122/i/450/depositphotos_71220693-stock-photo-sole-with-cherry-tomatoes.jpg",
+      nome_categoria:"Peixes",
+    },
+    {
+      id: 2,
+      imagem_categoria: "https://www.bahianoticias.com.br/fotos/hall_noticias/3440/mg/WhatsApp%20Image%202023-04-15%20at%2011.07.43..jpg",
+      nome_categoria:"Carnes",
+    },
+    {
+      id: 2,
+      imagem_categoria: "https://www.guiadasemana.com.br/contentFiles/image/opt_w1280h960/2021/04/FEA/66992_shutterstock-483777991.jpg",
+      nome_categoria:"Sobremesas",
+    },
+    {
+      id: 2,
+      imagem_categoria: "https://www.receiteria.com.br/wp-content/uploads/coquetel-de-morango-sem-alcool-01-730x730.jpg",
+      nome_categoria:"Bebidas",
+    },
+    {
+      id: 2,
+      imagem_categoria: "https://www.receiteria.com.br/wp-content/uploads/massa-para-empadao-sem-gluten-1-730x730.jpg",
+      nome_categoria:"Sem Gluten",
+    },
+    
+    
+  ];
+
   return (
-    <div className="bg-red-100 w-full flex justify-center gap-5 p-5">
-      <div className="flex flex-col items-center">
-        <div className="rounded-full overflow-hidden shadow-2xl">
-          <img
-            className="object-cover w-32 h-32 rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
-            src="https://www.receiteria.com.br/wp-content/uploads/bolo-simples-com-cobertura-de-ninho-774x477.jpeg"
-            alt="Sobremesa"
-          />
-        </div>
-        <h3 className="mt-2 text-lg font-semibold text-gray-800">Sobremesas</h3>
-      </div>
+    <div className="w-full flex justify-center gap-4 p-5">
+      {receitas.map((receita) => (
+        <CardCategoria key={receita.id} receita={receita} />
+      ))}
     </div>
   );
 };
