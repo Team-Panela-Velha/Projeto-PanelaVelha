@@ -1,4 +1,5 @@
 import Categoria from "../../components/Categoria";
+import MaisReceitas from "../../components/MaisReceitas";
 import Receita_Populares from "../../components/Receita_Populares";
 import Regioes from "../../components/Regioes";
 import SectionTitle from "../../components/SectionTitle";
@@ -23,14 +24,22 @@ const Home = () => (
                 />
                 <Regioes />
             </div>
-            <div className='my-6 mr-[3%]'>
+            <div className='my-6 flex flex-col'>
                 <SectionTitle
                     text="O que deseja coxinhar hoje"
                 />
+                <div className="mr-[5%]">
                 <Categoria />
+                </div>
             </div>
-            <div className="flex w-full mr-[3%] justify-center">
+            <div className="flex w-full my-10 justify-center">
                 <SliderCard />
+            </div>
+            <div className="pb-10">
+                <SectionTitle
+                    text="você também pode gostar"
+                />
+                <MaisReceitas />
             </div>
         </div>
     </>

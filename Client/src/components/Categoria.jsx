@@ -4,7 +4,7 @@ const CardCategoria = ({ receita }) => {
   const { id, imagem_categoria, nome_categoria } = receita;
 
   return (
-    <div className="flex flex-col items-center justify-center bg-red-100 w-48 h-40 rounded-md">
+    <div className="flex flex-col items-center justify-center">
       <div className="rounded-full overflow-hidden shadow-2xl shadow-red-300">
         <img
           className="object-cover w-24 h-24 rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
@@ -59,7 +59,7 @@ const Categoria = () => {
   ];
 
   return (
-    <div className="w-full flex justify-center gap-4 p-5">
+    <div className="w-full flex ml-3 bg-red-100 rounded-md justify-between p-5">
       {receitas.map((receita) => (
         <CardCategoria key={receita.id} receita={receita} />
       ))}
