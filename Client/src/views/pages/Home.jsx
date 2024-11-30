@@ -1,3 +1,4 @@
+import Categoria from "../../components/Categoria";
 import Receita_Populares from "../../components/Receita_Populares";
 import Regioes from "../../components/Regioes";
 import SectionTitle from "../../components/SectionTitle";
@@ -12,7 +13,7 @@ const Home = () => (
             </div>
             <div>
                 <SectionTitle
-                text="As mais requisitadas"
+                text="receitas mais requisitadas"
                 />
                 <Receita_Populares/>
             </div>
@@ -26,6 +27,10 @@ const Home = () => (
             <SectionTitle
                 text="O que deseja coxinhar hoje"
                 />
+
+                <div>
+                    <Categoria/>
+                </div>
                 <div className="flex w-full mr-[3%] justify-center">
                     <SliderCard/>
                 </div>
