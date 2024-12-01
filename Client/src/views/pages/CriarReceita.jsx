@@ -8,7 +8,10 @@ const CriarReceita = () => {
         numeroPessoas: "",
         categoria: "",
         ingredientes: "",
-        dificuldade: "", // Armazena o nível de dificuldade
+        dificuldade: "",
+        tempoPreparoH: "",
+        tempoPreparoM: "",
+
     });
 
 
@@ -79,13 +82,13 @@ const CriarReceita = () => {
                                 required
                             />
                         </div>
-                        <div className="flex w-full justify-center items-center">
-                            <div className="bg-yellow-200 p-2 w-[40%]">
+                        <div className="flex w-full justify-center">
+                            <div className="p-2 w-[40%]">
                                 <h2 className="uppercase font-bold text-redwood text-2xl pb-5">
                                     Informações Chaves
                                 </h2>
-                                <div className="m-6 w-[30%]">
-                                <fieldset>
+                                <div className="p-2 w-[30%]">
+                                <fieldset className="pb-3" >
                                 <legend className="font-semibold text-chocolate-cosmos pb-1">
                                     <h2>Dificuldade*</h2>
                                 </legend>
@@ -95,7 +98,7 @@ const CriarReceita = () => {
                                             required
                                             onChange={handleChange}
                                             value={formReceita.dificuldade}
-                                            className="w-28 text-xs p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:border-redwood focus:outline-none"
+                                            className="w-28 text-xs p-1  text-jet border border-collapse border-gray-300 focus:ring-redwood focus:border-redwood focus:outline-none"
                                         >
                                             <option value="MuitoFacil">Muito Facíl</option>
                                             <option value="Facil">Facíl</option>
@@ -104,9 +107,37 @@ const CriarReceita = () => {
                                             <option value="MuitoDificil">Muito Díficil</option>
                                         </select>
                                 </fieldset>
-                                
-                                
                             </div>
+                            
+                                <fieldset className="font-semibold text-chocolate-cosmos pb-1 pt-3 pl-2">
+                                    <legend>Tempo de Preparo*</legend>
+                                    
+                                    <input
+                                            type="number"
+                                            id="tempoPreparoH"
+                                            name="tempoPreparoH"
+                                            required
+                                            value={formReceita.tempoPreparoH}
+                                            onChange={handleChange}
+                                            className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
+                                        />
+                                        <label htmlFor="tempoPreparoH"
+                                        className="font-normal text-base pr-2 pl-1"
+                                        > Hora(s)</label>
+                                        <input
+                                            type="number"
+                                            id="tempoPreparoM"
+                                            name="tempoPreparoM"
+                                            required
+                                            value={formReceita.tempoPreparoM}
+                                            onChange={handleChange}
+                                            className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
+                                        />
+                                        <label htmlFor="tempoPreparoM"
+                                        className="font-normal text-base pr-2 pl-1"
+                                        > Minuto(s)</label>
+                                </fieldset>
+                            
                             </div>
                             <div className="w-[60%] p-2">
                                 <h2 className="uppercase font-bold text-redwood text-2xl pb-5">
