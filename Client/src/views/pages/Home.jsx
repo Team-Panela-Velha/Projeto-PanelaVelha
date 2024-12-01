@@ -42,10 +42,6 @@ const Home = () => (
                 />
                 <MaisReceitas />
             </div>
-            <div className="m-5">
-                <div>                <Link to="/CriarReceita">CriarReceita</Link>
-                </div>
-            </div>
         </div>
     </>
 )

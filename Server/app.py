@@ -58,6 +58,8 @@ criar_tabela.fechar_conexao()
 # ----------------------------------
 
 
+# ROTAS DE USUARIO
+
 @app.route('/api/login', methods=["POST"])
 def login():
     data = request.get_json()
@@ -127,7 +129,10 @@ def get_usuario():
         return jsonify({"message": "Invalid token"}), 401
 
 
-@app.route("/api/mostrar_receitas", methods=["GET"])      # Para a pag inicial ou pag qualquer outra pag q mostre varias receitas
+# ROTAS DE RECEITAS
+
+
+@app.route("/api/mostrar_receitas_populares", methods=["GET"])     
 def mostrar_receitas():
     try:
         db = CriarDB("PanelaVelha.db")
@@ -139,6 +144,28 @@ def mostrar_receitas():
         ]
 
         return jsonify({"receitas": receitas})
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
+
+
+@app.route("/api/mostrar_receitas_usuario/<id_usuario>", methods=["GET"])
+def mostrar_receitas_usuario(id_usuario):
+    try:
+        db = CriarDB("PanelaVelha.db")
+        receitas_array = db.cursor.execute(
+            """SELECT r.id_receita, r.nome_receita, r.imagem_receita from receitas r
+               inner join usuarios u on r.id_usuario = u.id
+               where u.id = ?""", (id_usuario)
+        ).fetchall()
+
+        receitas = [
+            {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
+            for row in receitas_array
+        ]
+
+        return jsonify({"receitas": receitas}), 200
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
     finally:

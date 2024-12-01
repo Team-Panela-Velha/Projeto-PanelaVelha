@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useState } from "react";
 import axios from "axios";
 
@@ -6,7 +6,6 @@ import "../../components/css/Login.css"
 
 const Login = () => {
 
-    const navigate = useNavigate();
     const [nome, setNome] = useState("");
     const [senha, setSenha] = useState("");
     const [isLoading, setIsLoaging] = useState(false);

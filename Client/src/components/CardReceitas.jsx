@@ -7,7 +7,7 @@ const CardReceitas = ({ receita }) => {
   return (
     <div className="flex flex-col items-center">
       <div
-        className="bg-orange-200 h-3/4 w-[12vw] rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
+        className="bg-orange-200 h-[120px] w-[12vw] rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
         style={{
           backgroundImage: `url(${imagem_receita})`,
           backgroundSize: "cover",
