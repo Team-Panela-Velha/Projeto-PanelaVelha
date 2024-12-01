@@ -42,9 +42,9 @@ const Home = () => (
                 />
                 <MaisReceitas />
             </div>
-            <div>
-                <h1>                <Link to="/CriarReceita">CriarReceita</Link>
-                </h1>
+            <div className="m-5">
+                <div>                <Link to="/CriarReceita">CriarReceita</Link>
+                </div>
             </div>
         </div>
     </>
