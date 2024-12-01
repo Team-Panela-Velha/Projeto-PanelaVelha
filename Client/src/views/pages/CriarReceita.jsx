@@ -30,9 +30,10 @@ const CriarReceita = () => {
     
     
     return (
-        <div className="w-full h-screen flex justify-center items-center">
+        <div className="w-full h-auto flex justify-center items-center">
             <div className="flex flex-col w-[85%]">
                 <div className="flex flex-col mt-10">
+                    
                     <h1 className="font-bold text-jet text-6xl text-center">Envie sua Receita</h1>
                     <form
                         onSubmit={handleSubmit}
