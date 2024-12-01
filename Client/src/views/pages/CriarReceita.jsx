@@ -4,7 +4,10 @@ const CriarReceita = () => {
     const [formReceita, setFormReceita] = useState({
         titulo: "",
         descricao: "",
-        imagemReceita: "", // Armazena a URL da imagem
+        imagemReceita: "",
+        numeroPessoas: "",
+        categoria: "",
+
     });
 
     const handleChange = (e) => {
@@ -19,76 +22,62 @@ const CriarReceita = () => {
     };
 
     return (
-        <div className="flex flex-col pr-[1%] w-full justify-center items-center">
-            <h1 className="text-5xl text-jet m-5 font-bold text-center">Envie sua Receita</h1>
-            <div className="w-full">
-            <form   
-                onSubmit={handleSubmit}
-                className="w-full h-full border-redwood bg-red-100 p-6"
-            >
-                <div className="flex flex-col justify-center items-center">
-                <div className="m-1 w-[50%]">
-                    <label className="block text-lg font-semibold text-jet mb-1">
-                        Título
-                    </label>
-                    <input
-                        type="text"
-                        name="titulo"
-                        value={formReceita.titulo}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-redwood bg-transparent rounded"
-                        placeholder="Digite o título da receita"
-                        required
-                    />
-                </div>
+        <div className="w-full flex justify-center items-center">
+            <div className="flex flex-col w-[85%]">
 
-                <div className="m-1 w-[50%]">
-                    <label className="block text-lg font-semibold text-jet mb-1">
-                        Descrição
-                    </label>
-                    <textarea
-                        name="descricao"
-                        value={formReceita.descricao}
-                        onChange={handleChange}
-                        className="w-full p-2 h-36 border border-redwood bg-transparent rounded"
-                        placeholder="Descreva sua receita"
-                        required
-                    ></textarea>
-                </div>
-
-                <div className="m-1 w-[50%]">
-                    <label className="block text-lg font-semibold text-jet mb-1">
-                        URL da Imagem
-                    </label>
-                    <input
-                        type="text"
-                        name="imagemReceita"
-                        value={formReceita.imagemReceita}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-redwood bg-transparent rounded"
-                        placeholder="Cole a URL da imagem"
-                        required
-                    />
-                </div>
-
-                <div className="m-1 w-[30%]">
-                    <button
-                        type="submit"
-                        className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                <div className="flex flex-col mt-10">
+                    <h1 className="font-bold text-jet text-6xl text-center">Envie sua Receita</h1>
+                    <form
+                        onSubmit={handleSubmit}
+                        className="w-full h-auto mt-10 bg-red-100"
                     >
-                        Enviar Receita
-                    </button>
+
+                        <div className="flex justify-center items-center flex-col mt-10">
+                            <label className="w-[50%] px-3 mb-1 mt-2 font-semibold text-gray-700">Título</label>
+                            <input
+                                type="text"
+                                id="titulo"
+                                name="titulo"
+                                value={formReceita.titulo}
+                                onChange={handleChange}
+                                className="bg-transparent mt-1 block w-[50%] h-10 px-3  border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                placeholder="Título da Receita"
+                                required
+                            />
+                        </div>
+                        <div className="flex justify-center items-center flex-col">
+                            <label className="w-[50%] px-3 mb-1 mt-2 font-semibold text-gray-700">Descrição</label>
+                            <textarea
+                                id="descricao"
+                                name="descricao"
+                                value={formReceita.descricao}
+                                onChange={handleChange}
+                                className="bg-transparent block w-[50%] h-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                placeholder="Descreva sua Receita"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div className="flex justify-center items-center flex-col">
+                            <label className="w-[50%] px-3 mb-1 mt-2 font-semibold text-gray-700">Imagem</label>
+                            <input
+                                type="text"
+                                id="imagem"
+                                name="imagem"
+                                value={formReceita.imagem}
+                                onChange={handleChange}
+                                className="bg-transparent block w-[50%] h-10 px-3  border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                placeholder="Cole a URL da imagem aki"
+                                required
+                            />
+                        </div>
+                    </form>
                 </div>
-                </div>
-                <div>
-                    <div>
-                        <h1>Informacoes chave</h1>
-                    </div>
-                    <div>
-                        Ingredientes
-                    </div>
-                </div>
-            </form>
+
+
+
+
+
             </div>
         </div>
     );
