@@ -5,6 +5,7 @@ import Regioes from "../../components/Regioes";
 import SectionTitle from "../../components/SectionTitle";
 import Slider from "../../components/Slider";
 import SliderCard from "../../components/SliderCard";
+import { Link } from "react-router-dom"
 
 const Home = () => (
     <>
@@ -40,6 +41,10 @@ const Home = () => (
                     text="você também pode gostar"
                 />
                 <MaisReceitas />
+            </div>
+            <div>
+                <h1>                <Link to="/CriarReceita">CriarReceita</Link>
+                </h1>
             </div>
         </div>
     </>
