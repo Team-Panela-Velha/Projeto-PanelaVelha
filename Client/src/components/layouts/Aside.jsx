@@ -44,12 +44,12 @@ function Aside() {
                     <Searchbar />
                 </div>
                 <nav className='flex justify-start pl-7 w-full'>
-                    <ul className='flex flex-col items-start uppercase text-sm font-semibold text-snow'>
-                        <li className='pb-2'><Link to="/">Início</Link></li>
-                        <li className='pb-2'>receitas</li>
-                        <li className='pb-2'>prateleira</li>
-                        <li className='pb-2'>salvas</li>
-                        <li className='pb-2'>
+                    <ul className='flex flex-col items-start uppercase text-sm font-semibold text-peaches'>
+                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'><Link to="/">Início</Link></li>
+                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'>receitas</li>
+                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'>prateleira</li>
+                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'>salvas</li>
+                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'>
                             {user ? (
                                 <Link to="/usuario">{user}</Link>
                             ) : (
