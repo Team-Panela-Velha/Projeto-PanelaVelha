@@ -11,7 +11,7 @@ const Usuario = () => {
     const [receitasUsuario, setReceitasUsuario] = useState([]);
 
     async function fetchUsuario(){
-        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {       //usando essa rota apenas como teste
+        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {       
             headers: {
             "Authorization": token, // Passa o token no cabeçalho Authorization
             },
@@ -43,27 +43,9 @@ const Usuario = () => {
     }, [usuario]);
 
 
-    
     function logout() { 
         localStorage.removeItem("jwtToken");
         window.location.href = "/";
-    }
-
-    // criando receitas teste
-    const nome = "Caipirinha de morango"
-    const imagem = "https://images.pexels.com/photos/27626304/pexels-photo-27626304/free-photo-of-comida-alimento-refeicao-frio.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-
-    const criarReceita = async(e) => {
-        e.preventDefault()
-
-        axios.post("http://127.0.0.1:5000/api/postar_receita", 
-            {
-                "nome_receita": nome, 
-                "imagem_receita": imagem, 
-                "id_usuario": usuario.id
-            })
-        .then(response => console.log(response))
-        .catch(err => console.log(err))
     }
 
     return (
@@ -78,7 +60,6 @@ const Usuario = () => {
                             <div className="flex justify-between w-5/6 relative left-24 mt-6">
                                 <h1 className="text-4xl text-redwood">Minhas receitas</h1>
                                 <Link to="/CriarReceita" className="w-10 rounded-full bg-slate-100"><p className="text-4xl text-redwood relative left-2 bottom-1">+</p></Link>
-                                {/* <button onClick={criarReceita}>+</button> */}
                             </div>  
                             {receitasUsuario.length > 0 ? (
                                 <div className="bg-red-100 w-[94%] relative left-8 mt-8 rounded-sm">

@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import axios from "axios"; 
+
 
 const CriarReceita = () => {
     const [formReceita, setFormReceita] = useState({
@@ -11,11 +14,47 @@ const CriarReceita = () => {
         dificuldade: "",
         tempoPreparoH: "",
         tempoPreparoM: "",
-
     });
-
     const [steps, setSteps] = useState([]); // Estado para os passos do modo de preparo
     const [enviado, setEnviado] = useState(false); // Estado para verificar se o formulário foi enviado
+    const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
+    const [usuario, setUsuario] = useState(null);
+
+
+    async function fetchUsuario(){            // pegando nome e id do usuario
+        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {      
+            headers: {
+            "Authorization": token, // Passa o token no cabeçalho Authorization
+            },
+        })
+        .then(response => {
+            setUsuario(response.data);
+            console.log(response.data);
+        })
+        .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
+    };    
+
+    useEffect(() => {
+        fetchUsuario();
+    }, []);
+    
+    async function criarReceita(e) {
+        e.preventDefault()
+
+        axios.post("http://127.0.0.1:5000/api/postar_receita", 
+            {
+                "nome_receita": formReceita.titulo, 
+                "imagem_receita": formReceita.imagemReceita, 
+                "id_usuario": usuario.id
+            })
+        .then(response => console.log(response))
+        .catch(err => console.log(err))
+
+        // console.log("Receita Enviada:", { ...formReceita, modoDePreparo: steps });
+        setEnviado(true); // Marca o formulário como enviado
+    }
+    
+
 
     // Atualiza os campos do formulário principal
     const handleChange = (e) => {
@@ -39,13 +78,6 @@ const CriarReceita = () => {
     const removeStep = (index) => {
         const updatedSteps = steps.filter((_, stepIndex) => stepIndex !== index);
         setSteps(updatedSteps);
-    };
-
-    // Manipula o envio do formulário
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Receita Enviada:", { ...formReceita, modoDePreparo: steps });
-        setEnviado(true); // Marca o formulário como enviado
     };
 
     // Redefine o estado para exibir o formulário novamente
@@ -87,7 +119,7 @@ const CriarReceita = () => {
 
                     <h1 className="font-bold text-jet text-6xl text-center">Envie sua Receita</h1>
                     <form
-                        onSubmit={handleSubmit}
+                        onSubmit={criarReceita}
                         className="w-full h-auto my-10 bg-red-100"
                     >
                         <div className="flex justify-center items-center flex-col mt-10">
@@ -106,7 +138,7 @@ const CriarReceita = () => {
                                 required
                             />
                         </div>
-                        <div className="flex justify-center items-center flex-col">
+                        {/* <div className="flex justify-center items-center flex-col">
                             <label className="w-[50%] px-3 mb-1 mt-2 font-semibold text-gray-700">
                                 Descrição*
                             </label>
@@ -119,7 +151,7 @@ const CriarReceita = () => {
                                 placeholder="Descreva sua Receita"
                                 required
                             ></textarea>
-                        </div>
+                        </div> */}
                         <div className="flex justify-center items-center flex-col mb-10">
                             <label className="w-[50%] px-3 mb-1 mt-2 font-semibold text-gray-700">
                                 Imagem*
@@ -135,7 +167,7 @@ const CriarReceita = () => {
                                 required
                             />
                         </div>
-                        <div className="flex w-full justify-center">
+                        {/* <div className="flex w-full justify-center">
                             <div className="p-2 w-[40%] pl-5">
                                 <h2 className="uppercase font-bold text-redwood text-xl pb-5">
                                     Informações Chaves
@@ -242,9 +274,8 @@ const CriarReceita = () => {
                                     ></textarea>
                                 </fieldset>
                             </div>
-
-                        </div>
-                        <div className="flex flex-col justify-center items-start p-5 mt-10">
+                        </div> */}
+                        {/* <div className="flex flex-col justify-center items-start p-5 mt-10">
                             <h2 className="uppercase font-bold text-redwood text-xl pb-5">Modo de Preparo</h2>
                             <div className="space-y-6">
                                 {steps.map((step, index) => (
@@ -296,7 +327,7 @@ const CriarReceita = () => {
                             >
                                 Adicionar Passo
                             </button>
-                        </div>
+                        </div> */}
                         <div className="w-full text-center my-10">
                             <button
                                 type="submit"
