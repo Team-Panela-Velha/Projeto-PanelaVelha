@@ -42,37 +42,37 @@ const ReceitaPage = () => {
                             <i class="bi bi-star-fill"></i>
                         </div>
                     </div>
-                    <div className="flex mt-5 mb-10 mr-3 bg-red-100 shadow-xl">
+                    <div className="flex justify-around items-center mt-5 mb-10 mr-3 bg-red-100 shadow-xl pt-3 pb-3">
                         <div className="flex flex-col m-2" >
                             <div>
-                                <img className="w-[30rem] h-[20rem]" src={receitaData.imagem_receita} alt="" />
+                                <img className="w-[28rem] h-[18rem] rounded-sm" src={receitaData.imagem_receita} alt="" />
                             </div>
                         </div>
-                        <div className="flex flex-col w-[35rem]">
+                        <div className="flex flex-col w-[35rem] relative bottom-3">
                             <div className="w-full">
                                 <img className="w-16 h-16 justify-self-center mt-5 " src={Garfo} alt="" />
                             </div>
                             <div className="w-full text-xs text-center">
-                                <p className="text-sm font-semibold mt-3">Enviado por {receitaData.nome_usuario}</p>
+                                <p className="text-sm font-semibold mt-3">Enviada por {receitaData.nome_usuario}</p>
                                 <p className="w-96 justify-self-center mt-2">
-                                    " Feita com morangos frescos e cachaça, essa variação doce e equilibrada da caipirinha tradicional é perfeita para festas ou momentos de relaxamento. Experimente e encante seus convidados! "
+                                    "Feita com morangos frescos e cachaça, essa variação doce e equilibrada da caipirinha tradicional é perfeita para festas ou momentos de relaxamento. Experimente e encante seus convidados!"
                                 </p>
                             </div>
                             <div className="flex gap-5 justify-center mt-8">
-                                <div className="relative flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
-                                    <img className="absolute top-[-20px] w-12 h-12" src={Relogio} alt="" />
-                                    <p className="uppercase font-bold mt-5">12 min</p>
-                                    <p className="uppercase text-xs w-16 font-semibold">Tempo de Preparo</p>
+                                <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
+                                    <img className="relative bottom-6 w-12 h-12" src={Relogio} alt="" />
+                                    <p className="relative bottom-4 uppercase text-center text-xs w-16 font-semibold">Tempo de Preparo</p>
+                                    <p className="relative bottom-6 uppercase font-bold mt-5">12 min</p>
                                 </div>
-                                <div className="relative flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
-                                    <img className="absolute top-[-20px] w-12 h-12" src={Nivel} alt="" />
-                                    <p className="uppercase font-bold mt-5">Facil</p>
-                                    <p className="uppercase text-xs w-16 font-semibold">culdade</p>
+                                <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
+                                    <img className="relative bottom-6 w-12 h-12" src={Nivel} alt="" />
+                                    <p className="relative bottom-4 right-1 uppercase text-xs w-16 font-semibold">Dificuldade</p>
+                                    <p className="relative bottom-4 uppercase font-bold mt-5">Facil</p>
                                 </div>
-                                <div className="relative flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
-                                    <img className="absolute top-[-20px] w-12 h-12" src={Chefe} alt="" />
-                                    <p className="uppercase font-bold mt-5">1 pessoa</p>
-                                    <p className="uppercase text-xs w-16 font-semibold">Serve</p>
+                                <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
+                                    <img className="relative bottom-7 w-12 h-12" src={Chefe} alt="" />
+                                    <p className="relative bottom-4 uppercase text-center text-xs w-16 font-semibold">Serve</p>
+                                    <p className="relative bottom-4 uppercase font-bold mt-5">1 pessoa</p>
                                 </div>
                                 
                             </div>

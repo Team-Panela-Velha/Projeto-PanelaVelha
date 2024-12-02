@@ -33,8 +33,12 @@ function Aside() {
 
             <aside className='aside-fixo flex flex-col w-1/5 bg-redwood h-screen'>
                 <div className='flex justify-center items-center gap-5 pt-6'>
-                    <img className="rounded-full w-14 h-14 border-2 border-chocolate-cosmos" src="src/assets/img/logo.png" alt="Logo Panela Velha" />
-                    <h1 className='font-black text-jet text-3xl w-1/2'>PANELA VELHA</h1>
+                    <Link to="/">
+                        <img className="rounded-full w-14 h-14 border-2 border-chocolate-cosmos" src="src/assets/img/logo.png" alt="Logo Panela Velha" />
+                    </Link>
+                    <Link to="/" className='w-[40%]'>
+                        <h1 className='font-black text-jet text-3xl w-1/2'>PANELA VELHA</h1>
+                    </Link>    
                 </div>
                 <div className="flex justify-center pt-6 pb-6 w-full">
                     <Searchbar />
