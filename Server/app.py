@@ -1,5 +1,6 @@
 import sqlite3
 import jwt
+import json
 import datetime
 from flask import Flask, session, render_template, request, g, jsonify
 # from dotenv import load_dotenv
@@ -41,6 +42,7 @@ criar_tabela.cursor.execute("""
         id_receita integer primary key autoincrement,
         nome_receita text not null,
         imagem_receita text not null,
+        passos_receita text not null,
         id_usuario integer not null,
         FOREIGN KEY (id_usuario) references usuarios(id)
     )
@@ -177,7 +179,7 @@ def receita(id_receita):
     try:
         db = CriarDB("PanelaVelha.db")
         receita_array = db.cursor.execute(
-            """SELECT r.id_receita, r.nome_receita, r.imagem_receita, u.id, u.nome from receitas r
+            """SELECT r.id_receita, r.nome_receita, r.imagem_receita, r.passos_receita, u.id, u.nome from receitas r
                inner join usuarios u on r.id_usuario = u.id
                where r.id_receita = ?""", (id_receita)
         ).fetchone()
@@ -186,8 +188,9 @@ def receita(id_receita):
             "id_receita": receita_array[0],
             "nome_receita": receita_array[1],
             "imagem_receita": receita_array[2],
-            "id_usuario": receita_array[3],
-            "nome_usuario": receita_array[4]
+            "passos_receita": receita_array[3],
+            "id_usuario": receita_array[4],
+            "nome_usuario": receita_array[5]
         }
 
         return jsonify({"receita": receita}), 201
@@ -203,13 +206,16 @@ def postar_receita():
     data = request.get_json()
     nome = data.get("nome_receita")
     imagem = data.get("imagem_receita")
+    passos_receita = data.get("passos_receita")
     id_usuario = data.get("id_usuario")
+
+    passos = json.dumps(passos_receita)  # transformar a lista em formato string JSON. o banco n recebe valores list
 
     if not nome or not id_usuario or not imagem:
         return jsonify({"error": "Dados insuficientes"}), 400
     
     db = CriarDB("PanelaVelha.db")
-    receita = Receita(nome, imagem, id_usuario, db)
+    receita = Receita(nome, imagem, passos, id_usuario, db)
 
     try:
         receita.postar_receita()

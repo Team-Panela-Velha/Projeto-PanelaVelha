@@ -96,11 +96,14 @@ const ReceitaPage = () => {
                             <h2 className=" uppercase font-semibold">modo de preparo</h2>
                             <div className="flex flex-col">
                                 <ul className="font-normal text-jet mt-3 list-decimal ml-5 ">
-                                    <li className="border-b-black border-b-2 m-2 pb-2 "><b>Prepare os ingredientes:</b> Lave bem os morangos e o limão. Corte os morangos em pedaços e, se desejar usar o limão, corte-o em fatias ou pedaços pequenos, removendo as sementes.</li>
+                                    {JSON.parse(receitaData.passos_receita).map((passo) => (    // JSON.parse transforma o tipo do arquivo JSON em um array normal novamente (os passos sao enviados como json para o banco)
+                                        <li key={passo} className="border-b-black border-b-2 m-2 pb-2">{passo}</li>
+                                    ))}
+                                    {/* <li className="border-b-black border-b-2 m-2 pb-2 "><b>Prepare os ingredientes:</b> Lave bem os morangos e o limão. Corte os morangos em pedaços e, se desejar usar o limão, corte-o em fatias ou pedaços pequenos, removendo as sementes.</li>
                                     <li className="border-b-black border-b-2 m-2 pb-2" ><b>Macere as frutas:</b> Em um copo ou recipiente, coloque os morangos (e o limão, se usar) e o açúcar. Use um socador para macerar as frutas delicadamente, liberando o suco, mas sem amassar demais.</li>
                                     <li className="border-b-black border-b-2 m-2 pb-2"><b>Adicione a cachaça:</b> Despeje a cachaça sobre a mistura de frutas e mexa bem para misturar os sabores.</li>
                                     <li className="border-b-black border-b-2 m-2 pb-2"><b>Complete com gelo:</b> Encha o copo com gelo. Mexa levemente para resfriar a bebida.</li>
-                                    <li className="border-b-black border-b-2 m-2 pb-2"><b>Decore e sirva:</b> Se quiser, decore com um morango inteiro ou uma fatia de limão na borda do copo. Sirva imediatamente e aproveite!</li>                               
+                                    <li className="border-b-black border-b-2 m-2 pb-2"><b>Decore e sirva:</b> Se quiser, decore com um morango inteiro ou uma fatia de limão na borda do copo. Sirva imediatamente e aproveite!</li>                                */}
                                 </ul>
                             </div>  
                         </div>                    

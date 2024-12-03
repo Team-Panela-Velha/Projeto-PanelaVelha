@@ -45,6 +45,7 @@ const CriarReceita = () => {
             {
                 "nome_receita": formReceita.titulo, 
                 "imagem_receita": formReceita.imagemReceita, 
+                "passos_receita": steps,
                 "id_usuario": usuario.id
             })
         .then(response => console.log(response))
@@ -64,13 +65,13 @@ const CriarReceita = () => {
 
     // Adiciona um novo passo vazio ao estado
     const addStep = () => {
-        setSteps([...steps, { titulo: "", descricao: "" }]);
+        setSteps([...steps, ""]);
     };
 
     // Atualiza o conteúdo de um passo específico (título ou descrição)
-    const handleStepChange = (index, field, value) => {
+    const handleStepChange = (index, value) => {
         const updatedSteps = [...steps];
-        updatedSteps[index][field] = value;
+        updatedSteps[index] = value;
         setSteps(updatedSteps);
     };
 
@@ -96,7 +97,10 @@ const CriarReceita = () => {
         });
         setSteps([]);
     };
-
+    
+    useEffect(() => {
+        console.log(steps);
+    }, [steps])
 
     return (
         <div className="w-full h-screen flex justify-center items-center">
@@ -275,16 +279,16 @@ const CriarReceita = () => {
                                 </fieldset>
                             </div>
                         </div> */}
-                        {/* <div className="flex flex-col justify-center items-start p-5 mt-10">
+                        <div className="flex flex-col justify-center items-start p-5 mt-10">
                             <h2 className="uppercase font-bold text-redwood text-xl pb-5">Modo de Preparo</h2>
                             <div className="space-y-6">
                                 {steps.map((step, index) => (
-                                    <div key={index} className="space-y-3 border-b pb-4">
+                                    <div key={index} className="space-y-3 border-b relative left-8 pb-4">
                                         <div className="flex items-center space-x-4">
                                             <label className="font-bold uppercase text-chocolate-cosmos">
-                                                Passo {index + 1} - Título:*
+                                                Passo {index + 1}:
                                             </label>
-                                            <input
+                                            {/* <input
                                                 type="text"
                                                 value={step.titulo}
                                                 onChange={(e) =>
@@ -293,19 +297,19 @@ const CriarReceita = () => {
                                                 className="flex-1 px-4 py-2 bg-transparent block border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
                                                 placeholder={`Título do passo ${index + 1}`}
                                                 required
-                                            />
+                                            /> */}
                                         </div>
                                         <div className="flex flex-col">
-                                            <label className="font-bold uppercase text-chocolate-cosmos">
+                                            {/* <label className="font-bold uppercase text-chocolate-cosmos">
                                                 Descrição:*
-                                            </label>
+                                            </label> */}
                                             <textarea
-                                                value={step.descricao}
+                                                value={step.passo}
                                                 onChange={(e) =>
-                                                    handleStepChange(index, "descricao", e.target.value)
+                                                    handleStepChange(index, e.target.value)
                                                 }
-                                                className="bg-transparent block w-full h-36 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
-                                                placeholder={`Descrição detalhada do passo ${index + 1}`}
+                                                className="bg-transparent block w-96 h-36 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                                placeholder={`Instruções do passo ${index + 1}`}
                                                 rows="3"
                                                 required
                                             ></textarea>
@@ -327,7 +331,7 @@ const CriarReceita = () => {
                             >
                                 Adicionar Passo
                             </button>
-                        </div> */}
+                        </div>
                         <div className="w-full text-center my-10">
                             <button
                                 type="submit"
