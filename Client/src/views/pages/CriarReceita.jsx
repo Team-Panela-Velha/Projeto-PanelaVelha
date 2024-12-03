@@ -10,12 +10,12 @@ const CriarReceita = () => {
         imagemReceita: "",
         numeroPessoas: "",
         categoria: "",
-        ingredientes: "",
         dificuldade: "",
         tempoPreparoH: "",
         tempoPreparoM: "",
     });
     const [steps, setSteps] = useState([]); // Estado para os passos do modo de preparo
+    const [items, setItems] = useState([]); // ingredientes
     const [enviado, setEnviado] = useState(false); // Estado para verificar se o formulário foi enviado
     const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
     const [usuario, setUsuario] = useState(null);
@@ -45,6 +45,7 @@ const CriarReceita = () => {
             {
                 "nome_receita": formReceita.titulo, 
                 "imagem_receita": formReceita.imagemReceita, 
+                "ingredientes": items,
                 "passos_receita": steps,
                 "id_usuario": usuario.id
             })
@@ -68,18 +69,36 @@ const CriarReceita = () => {
         setSteps([...steps, ""]);
     };
 
+    // o msm para os ingredientes
+    const addItem = () => {
+        setItems([...items, ""]);
+    };
+
     // Atualiza o conteúdo de um passo específico (título ou descrição)
-    const handleStepChange = (index, value) => {
+    const handleStepChange = (index, step) => {
         const updatedSteps = [...steps];
-        updatedSteps[index] = value;
+        updatedSteps[index] = step;
         setSteps(updatedSteps);
     };
+
+    // o msm para os ingredientes
+    const handleItemChange = (index, item) => {
+        const updatedItems = [...items];
+        updatedItems[index] = item;
+        setItems(updatedItems);
+    }
 
     // Remove um passo específico
     const removeStep = (index) => {
         const updatedSteps = steps.filter((_, stepIndex) => stepIndex !== index);
         setSteps(updatedSteps);
     };
+
+    // o msm para os ingredientes
+    const removeItem = (index) => {
+        const updatedItems = items.filter((_, itemIndex) => itemIndex !== index);
+        setItems(updatedItems);
+    }
 
     // Redefine o estado para exibir o formulário novamente
     const handleVoltar = () => {
@@ -90,17 +109,13 @@ const CriarReceita = () => {
             imagemReceita: "",
             numeroPessoas: "",
             categoria: "",
-            ingredientes: "",
             dificuldade: "",
             tempoPreparoH: "",
             tempoPreparoM: "",
         });
         setSteps([]);
+        setItems([]);
     };
-    
-    useEffect(() => {
-        console.log(steps);
-    }, [steps])
 
     return (
         <div className="w-full h-screen flex justify-center items-center">
@@ -127,9 +142,9 @@ const CriarReceita = () => {
                         className="w-full h-auto my-10 bg-red-100"
                     >
                         <div className="flex justify-center items-center flex-col mt-10">
-                            <h2 className="uppercase font-bold text-redwood text-xl pb-5 self-start p-5">Sua Receita</h2>
-                            <label className="w-[50%] px-3 mb-1 mt-2 font-semibold text-gray-700">
-                                Título*
+                            <h2 className="uppercase font-bold text-redwood text-xl ml-8 pb-5 self-start p-5">Sua Receita</h2>
+                            <label className="w-[50%] relative right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
+                                Nome da receita*
                             </label>
                             <input
                                 type="text"
@@ -137,27 +152,13 @@ const CriarReceita = () => {
                                 name="titulo"
                                 value={formReceita.titulo}
                                 onChange={handleChange}
-                                className="bg-transparent mt-1 block w-[50%] h-10 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                className="bg-transparent relative right-32 mt-1 block w-[50%] h-10 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
                                 placeholder="Título da Receita"
                                 required
                             />
                         </div>
-                        {/* <div className="flex justify-center items-center flex-col">
-                            <label className="w-[50%] px-3 mb-1 mt-2 font-semibold text-gray-700">
-                                Descrição*
-                            </label>
-                            <textarea
-                                id="descricao"
-                                name="descricao"
-                                value={formReceita.descricao}
-                                onChange={handleChange}
-                                className="bg-transparent block w-[50%] h-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
-                                placeholder="Descreva sua Receita"
-                                required
-                            ></textarea>
-                        </div> */}
                         <div className="flex justify-center items-center flex-col mb-10">
-                            <label className="w-[50%] px-3 mb-1 mt-2 font-semibold text-gray-700">
+                            <label className="w-[50%] relative right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
                                 Imagem*
                             </label>
                             <input
@@ -166,15 +167,15 @@ const CriarReceita = () => {
                                 name="imagemReceita"
                                 value={formReceita.imagemReceita}
                                 onChange={handleChange}
-                                className="bg-transparent block w-[50%] h-10 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                className="bg-transparent block relative right-32 w-[50%] h-10 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
                                 placeholder="https://example.com"
                                 required
                             />
                         </div>
-                        {/* <div className="flex w-full justify-center">
+                        {/* <div className="flex w-full justify-start relative left-8">
                             <div className="p-2 w-[40%] pl-5">
                                 <h2 className="uppercase font-bold text-redwood text-xl pb-5">
-                                    Informações Chaves
+                                    Informações Adicionais
                                 </h2>
                                 <div className=" w-[30%]">
                                     <fieldset className="pb-3" >
@@ -228,109 +229,124 @@ const CriarReceita = () => {
                                 </fieldset>
 
                             </div>
-                            <div className="w-[60%] p-2">
-                                <h2 className="uppercase font-bold text-redwood text-xl pb-5">
-                                    Ingredientes
-                                </h2>
-                                <fieldset className="mb-10">
-                                    <div className="h-6">
-                                        <legend className="font-semibold text-chocolate-cosmos pb-1">
-                                            Número de pessoas ou porções*
-                                        </legend>
-                                        <input
-                                            type="number"
-                                            id="numeroPessoas"
-                                            name="numeroPessoas"
-                                            required
-                                            value={formReceita.numeroPessoas}
-                                            onChange={handleChange}
-                                            className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
-                                        />
-                                        <select
-                                            id="categoria"
-                                            name="categoria"
-                                            required
-                                            onChange={handleChange}
-                                            value={formReceita.categoria}
-                                            className="h-full text-xs p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:border-redwood focus:outline-none"
-                                        >
-                                            <option value="">Selecione</option>
-                                            <option value="Porção">Porção</option>
-                                            <option value="Pratos">Prato(s)</option>
-                                            <option value="Pedaços">Pedaço(s)</option>
-                                            <option value="Fatias">Fatia(s)</option>
-                                            <option value="Pessoas">Pessoa(s)</option>
-                                        </select>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend className="font-semibold text-chocolate-cosmos pb-1">
-                                        Ingredientes*
-                                    </legend>
-                                    <textarea
-                                        id="ingredientes"
-                                        name="ingredientes"
-                                        value={formReceita.ingredientes}
-                                        onChange={handleChange}
-                                        className="bg-transparent block w-full h-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
-                                        placeholder="Insira um ingrediente por linha"
-                                        required
-                                    ></textarea>
-                                </fieldset>
-                            </div>
                         </div> */}
-                        <div className="flex flex-col justify-center items-start p-5 mt-10">
-                            <h2 className="uppercase font-bold text-redwood text-xl pb-5">Modo de Preparo</h2>
-                            <div className="space-y-6">
-                                {steps.map((step, index) => (
-                                    <div key={index} className="space-y-3 border-b relative left-8 pb-4">
-                                        <div className="flex items-center space-x-4">
-                                            <label className="font-bold uppercase text-chocolate-cosmos">
-                                                Passo {index + 1}:
-                                            </label>
-                                            {/* <input
-                                                type="text"
-                                                value={step.titulo}
-                                                onChange={(e) =>
-                                                    handleStepChange(index, "titulo", e.target.value)
-                                                }
-                                                className="flex-1 px-4 py-2 bg-transparent block border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
-                                                placeholder={`Título do passo ${index + 1}`}
-                                                required
-                                            /> */}
+                        <div className="flex justify-around flex-row-reverse items-start p-5 mt-10">
+                            <div className="w-1/3">
+                                <h2 className="uppercase font-bold text-redwood text-xl pb-5">Modo de Preparo</h2>
+                                <div className="space-y-6">
+                                    {steps.map((step, index) => (
+                                        <div key={index} className="space-y-3 border-b relative left-8 pb-4">
+                                            <div className="flex items-center space-x-4">
+                                                <label className="font-bold uppercase text-chocolate-cosmos">
+                                                    Passo {index + 1}:
+                                                </label>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <textarea
+                                                    value={step}
+                                                    onChange={(e) =>
+                                                        handleStepChange(index, e.target.value)
+                                                    }
+                                                    className="bg-transparent block w-full h-30 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                                    placeholder={`Instruções do passo ${index + 1}`}
+                                                    rows="3"
+                                                    required
+                                                ></textarea>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => removeStep(index)}
+                                                className="text-butterscotch hover:text-red-700"
+                                            >
+                                                Remover Passo
+                                            </button>
                                         </div>
-                                        <div className="flex flex-col">
-                                            {/* <label className="font-bold uppercase text-chocolate-cosmos">
-                                                Descrição:*
-                                            </label> */}
-                                            <textarea
-                                                value={step.passo}
-                                                onChange={(e) =>
-                                                    handleStepChange(index, e.target.value)
-                                                }
-                                                className="bg-transparent block w-96 h-36 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
-                                                placeholder={`Instruções do passo ${index + 1}`}
-                                                rows="3"
-                                                required
-                                            ></textarea>
-                                        </div>
-                                        <button
-                                            type="button"
-                                            onClick={() => removeStep(index)}
-                                            className="text-butterscotch hover:text-red-700"
-                                        >
-                                            Remover Passo
-                                        </button>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={addStep}
+                                    className="mt-4 ml-4 px-2 py-2 bg-chocolate-cosmos text-white rounded-md hover:bg-butterscotch"
+                                >
+                                    Adicionar Passo
+                                </button>
                             </div>
-                            <button
-                                type="button"
-                                onClick={addStep}
-                                className="mt-4 px-2 py-2 bg-chocolate-cosmos text-white rounded-md hover:bg-butterscotch"
-                            >
-                                Adicionar Passo
-                            </button>
+                            <div className="w-1/3">
+                                <div className="w-full p-2 relative bottom-3">
+                                    <h2 className="uppercase font-bold text-redwood text-xl pb-5">
+                                        Ingredientes
+                                    </h2>
+                                    {/* <fieldset className="mb-10">
+                                        <div className="h-6">
+                                            <legend className="font-semibold text-chocolate-cosmos pb-1">
+                                                Número de pessoas ou porções*
+                                            </legend>
+                                            <input
+                                                type="number"
+                                                id="numeroPessoas"
+                                                name="numeroPessoas"
+                                                required
+                                                value={formReceita.numeroPessoas}
+                                                onChange={handleChange}
+                                                className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
+                                            />
+                                            <select
+                                                id="categoria"
+                                                name="categoria"
+                                                required
+                                                onChange={handleChange}
+                                                value={formReceita.categoria}
+                                                className="h-full text-xs p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:border-redwood focus:outline-none"
+                                            >
+                                                <option value="">Selecione</option>
+                                                <option value="Porção">Porção</option>
+                                                <option value="Pratos">Prato(s)</option>
+                                                <option value="Pedaços">Pedaço(s)</option>
+                                                <option value="Fatias">Fatia(s)</option>
+                                                <option value="Pessoas">Pessoa(s)</option>
+                                            </select>
+                                        </div>
+                                    </fieldset> */}
+                                    <div className="space-y-6">
+                                    {items.map((item, index) => (
+                                        <div key={index} className="space-y-3 border-b relative left-8 pb-4">
+                                            <div className="flex items-center space-x-4">
+                                                <label className="font-bold uppercase text-chocolate-cosmos">
+                                                    Ingrediente {index + 1}:
+                                                </label>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <textarea
+                                                    value={item}
+                                                    onChange={(e) =>
+                                                        handleItemChange(index, e.target.value)
+                                                    }
+                                                    className="bg-transparent block w-full h-11 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                                    placeholder={`Quantidade e nome do ingrediente ${index + 1}`}
+                                                    rows="3"
+                                                    required
+                                                ></textarea>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => removeItem(index)}
+                                                className="text-butterscotch hover:text-red-700"
+                                            >
+                                                Remover Passo
+                                            </button>
+                                        </div>
+                                    ))}
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={addItem}
+                                        className="mt-4 ml-4 px-2 py-2 bg-chocolate-cosmos text-white rounded-md hover:bg-butterscotch"
+                                    >
+                                        Adicionar Passo
+                                    </button>
+                                </div>
+                            </div>
+                            
                         </div>
                         <div className="w-full text-center my-10">
                             <button

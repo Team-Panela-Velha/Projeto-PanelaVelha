@@ -84,11 +84,9 @@ const ReceitaPage = () => {
                             <h2 className="uppercase">igredientes</h2>
                             <div>
                                 <ul className="list-disc ml-5 mt-4 font-normal text-jet">
-                                    <li className="mb-2">5 morangos maduros e frescos;</li>
-                                    <li className="mb-2">1 limão (opcional, para equilibrar o sabor);</li>
-                                    <li className="mb-2">2 colheres de sopa de açúcar (ou a gosto);</li>
-                                    <li className="mb-2">50 ml de cachaça de boa qualidade;</li>
-                                    <li className="mb-2">Gelo a gosto.</li>
+                                    {JSON.parse(receitaData.ingredientes).map((ingrediente) => (
+                                        <li key={ingrediente} className="">{ingrediente}</li>
+                                    ))}
                                 </ul>
                             </div>
                         </div>
