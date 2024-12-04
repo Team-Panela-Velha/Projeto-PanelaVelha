@@ -140,8 +140,26 @@ def get_usuario():
 # ROTAS DE RECEITAS
 
 
-@app.route("/api/mostrar_receitas_populares", methods=["GET"])     
+@app.route("/api/mostrar_receitas", methods=["GET"])
 def mostrar_receitas():
+    try:
+        db = CriarDB("PanelaVelha.db")
+        receitas_array =  db.cursor.execute("SELECT id_receita, nome_receita, imagem_receita from receitas").fetchall()
+
+        receitas = [
+            {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
+            for row in receitas_array
+        ]
+
+        return jsonify({"receitas": receitas}), 200
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
+
+
+@app.route("/api/mostrar_receitas_populares", methods=["GET"])     
+def mostrar_receitas_populares():
     try:
         db = CriarDB("PanelaVelha.db")
         receitas_array = db.cursor.execute("SELECT id_receita, nome_receita, imagem_receita from receitas").fetchmany(6)
@@ -151,7 +169,7 @@ def mostrar_receitas():
             for row in receitas_array
         ]
 
-        return jsonify({"receitas": receitas})
+        return jsonify({"receitas": receitas}), 200
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
     finally:
