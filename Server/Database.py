@@ -23,17 +23,22 @@ class Usuario:
         
 
 class Receita:
-    def __init__(self, nome, imagem, ingredientes, passos, id_usuario, db):
+    def __init__(self, nome, imagem, ingredientes, passos, porcao, categoria, dificuldade, hora, min, id_usuario, db):
         self.nome = nome
         self.imagem = imagem
         self.ingredientes = ingredientes
         self.passos = passos
+        self.num_porcao = porcao
+        self.categoria = categoria
+        self.dificuldade = dificuldade
+        self.tempo_hora = hora
+        self.tempo_min = min
         self.id_usuario = id_usuario
         self.db = db
 
     def postar_receita(self):
         try:
-            self.db.cursor.execute("INSERT INTO receitas (nome_receita, imagem_receita, ingredientes, passos_receita, id_usuario) values (?, ?, ?, ?, ?)", (self.nome, self.imagem, self.ingredientes, self.passos, self.id_usuario))
+            self.db.cursor.execute("INSERT INTO receitas (nome_receita, imagem_receita, ingredientes, passos_receita, num_porcao, categoria, dificuldade, tempo_hora, tempo_min, id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (self.nome, self.imagem, self.ingredientes, self.passos, self.num_porcao, self.categoria, self.dificuldade, self.tempo_hora, self.tempo_min, self.id_usuario))
             self.db.conexao.commit()
         except sqlite3.Error as e:
             raise Exception(f"Erro ao tentar postar receita: {e}")

@@ -47,6 +47,11 @@ const CriarReceita = () => {
                 "imagem_receita": formReceita.imagemReceita, 
                 "ingredientes": items,
                 "passos_receita": steps,
+                "num_porcao": formReceita.numeroPessoas,
+                "categoria": formReceita.categoria,
+                "dificuldade": formReceita.dificuldade,
+                "tempo_min": formReceita.tempoPreparoM,
+                "tempo_hora": formReceita.tempoPreparoH,
                 "id_usuario": usuario.id
             })
         .then(response => console.log(response))
@@ -172,7 +177,7 @@ const CriarReceita = () => {
                                 required
                             />
                         </div>
-                        {/* <div className="flex w-full justify-start relative left-8">
+                        <div className="flex w-full justify-start relative left-8">
                             <div className="p-2 w-[40%] pl-5">
                                 <h2 className="uppercase font-bold text-redwood text-xl pb-5">
                                     Informações Adicionais
@@ -190,11 +195,12 @@ const CriarReceita = () => {
                                             value={formReceita.dificuldade}
                                             className="w-28 text-xs p-1  text-jet border border-collapse border-gray-300 focus:ring-redwood focus:border-redwood focus:outline-none"
                                         >
-                                            <option value="MuitoFacil">Muito Facíl</option>
-                                            <option value="Facil">Facíl</option>
-                                            <option value="Medio">Médio</option>
-                                            <option value="Dificil">Díficil</option>
-                                            <option value="MuitoDificil">Muito Díficil</option>
+                                            <option value="">Selecione</option>
+                                            <option value="Muito Fácil">Muito Facíl</option>
+                                            <option value="Fácil">Facíl</option>
+                                            <option value="Médio">Médio</option>
+                                            <option value="Difícil">Díficil</option>
+                                            <option value="Muito Difícil">Muito Díficil</option>
                                         </select>
                                     </fieldset>
                                 </div>
@@ -229,7 +235,7 @@ const CriarReceita = () => {
                                 </fieldset>
 
                             </div>
-                        </div> */}
+                        </div>
                         <div className="flex justify-around flex-row-reverse items-start p-5 mt-10">
                             <div className="w-1/3">
                                 <h2 className="uppercase font-bold text-redwood text-xl pb-5">Modo de Preparo</h2>
@@ -276,7 +282,7 @@ const CriarReceita = () => {
                                     <h2 className="uppercase font-bold text-redwood text-xl pb-5">
                                         Ingredientes
                                     </h2>
-                                    {/* <fieldset className="mb-10">
+                                    <fieldset className="mb-10">
                                         <div className="h-6">
                                             <legend className="font-semibold text-chocolate-cosmos pb-1">
                                                 Número de pessoas ou porções*
@@ -306,7 +312,7 @@ const CriarReceita = () => {
                                                 <option value="Pessoas">Pessoa(s)</option>
                                             </select>
                                         </div>
-                                    </fieldset> */}
+                                    </fieldset>
                                     <div className="space-y-6">
                                     {items.map((item, index) => (
                                         <div key={index} className="space-y-3 border-b relative left-8 pb-4">
@@ -332,7 +338,7 @@ const CriarReceita = () => {
                                                 onClick={() => removeItem(index)}
                                                 className="text-butterscotch hover:text-red-700"
                                             >
-                                                Remover Passo
+                                                Remover Ingrediente
                                             </button>
                                         </div>
                                     ))}
@@ -342,7 +348,7 @@ const CriarReceita = () => {
                                         onClick={addItem}
                                         className="mt-4 ml-4 px-2 py-2 bg-chocolate-cosmos text-white rounded-md hover:bg-butterscotch"
                                     >
-                                        Adicionar Passo
+                                        Adicionar Ingrediente
                                     </button>
                                 </div>
                             </div>

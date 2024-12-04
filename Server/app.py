@@ -44,6 +44,11 @@ criar_tabela.cursor.execute("""
         imagem_receita text not null,
         ingredientes text not null,
         passos_receita text not null,
+        num_porcao int not null,
+        categoria text not null,
+        dificuldade text not null,
+        tempo_hora int,
+        tempo_min int,
         id_usuario integer not null,
         FOREIGN KEY (id_usuario) references usuarios(id)
     )
@@ -180,7 +185,7 @@ def receita(id_receita):
     try:
         db = CriarDB("PanelaVelha.db")
         receita_array = db.cursor.execute(
-            """SELECT r.id_receita, r.nome_receita, r.imagem_receita, r.ingredientes, r.passos_receita, u.id, u.nome from receitas r
+            """SELECT r.id_receita, r.nome_receita, r.imagem_receita, r.ingredientes, r.passos_receita, r.num_porcao, r.categoria, r.dificuldade, r.tempo_min, r.tempo_hora, u.id, u.nome from receitas r
                inner join usuarios u on r.id_usuario = u.id
                where r.id_receita = ?""", (id_receita)
         ).fetchone()
@@ -191,8 +196,13 @@ def receita(id_receita):
             "imagem_receita": receita_array[2],
             "ingredientes": receita_array[3],
             "passos_receita": receita_array[4],
-            "id_usuario": receita_array[5],
-            "nome_usuario": receita_array[6]
+            "num_porcao": receita_array[5],
+            "categoria": receita_array[6],
+            "dificuldade": receita_array[7],
+            "tempo_min": receita_array[8],
+            "tempo_hora": receita_array[9],
+            "id_usuario": receita_array[10],
+            "nome_usuario": receita_array[11]
         }
 
         return jsonify({"receita": receita}), 201
@@ -210,6 +220,11 @@ def postar_receita():
     imagem = data.get("imagem_receita")
     ingredientes_receita = data.get("ingredientes")
     passos_receita = data.get("passos_receita")
+    num_porcao = int(data.get("num_porcao"))
+    categoria = data.get("categoria")
+    dificuldade = data.get("dificuldade")
+    tempo_min = int(data.get("tempo_min"))
+    tempo_hora = int(data.get("tempo_hora"))
     id_usuario = data.get("id_usuario")
 
     ingredientes = json.dumps(ingredientes_receita)
@@ -219,7 +234,7 @@ def postar_receita():
         return jsonify({"error": "Dados insuficientes"}), 400
     
     db = CriarDB("PanelaVelha.db")
-    receita = Receita(nome, imagem, ingredientes, passos, id_usuario, db)
+    receita = Receita(nome, imagem, ingredientes, passos, num_porcao, categoria, dificuldade, tempo_hora, tempo_min, id_usuario, db)
 
     try:
         receita.postar_receita()
