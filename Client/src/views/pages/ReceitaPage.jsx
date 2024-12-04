@@ -61,13 +61,25 @@ const ReceitaPage = () => {
                             <div className="flex gap-5 justify-center mt-8">
                                 <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
                                     <img className="relative bottom-6 w-12 h-12" src={Relogio} alt="" />
-                                    <p className="relative bottom-4 uppercase text-center text-xs w-16 font-semibold">Tempo de Preparo</p>
-                                    <p className="relative bottom-6 uppercase font-bold mt-5">{receitaData.tempo_hora}h {receitaData.tempo_min}min</p>
+                                    <p className="relative bottom-4 uppercase text-center text-xs w-16 font-semibold">Tempo de Preparo</p> 
+                                    {receitaData.tempo_hora > 0 ? (
+                                        receitaData.tempo_min > 0 ? (
+                                            <p className="relative bottom-6 uppercase font-bold mt-5">{receitaData.tempo_hora}h {receitaData.tempo_min}min</p>
+                                        ) : (
+                                            <p className="relative bottom-6 uppercase font-bold mt-5">{receitaData.tempo_hora}h</p>
+                                        )                                
+                                    ) : (
+                                        <p className="relative bottom-6 uppercase font-bold mt-5">{receitaData.tempo_min}min</p>
+                                    )}              
                                 </div>
                                 <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
                                     <img className="relative bottom-6 w-12 h-12" src={Nivel} alt="" />
                                     <p className="relative bottom-4 right-1 uppercase text-xs w-16 font-semibold">Dificuldade</p>
-                                    <p className="relative bottom-4 uppercase font-bold mt-5">{receitaData.dificuldade}</p>
+                                    {receitaData.dificuldade == "Muito Difícil" ? (
+                                        <p className="relative bottom-6 left-7 uppercase font-bold mt-5">{receitaData.dificuldade}</p>
+                                    ) : (
+                                        <p className="relative bottom-4 uppercase font-bold mt-5">{receitaData.dificuldade}</p>
+                                    )}
                                 </div>
                                 <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
                                     <img className="relative bottom-7 w-12 h-12" src={Chefe} alt="" />

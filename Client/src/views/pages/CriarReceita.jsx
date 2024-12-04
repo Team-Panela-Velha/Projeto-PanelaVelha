@@ -210,6 +210,7 @@ const CriarReceita = () => {
 
                                     <input
                                         type="number"
+                                        min="0"
                                         id="tempoPreparoH"
                                         name="tempoPreparoH"
                                         required
@@ -222,9 +223,11 @@ const CriarReceita = () => {
                                     > Hora(s)</label>
                                     <input
                                         type="number"
+                                        min="0"
+                                        max="59"
+                                        required
                                         id="tempoPreparoM"
                                         name="tempoPreparoM"
-                                        required
                                         value={formReceita.tempoPreparoM}
                                         onChange={handleChange}
                                         className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
@@ -289,6 +292,7 @@ const CriarReceita = () => {
                                             </legend>
                                             <input
                                                 type="number"
+                                                min="1"
                                                 id="numeroPessoas"
                                                 name="numeroPessoas"
                                                 required

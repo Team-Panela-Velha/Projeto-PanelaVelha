@@ -190,7 +190,7 @@ def receita(id_receita):
                where r.id_receita = ?""", (id_receita)
         ).fetchone()
 
-        receita = {
+        receita = {                 # o select devolve uma lista, por isso mudar para um dict
             "id_receita": receita_array[0],
             "nome_receita": receita_array[1],
             "imagem_receita": receita_array[2],
@@ -234,7 +234,7 @@ def postar_receita():
         return jsonify({"error": "Dados insuficientes"}), 400
     
     db = CriarDB("PanelaVelha.db")
-    receita = Receita(nome, imagem, ingredientes, passos, num_porcao, categoria, dificuldade, tempo_hora, tempo_min, id_usuario, db)
+    receita = Receita(nome, imagem, ingredientes, passos, num_porcao, categoria, dificuldade, tempo_hora, tempo_min, id_usuario, db)  # seria melhor fazer o desempacotamento do data aqui, mas alguns dados precisam ser ajustados
 
     try:
         receita.postar_receita()
@@ -267,22 +267,6 @@ def ingredientes():
 @app.route("/api/favorito", methods=["POST"])
 def favorito():
     ...
-
-
-# testando
-# @app.route("/api/teste", methods=["GET"])
-# def teste():
-#     token = request.headers.get('Authorization')
-#     if not token:
-#         return jsonify({"message": "Token is missing"}), 401
-
-#     try:
-#         decoded = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-#         return jsonify({"Welcome": decoded["user_name"], "id": decoded["user_id"]})
-#     except jwt.ExpiredSignatureError:
-#         return jsonify({"message": "Token expired"}), 401
-#     except jwt.InvalidTokenError:
-#         return jsonify({"message": "Invalid token"}), 401
 
 
 if __name__ == "__main__":
