@@ -5,18 +5,23 @@ const CardCategoria = ({ receita }) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="rounded-full overflow-hidden shadow-2xl shadow-red-300">
-        <img
-          className="object-cover w-24 h-24 rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
-          src={imagem_categoria}
-          alt={nome_categoria}
-        />
-      </div>
+      <Link to={"/receitas"}>
+        <div className="rounded-full overflow-hidden shadow-2xl shadow-slate-400">
+          <img
+            className="object-cover w-24 h-24 rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
+            src={imagem_categoria}
+            alt={nome_categoria}
+          />
+        </div>
+      </Link>
       <div className="pt-4">
-        <p className="font-bold text-sm leading-tight text-center">
-          <Link to={`/receitas/${id}`}>{nome_categoria}</Link>
-        </p>
+        <Link to={"/receitas"}>
+          <p className="font-bold text-sm leading-tight text-center font-mono">
+            {nome_categoria}
+          </p>
+        </Link>
       </div>
+      
     </div>
   );
 };
@@ -59,7 +64,7 @@ const Categoria = () => {
   ];
 
   return (
-    <div className="w-full flex ml-3 bg-red-100 rounded-md justify-between p-5">
+    <div className="w-full flex ml-3 bg-slate-100 rounded-md justify-between p-5">
       {receitas.map((receita) => (
         <CardCategoria key={receita.id} receita={receita} />
       ))}

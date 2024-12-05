@@ -16,7 +16,7 @@ const CardReceitas = ({ receita }) => {
         }}
       ></div></Link>
       <div className="pt-4 ">
-        <p className="font-bold text-sm leading-tight text-center">
+        <p className="font-bold text-sm leading-tight text-center first-letter:uppercase font-mono">
           <Link to={`/receitas/${id}`}>{nome_receita}</Link>
         </p>
       </div>

@@ -15,7 +15,7 @@ const Home = () => (
             </div>
             <div>
                 <SectionTitle
-                    text="receitas mais requisitadas"
+                    text="receitas mais procuradas"
                 />
                 <Receita_Populares />
             </div>
@@ -27,7 +27,7 @@ const Home = () => (
             </div>
             <div className='my-6 flex flex-col'>
                 <SectionTitle
-                    text="O que deseja coxinhar hoje"
+                    text="O que deseja cozinhar hoje?"
                 />
                 <div className="mr-[5%]">
                 <Categoria />

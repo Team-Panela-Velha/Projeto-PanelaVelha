@@ -3,10 +3,19 @@
                 0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra ainda mais leve */
 }
 
-.slide img{
-    transition: all 0.5s ease;
+.slide .texto{
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-.slide img:hover{
-    filter: brightness(80%);
+.slide .imagem{
+    transition: filter 0.5s ease;
+}
+
+.slide:hover .imagem{
+    filter: brightness(70%);
+}
+
+.slide:hover .texto{
+    opacity: 1;
 }

@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 const ReceitaPage = () => {
 
     const[receitaData, setReceitaData] = useState(null);
-    const { id } = useParams();
+    const { id } = useParams();             // constante id definida com base no url da pag
     
     async function fetchReceita() {
         axios.get(`http://127.0.0.1:5000/api/receita/${id}`)

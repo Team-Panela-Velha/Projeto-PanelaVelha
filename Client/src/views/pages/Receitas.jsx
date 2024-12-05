@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Card from "../../components/CardReceitas"
 
@@ -26,7 +25,7 @@ const Receitas = () => {
                     <h1 className="uppercase text-4xl font-bold text-chocolate-cosmos">Receitas</h1>
                 </div>
                 <div className="flex justify-center">
-                    <div className="flex flex-wrap justify-start gap-6 w-[86.7%]">
+                    <div className="flex flex-wrap justify-start gap-6 w-[86.7%] bg-slate-100 pl-4 pt-5 rounded-md">
                         {receitas.map((receita) => (
                             <Card  key={receita.id} receita={receita} />
                         ))}

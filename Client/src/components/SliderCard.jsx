@@ -31,7 +31,7 @@ const SliderCard = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
-    }, 3000); // Muda o card a cada 3 segundos
+    }, 5000); // Muda o card a cada 5 segundos
 
     // Limpeza do intervalo quando o componente for desmontado
     return () => clearInterval(interval);
@@ -41,8 +41,8 @@ const SliderCard = () => {
     <div className="relative w-full mx-3">
       <div className="flex overflow-hidden ">
         <div
-          className="flex transition-transform duration-1000 mr-10"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          className="flex transition-transform duration-1000 mr-11"
+          style={{ transform: `translateX(-${currentIndex * 101.5}%)` }}
         >
           {cards.map((card, index) => (
             <div
@@ -54,7 +54,7 @@ const SliderCard = () => {
                 alt={card.title}
                 className="w-1/2 h-80 object-cover rounded-l-lg mb-4"
               />
-              <div className='w-1/2 h-80 bg-red-100'>
+              <div className='w-1/2 h-80 bg-slate-100'>
                 <div className='flex flex-col justify-center items-center w-full h-full gap-2'>
                   <div className="w-full">
                     <img className="w-16 h-16 justify-self-center " src={Garfo} alt="" />
