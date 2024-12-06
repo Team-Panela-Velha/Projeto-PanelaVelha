@@ -266,10 +266,20 @@ def postar_receita():
         db.fechar_conexao()
 
 
-@app.route("/api/editar_receita", methods=["PUT"])
-def editar_receita():
-    ...
+@app.route("/api/editar_receita/<id_receita>", methods=["PATCH"])
+def editar_receita(id_receita):
+    try:
+        db = CriarDB("PanelaVelha.db")
+        data = request.get_json()
 
+        colunas = ", ".join([f"{coluna} = ?" for coluna in data.keys()])
+        valores = tuple(data.values())      # PROBLEMA AQUI - ITEMS E STEPS SAO LISTAS
+
+        db.cursor.execute(f"UPDATE receitas SET {colunas} WHERE ?", (*valores, id_receita))
+        db.conexao.commit()
+        return jsonify({"mensagem": "Receita atualizada com sucesso"}), 200
+    except sqlite3.Error as e:
+        return jsonify({"erro": f"Não foi possível alterar os dados: {e}"}), 500
 
 @app.route("/api/ingredientes", methods=["GET"])   # para a postagem de receitas
 def ingredientes():

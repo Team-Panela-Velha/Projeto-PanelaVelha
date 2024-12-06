@@ -5,6 +5,7 @@ import Usuario from "../../views/pages/Usuario"
 import ReceitaPage from "../../views/pages/ReceitaPage"
 import CriarReceita from "../../views/pages/CriarReceita"
 import Receitas from "../../views/pages/Receitas"
+import EditarReceita from "../../views/pages/EditarReceita"
 
 import { Routes, Route } from "react-router-dom"
 
@@ -19,6 +20,7 @@ const Content = props => (
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/CriarReceita" element={<CriarReceita />} />
+                <Route path="/editar_receita/:id" element={<EditarReceita />} />
             </Routes>
         </main>
     </>
