@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { useState } from "react";
 import axios from "axios";
 
@@ -12,11 +13,15 @@ const Cadastro = () => {
         e.preventDefault();
 
         axios.post("http://127.0.0.1:5000/api/cadastro", {"nome": nome, "senha": senha})
-        .then(response => console.log(response))
+        .then(response => {
+            console.log(response)
+            alert("Cadastrado com sucesso")
+        })
         .catch(err => console.log(err))
 
         setNome("");
         setSenha("");
+        window.location.href = "/login";
     };
 
     return (
@@ -39,7 +44,8 @@ const Cadastro = () => {
                     <div>
                         <button className="bg-redwood w-full h-10 rounded-sm" type="submit"><p className="text-white">Cadastrar</p></button>
                     </div>
-                </div>         
+                </div>    
+                <p className="relative right-[13%] top-10">Já possui uma conta? <Link to="/login" className="text-redwood">Faça login aqui</Link></p>         
             </form>
         </div>
 

@@ -19,17 +19,21 @@ const Login = () => {
             if (response.data) {
                 console.log(response.data.token)
                 localStorage.setItem("jwtToken", response.data.token)
+                alert("Login realizado com sucesso")
+                window.location.href = "/";
             } else {
                 console.log("Erro ao autenticar");
             }
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err)
+            alert("Erro no login")
+        })
 
         setIsLoaging(false);
         
         setNome("");
         setSenha("");
-        window.location.href = "/";
     };
     
     return (

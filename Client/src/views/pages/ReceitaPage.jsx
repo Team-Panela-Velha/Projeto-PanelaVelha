@@ -45,7 +45,7 @@ const ReceitaPage = () => {
                     <div className="flex justify-around items-center mt-5 mb-10 mr-3 bg-red-100 shadow-xl pt-3 pb-3">
                         <div className="flex flex-col m-2" >
                             <div>
-                                <img className="w-[28rem] h-[18rem] rounded-sm" src={receitaData.imagem_receita} alt="" />
+                                <img className="w-[28rem] h-[18rem] rounded-sm relative left-3" src={receitaData.imagem_receita} alt="" />
                             </div>
                         </div>
                         <div className="flex flex-col w-[35rem] relative bottom-3">
@@ -54,11 +54,11 @@ const ReceitaPage = () => {
                             </div>
                             <div className="w-full text-xs text-center">
                                 <p className="text-sm font-semibold mt-3">Enviada por {receitaData.nome_usuario}</p>
-                                <p className="w-96 justify-self-center mt-2">
-                                    "Feita com morangos frescos e cachaça, essa variação doce e equilibrada da caipirinha tradicional é perfeita para festas ou momentos de relaxamento. Experimente e encante seus convidados!"
+                                <p className="w-96 justify-self-center mt-2 first-letter:uppercase">
+                                    {receitaData.desc}
                                 </p>
                             </div>
-                            <div className="flex gap-5 justify-center mt-8">
+                            <div className="flex gap-5 justify-center mt-10">
                                 <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
                                     <img className="relative bottom-6 w-12 h-12" src={Relogio} alt="" />
                                     <p className="relative bottom-4 uppercase text-center text-xs w-16 font-semibold">Tempo de Preparo</p> 
@@ -97,7 +97,7 @@ const ReceitaPage = () => {
                             <div>
                                 <ul className="list-disc ml-5 mt-4 font-normal text-jet">
                                     {JSON.parse(receitaData.ingredientes).map((ingrediente) => (
-                                        <li key={ingrediente} className="">{ingrediente}</li>
+                                        <li key={ingrediente} className="first-letter:uppercase">{ingrediente}</li>
                                     ))}
                                 </ul>
                             </div>
@@ -107,7 +107,7 @@ const ReceitaPage = () => {
                             <div className="flex flex-col">
                                 <ul className="font-normal text-jet mt-3 list-decimal ml-5 ">
                                     {JSON.parse(receitaData.passos_receita).map((passo) => (    // JSON.parse transforma o tipo do arquivo JSON em um array normal novamente (os passos sao enviados como json para o banco)
-                                        <li key={passo} className="border-b-black border-b-2 m-2 pb-2">{passo}</li>
+                                        <li key={passo} className="border-b-black border-b-2 m-2 pb-2 first-letter:uppercase">{passo}</li>
                                     ))}
                                     {/* <li className="border-b-black border-b-2 m-2 pb-2 "><b>Prepare os ingredientes:</b> Lave bem os morangos e o limão. Corte os morangos em pedaços e, se desejar usar o limão, corte-o em fatias ou pedaços pequenos, removendo as sementes.</li>
                                     <li className="border-b-black border-b-2 m-2 pb-2" ><b>Macere as frutas:</b> Em um copo ou recipiente, coloque os morangos (e o limão, se usar) e o açúcar. Use um socador para macerar as frutas delicadamente, liberando o suco, mas sem amassar demais.</li>

@@ -13,6 +13,7 @@ const CriarReceita = () => {
         dificuldade: "",
         tempoPreparoH: "",
         tempoPreparoM: "",
+        desc: ""
     });
     const [steps, setSteps] = useState([]); // Estado para os passos do modo de preparo
     const [items, setItems] = useState([]); // ingredientes
@@ -52,6 +53,7 @@ const CriarReceita = () => {
                 "dificuldade": formReceita.dificuldade,
                 "tempo_min": formReceita.tempoPreparoM,
                 "tempo_hora": formReceita.tempoPreparoH,
+                "desc": formReceita.desc,
                 "id_usuario": usuario.id
             })
         .then(response => console.log(response))
@@ -117,10 +119,16 @@ const CriarReceita = () => {
             dificuldade: "",
             tempoPreparoH: "",
             tempoPreparoM: "",
+            desc: ""
         });
         setSteps([]);
         setItems([]);
     };
+
+    const textAreaResize = (event) => {
+        event.target.style.height = "auto"; // Reseta a altura para recalcular
+        event.target.style.height = `${event.target.scrollHeight}px`; // Define a altura com base no scrollHeight
+    };    
 
     return (
         <div className="w-full h-screen flex justify-center items-center">
@@ -162,7 +170,7 @@ const CriarReceita = () => {
                                 required
                             />
                         </div>
-                        <div className="flex justify-center items-center flex-col mb-10">
+                        <div className="flex justify-center items-center flex-col mb-3">
                             <label className="w-[50%] relative right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
                                 Imagem*
                             </label>
@@ -174,6 +182,22 @@ const CriarReceita = () => {
                                 onChange={handleChange}
                                 className="bg-transparent block relative right-32 w-[50%] h-10 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
                                 placeholder="https://example.com"
+                                required
+                            />
+                        </div>
+                        <div className="flex justify-center items-center flex-col mb-10">
+                            <label className="w-[50%] relative right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
+                                Descrição da receita*
+                            </label>
+                            <textarea
+                                type="text"
+                                id="desc"
+                                name="desc"
+                                value={formReceita.desc}
+                                onChange={handleChange}
+                                onInput={textAreaResize}
+                                className="bg-transparent relative right-32 mt-1 block w-[50%] h-auto overflow-hidden px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                placeholder="Fale um pouco sobre a receita"
                                 required
                             />
                         </div>

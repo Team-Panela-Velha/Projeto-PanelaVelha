@@ -49,6 +49,7 @@ criar_tabela.cursor.execute("""
         dificuldade text not null,
         tempo_hora int,
         tempo_min int,
+        desc text not null,
         id_usuario integer not null,
         FOREIGN KEY (id_usuario) references usuarios(id)
     )
@@ -203,7 +204,7 @@ def receita(id_receita):
     try:
         db = CriarDB("PanelaVelha.db")
         receita_array = db.cursor.execute(
-            """SELECT r.id_receita, r.nome_receita, r.imagem_receita, r.ingredientes, r.passos_receita, r.num_porcao, r.categoria, r.dificuldade, r.tempo_min, r.tempo_hora, u.id, u.nome from receitas r
+            """SELECT r.id_receita, r.nome_receita, r.imagem_receita, r.ingredientes, r.passos_receita, r.num_porcao, r.categoria, r.dificuldade, r.tempo_min, r.tempo_hora, r.desc, u.id, u.nome from receitas r
                inner join usuarios u on r.id_usuario = u.id
                where r.id_receita = ?""", (id_receita)
         ).fetchone()
@@ -219,9 +220,10 @@ def receita(id_receita):
             "dificuldade": receita_array[7],
             "tempo_min": receita_array[8],
             "tempo_hora": receita_array[9],
-            "id_usuario": receita_array[10],
-            "nome_usuario": receita_array[11]
-        }
+            "desc": receita_array[10],
+            "id_usuario": receita_array[11],
+            "nome_usuario": receita_array[12]
+        } 
 
         return jsonify({"receita": receita}), 201
         
@@ -243,6 +245,7 @@ def postar_receita():
     dificuldade = data.get("dificuldade")
     tempo_min = int(data.get("tempo_min"))
     tempo_hora = int(data.get("tempo_hora"))
+    desc = data.get("desc")
     id_usuario = data.get("id_usuario")
 
     ingredientes = json.dumps(ingredientes_receita)
@@ -252,7 +255,7 @@ def postar_receita():
         return jsonify({"error": "Dados insuficientes"}), 400
     
     db = CriarDB("PanelaVelha.db")
-    receita = Receita(nome, imagem, ingredientes, passos, num_porcao, categoria, dificuldade, tempo_hora, tempo_min, id_usuario, db)  # seria melhor fazer o desempacotamento do data aqui, mas alguns dados precisam ser ajustados
+    receita = Receita(nome, imagem, ingredientes, passos, num_porcao, categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario, db)  # seria melhor fazer o desempacotamento do data aqui, mas alguns dados precisam ser ajustados
 
     try:
         receita.postar_receita()
