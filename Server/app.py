@@ -273,13 +273,21 @@ def editar_receita(id_receita):
         data = request.get_json()
 
         colunas = ", ".join([f"{coluna} = ?" for coluna in data.keys()])
+
+        data = {key: (json.dumps(value) if isinstance(value, list) else value) for key, value in data.items()}
+
+        # for item in data.values():              # n altera o valor corretamente
+        #     if isinstance(item, list):
+        #         item = json.dumps(item)
+
         valores = tuple(data.values())      # PROBLEMA AQUI - ITEMS E STEPS SAO LISTAS
 
         db.cursor.execute(f"UPDATE receitas SET {colunas} WHERE ?", (*valores, id_receita))
-        db.conexao.commit()
+        db.conexao.commit() 
         return jsonify({"mensagem": "Receita atualizada com sucesso"}), 200
     except sqlite3.Error as e:
         return jsonify({"erro": f"Não foi possível alterar os dados: {e}"}), 500
+
 
 @app.route("/api/ingredientes", methods=["GET"])   # para a postagem de receitas
 def ingredientes():

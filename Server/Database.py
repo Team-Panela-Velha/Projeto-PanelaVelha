@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 class Usuario:
     def __init__(self, nome, senha, db):

@@ -93,7 +93,11 @@ const EditarReceita = () => {
                 "desc": formReceita.desc,
                 "id_usuario": usuario.id
             })
-        .then(response => console.log(response))
+        .then(response => {
+            console.log(response);
+            alert("Receita atualizada");
+            window.location.href = "/usuario";
+        })
         .catch(err => console.log(err))
     }
     
