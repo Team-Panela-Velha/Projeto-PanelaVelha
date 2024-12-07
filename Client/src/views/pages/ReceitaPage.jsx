@@ -45,7 +45,7 @@ const ReceitaPage = () => {
                     <div className="flex justify-around items-center mt-5 mb-10 mr-3 bg-red-100 shadow-xl pt-3 pb-3">
                         <div className="flex flex-col m-2" >
                             <div>
-                                <img className="w-[28rem] h-[18rem] rounded-sm relative left-3" src={receitaData.imagem_receita} alt="" />
+                                <img className="w-[28rem] h-[18rem] rounded-sm relative left-3 object-cover object-center-center" src={receitaData.imagem_receita} alt="" />
                             </div>
                         </div>
                         <div className="flex flex-col w-[35rem] relative bottom-3">

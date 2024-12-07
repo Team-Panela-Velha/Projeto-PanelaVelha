@@ -20,6 +20,9 @@ export default {
       boxShadow: {
         'right-only': '4px 0 8px rgba(0, 0, 0, 0.2)', // ajuste o valor conforme necessário
       },
+      objectPosition: {
+        'center-center': 'center center',
+      }
     },
   },
   plugins: [],
