@@ -289,6 +289,18 @@ def editar_receita(id_receita):
         return jsonify({"erro": f"Não foi possível alterar os dados: {e}"}), 500
 
 
+@app.route("/api/deletar_receita/<id_receita>", methods=["DELETE"])
+def excluir_receita(id_receita):
+    try:
+        db = CriarDB("PanelaVelha.db")
+        db.cursor.execute("DELETE from receitas WHERE id_receita = ?", id_receita)
+        db.conexao.commit()
+
+        return jsonify({"sucesso": "Sua receita foi excluída"}), 200
+    except sqlite3.Error as e:
+        return jsonify({"erro": f"Não foi possível excluir a receita: {e}"}), 500
+
+
 @app.route("/api/ingredientes", methods=["GET"])   # para a postagem de receitas
 def ingredientes():
     try:

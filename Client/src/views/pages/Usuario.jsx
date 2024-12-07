@@ -59,11 +59,11 @@ const Usuario = () => {
                         <div>
                             <div className="flex justify-between w-5/6 relative left-24 mt-6">
                                 <h1 className="text-4xl text-redwood">Minhas receitas</h1>
-                                <Link to="/CriarReceita" className="w-10 rounded-full bg-slate-100"><p className="text-4xl text-redwood relative left-2 bottom-1">+</p></Link>
+                                <Link to="/CriarReceita"><div className="relative top-2 bg-slate-100 text-3xl text-redwood h-8 w-8 rounded-full flex justify-center items-end hover:bg-redwood hover:text-slate-100 duration-200">+</div></Link>
                             </div>  
                             {receitasUsuario.length > 0 ? (
-                                <div className="bg-red-100 w-[94%] relative left-8 mt-8 rounded-sm">
-                                    <div className="flex flex-wrap justify-start relative left-3 gap-4 w-full p-3 rounded-md">
+                                <div className="bg-redwood w-[94%] relative left-8 mt-8 rounded-sm">
+                                    <div className="flex flex-wrap justify-start relative left-3 gap-2 w-full p-3 rounded-md">
                                         {receitasUsuario.map((receita) => (
                                             <Card key={receita.id} receita={receita}/>
                                         ))}

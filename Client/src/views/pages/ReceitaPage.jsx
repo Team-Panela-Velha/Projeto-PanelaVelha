@@ -34,14 +34,6 @@ const ReceitaPage = () => {
                         <h1>{receitaData.nome_receita}</h1>
                         <hr className="border-[1.5px] border-black mt-7 mr-3" />
                     </div>
-                    <div className="flex justify-between mr-3">
-                        <div>
-                            21/11/2024
-                        </div>
-                        <div>
-                            <i class="bi bi-star-fill"></i>
-                        </div>
-                    </div>
                     <div className="flex justify-around items-center mt-5 mb-10 mr-3 bg-red-100 shadow-xl pt-3 pb-3">
                         <div className="flex flex-col m-2" >
                             <div>
