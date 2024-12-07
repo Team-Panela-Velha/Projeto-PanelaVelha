@@ -1,14 +1,9 @@
 import React, { useState } from "react";
+import CardComentario from "./CardComentario";
 
 const FormAvaliacao = () => {
-    const [formData, setFormData] = useState({
-        nome: "",
-        email: "",
-        comentario: "",
-        avaliacao: 0, // Armazena a avaliação por estrelas
-    });
-
-    const [comentarioPostado, setComentarioPostado] = useState(""); // Estado para armazenar o comentário postado
+    const [formData, setFormData] = useState({ nome: "", email: "", comentario: "", avaliacao: 0 });
+    const [comentarios, setComentarios] = useState([]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,16 +11,13 @@ const FormAvaliacao = () => {
     };
 
     const handleStarClick = (rating) => {
-        setFormData({ ...formData, avaliacao: rating }); // Atualiza a avaliação no estado
+        setFormData({ ...formData, avaliacao: rating });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setComentarioPostado(formData.comentario);
-        alert(
-            `Avaliação enviada por ${formData.nome} com ${formData.avaliacao} estrelas!`
-        );
-        console.log(formData);
+        setComentarios([...comentarios, { ...formData, data: new Date().toLocaleDateString("pt-BR") }]);
+        setFormData({ nome: "", email: "", comentario: "", avaliacao: 0 });
     };
 
     return (
@@ -127,12 +119,9 @@ const FormAvaliacao = () => {
 
             </form>
             {/* Exibindo o comentário postado, caso exista */}
-            {comentarioPostado && (
-                <div className="mt-6">
-                    <h3 className="text-lg font-semibold">Comentário Postado:</h3>
-                    <p>{comentarioPostado}</p>
-                </div>
-            )}
+            {comentarios.map((comentario, index) => (
+                <CardComentario key={index} comentario={comentario} />
+            ))}
         </div>
 
     );
