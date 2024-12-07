@@ -280,9 +280,9 @@ def editar_receita(id_receita):
         #     if isinstance(item, list):
         #         item = json.dumps(item)
 
-        valores = tuple(data.values())      # PROBLEMA AQUI - ITEMS E STEPS SAO LISTAS
+        valores = tuple(data.values())    
 
-        db.cursor.execute(f"UPDATE receitas SET {colunas} WHERE ?", (*valores, id_receita))
+        db.cursor.execute(f"UPDATE receitas SET {colunas} WHERE id_receita = ?", (*valores, id_receita))
         db.conexao.commit() 
         return jsonify({"mensagem": "Receita atualizada com sucesso"}), 200
     except sqlite3.Error as e:
