@@ -53,12 +53,12 @@ const Usuario = () => {
             {usuario ? (              // as vezes a pag carregava antes de processar os dados, e n gerava o usuario no fetchUsuario
                 <div className="flex flex-col items-center gap-10 mt-12">
                     <div className="w-11/12 relative left-3">
-                        <h1 className="text-5xl text-chocolate-cosmos">{usuario.usuario}</h1>  
+                        <h1 className="text-5xl font-semibold text-chocolate-cosmos">{usuario.usuario}</h1>  
                     </div>
                     <div className="bg-slate-100 w-11/12 flex flex-col gap-9 rounded-md">
                         <div>
                             <div className="flex justify-between w-5/6 relative left-24 mt-6">
-                                <h1 className="text-4xl text-redwood">Minhas receitas</h1>
+                                <h1 className="uppercase font-semibold text-redwood text-3xl">Minhas receitas</h1>
                                 <Link to="/CriarReceita"><div className="relative top-2 bg-slate-100 text-3xl text-redwood h-8 w-8 rounded-full flex justify-center items-end hover:bg-redwood hover:text-slate-100 duration-200">+</div></Link>
                             </div>  
                             {receitasUsuario.length > 0 ? (
@@ -81,7 +81,7 @@ const Usuario = () => {
                         </div>
                         <div>
                             <div className="flex relative left-24">
-                                <h1 className=" text-4xl text-redwood">Favoritas</h1>
+                                <h1 className="uppercase font-semibold text-redwood text-3xl">Favoritas</h1>
                             </div>
                         </div>
                     </div>

@@ -30,14 +30,30 @@ const ReceitaPage = () => {
         <div className="w-full h-screen">
             {receitaData ? (
                 <div className="flex flex-col justify-center">
-                    <div className="text-5xl text-center mt-5 font-semibold">
+                    <div className="text-5xl text-center mt-5 font-semibold text-chocolate-cosmos">
                         <h1>{receitaData.nome_receita}</h1>
                         <hr className="border-[1.5px] border-black mt-7 mr-3" />
+                    </div>
+                    <div className="flex justify-between pr-3">
+                        <div>
+                            07/12/2024
+                        </div>
+                        <div>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>    
+                        </div>
                     </div>
                     <div className="flex justify-around items-center mt-5 mb-10 mr-3 bg-red-100 shadow-xl pt-3 pb-3">
                         <div className="flex flex-col m-2" >
                             <div>
                                 <img className="w-[28rem] h-[18rem] rounded-sm relative left-3 object-cover object-center-center" src={receitaData.imagem_receita} alt="" />
+                                
+                            </div>
+                            <div className="flex justify-start gap-3 mt-2 pl-3">
+                                <button className="font-semibold text-lg"><i class="bi bi-heart text-redwood"></i></button>
                             </div>
                         </div>
                         <div className="flex flex-col w-[35rem] relative bottom-3">
@@ -80,7 +96,6 @@ const ReceitaPage = () => {
                                 </div>
                                 
                             </div>
-
                         </div>
                     </div>
                     <div className="flex justify-between mr-3 ml-3 mt-3">
@@ -109,7 +124,8 @@ const ReceitaPage = () => {
                                 </ul>
                             </div>  
                         </div>                    
-                    </div>                    
+                    </div>            
+                        
                         <div  className="mt-16">
                             <FormAvaliacao/>
                         </div>                

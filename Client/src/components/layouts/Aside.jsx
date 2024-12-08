@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import Searchbar from '../Searchbar'
 import axios from "axios"
-
+import Logo from "../../assets/img/logo.png";
 import '../css/Aside.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
@@ -34,7 +34,7 @@ function Aside() {
             <aside className='aside-fixo flex flex-col w-1/5 bg-redwood h-screen'>
                 <div className='flex justify-center items-center gap-5 pt-6'>
                     <Link to="/">
-                        <img className="rounded-full w-14 h-14 border-2 border-chocolate-cosmos" src="src/assets/img/logo.png" alt="Logo Panela Velha" />
+                        <img className="rounded-full w-14 h-14 border-2 border-chocolate-cosmos" src={ Logo } alt="Logo Panela Velha" />
                     </Link>
                     <Link to="/" className='w-[40%]'>
                         <h1 className='font-black text-jet text-3xl w-1/2'>PANELA VELHA</h1>
@@ -45,11 +45,11 @@ function Aside() {
                 </div>
                 <nav className='flex justify-start pl-7 w-full'>
                     <ul className='flex flex-col items-start uppercase text-sm font-semibold text-peaches'>
-                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'><Link to="/">Início</Link></li>
-                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'><Link to="/receitas">Receitas</Link></li>
-                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'>prateleira</li>
-                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'>salvas</li>
-                        <li className='pb-2 text-xl duration-100 hover:text-chocolate-cosmos'>
+                        <li className='pb-2 text-lg duration-100 hover:text-chocolate-cosmos'><Link to="/">Início</Link></li>
+                        <li className='pb-2 text-lg duration-100 hover:text-chocolate-cosmos'><Link to="/receitas">Receitas</Link></li>
+                        <li className='pb-2 text-lg duration-100 hover:text-chocolate-cosmos'>prateleira</li>
+                        <li className='pb-2 text-lg duration-100 hover:text-chocolate-cosmos'>salvas</li>
+                        <li className='pb-2 text-lg duration-100 hover:text-chocolate-cosmos'>
                             {user ? (
                                 <Link to="/usuario">{user}</Link>
                             ) : (

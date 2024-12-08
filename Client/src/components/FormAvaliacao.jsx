@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CardComentario from "./CardComentario";
+import Logo from "../assets/img/logo.png";
 
 const FormAvaliacao = () => {
     const [formData, setFormData] = useState({ nome: "", email: "", comentario: "", avaliacao: 0 });
@@ -27,7 +28,7 @@ const FormAvaliacao = () => {
                 onSubmit={handleSubmit}
                 className="w-full h-full bg-red-100"
             >
-                <h1 className="text-center w-full uppercase">Comentarios</h1>
+                <h1 className="uppercase font-semibold text-redwood text-3xl text-center mt-1">Comentarios</h1>
                 <div className="m-6 w-[30%]">
                     <label className="block text-lg font-bold text-jet mb-2">
                         <h2>o que você achou dessa receita?</h2>
@@ -59,7 +60,7 @@ const FormAvaliacao = () => {
                 <div className="flex w-full justify-start">
                     <div className="flex w-10/12 h-full">
                         <div className="w-1/4 flex flex-col justify-start items-center text-center m-6">
-                            <img className="rounded-full w-14 h-14 mb-2" src="src/assets/img/logo.png" alt="Logo Panela Velha" />
+                            <img className="rounded-full w-14 h-14 mb-2" src={ Logo } alt="Logo Panela Velha" />
                             <p>Matheus Lopes</p>
                         </div>
                         <div className="w-3/4">
