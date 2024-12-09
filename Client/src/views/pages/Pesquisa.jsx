@@ -30,13 +30,13 @@ const Pesquisa = () => {
                 </div>
                 <div className="flex justify-center">
                     <div className="flex flex-wrap justify-start gap-6 w-[86.7%] bg-slate-100 pl-4 pt-5 pb-4 rounded-md">
-                        {receitas ? (
+                    {receitas && receitas.length > 0 ? (
                             receitas.map((receita) => (
                                 <Card key={receita.id} receita={receita}/>
                             ))
-                        ) : (    
-                            <h1>Sem resultados para ""</h1>
-                        )}
+                    ) : (    
+                            <h1 className="font-bold text-redwood text-2xl uppercase relative left-[30%]">Sem resultados para "{pesquisa}"</h1>
+                    )}
                     </div>
                 </div>
             </div>
