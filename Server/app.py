@@ -177,6 +177,27 @@ def mostrar_receitas_populares():
         db.fechar_conexao()
 
 
+@app.route("/api/mostrar_receitas/<pesquisa>", methods=["GET"])
+def mostrar_receita_pesquisa(pesquisa):
+    try:
+        db = CriarDB("PanelaVelha.db")
+        receitas_array = db.cursor.execute(
+            """SELECT id_receita, nome_receita, imagem_receita from receitas
+               WHERE nome_receita LIKE ? || '%' """, (pesquisa,)  # , no final para mostrar q é uma tupla. sem a virgula, ele recebe as letras separadamente
+        ).fetchall()
+
+        receitas = [
+            {"id_receita": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
+            for row in receitas_array
+        ]
+
+        return jsonify({"receitas": receitas})
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
+
+
 @app.route("/api/mostrar_receitas_usuario/<id_usuario>", methods=["GET"])
 def mostrar_receitas_usuario(id_usuario):
     try:
@@ -184,7 +205,7 @@ def mostrar_receitas_usuario(id_usuario):
         receitas_array = db.cursor.execute(
             """SELECT r.id_receita, r.nome_receita, r.imagem_receita from receitas r
                inner join usuarios u on r.id_usuario = u.id
-               where u.id = ?""", (id_usuario)
+               WHERE u.id = ?""", (id_usuario)
         ).fetchall()
 
         receitas = [

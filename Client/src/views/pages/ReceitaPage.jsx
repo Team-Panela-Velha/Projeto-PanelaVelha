@@ -49,7 +49,7 @@ const ReceitaPage = () => {
                     <div className="flex justify-around items-center mt-5 mb-10 mr-3 bg-red-100 shadow-xl pt-3 pb-3">
                         <div className="flex flex-col m-2" >
                             <div>
-                                <img className="w-[28rem] h-[18rem] rounded-sm relative left-3 object-cover object-center-center" src={receitaData.imagem_receita} alt="" />
+                                <img className="w-[30rem] h-[18rem] rounded-sm relative left-3 object-cover object-center-center" src={receitaData.imagem_receita} alt="" />
                                 
                             </div>
                             <div className="flex justify-start gap-3 mt-2 pl-3">

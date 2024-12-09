@@ -1,48 +1,57 @@
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
+
 import './css/Searchbar.css'
 
 function Searchbar() {
-    const [input, setInput] = useState("")
-    const [ingredientes, setIngredientes] = useState([]);
+    const [input, setInput] = useState("");
+    const [nomeReceitas, setNomeReceitas] = useState([]);
     const [resultados, setResultados] = useState([]);
 
     useEffect(() => {
-        const fetchIngredientes = async () => {
+        const fetchNomeReceitas = async () => {
             try {
-                const response = await fetch("http://127.0.0.1:5000/api/ingredientes"); // Ajuste conforme necessário
-                const data = await response.json();
-                console.log("Dados recebidos da API:", data);  // Verifique a estrutura dos dados
-                setIngredientes(data);
+                axios.get("http://127.0.0.1:5000/api/mostrar_receitas")  // usando a msm rota das receitas
+                .then(response => {
+                    setNomeReceitas(response.data.receitas.map(r => r.nome_receita));     // fazendo map pq so precisa do nome_receita
+                    console.log(response.data.receitas)
+                })
             } catch (error) {
-                console.error("Erro ao buscar ingredientes:", error);
+                console.error("Erro ao buscar receitas:", error);
             }
         };
 
-        fetchIngredientes();
+        fetchNomeReceitas();
     }, []);
 
     useEffect(() => {
         if (input) {
             // Filtra os ingredientes com base no input
-            const filtrados = ingredientes.filter(ingrediente =>
-                ingrediente.toLowerCase().includes(input.toLowerCase())  // Verifica a string
+            const filtrados = nomeReceitas.filter(receita =>
+                receita.toLowerCase().includes(input.toLowerCase())  // Verifica a string
             );
             console.log("Filtrados:", filtrados);  // Verifique os resultados filtrados
             setResultados(filtrados);
         } else {
             setResultados([]);  // Se não houver input, limpa os resultados
         }
-    }, [input, ingredientes]);
+    }, [input, nomeReceitas]);
 
     // Função que será chamada quando o usuário clicar em um item da lista
-    const handleClick = (ingrediente) => {
-        setInput(ingrediente);  // Preenche o input com o nome do ingrediente
+    const handleClick = (receita) => {
+        setInput(receita);  // Preenche o input com o nome do ingrediente
         setResultados([]);  // Limpa os resultados após o clique
     };
 
+    const pesquisar = async(e) => {
+        e.preventDefault();
+        setInput("");
+        window.location.href = `/receitas/pesquisa/${input}`;
+    }
+
     return (
         <div className="relative">
-            <form className="relative flex items-center w-[180px] h-[35px] bg-white rounded-2xl">
+            <form className="relative flex items-center w-[180px] h-[35px] bg-white rounded-2xl" onSubmit={pesquisar}>
                 <button className="text-[#8b8ba7] p-0 pl-2 bg-none border-none">
                     <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
                         <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -64,13 +73,13 @@ function Searchbar() {
             </form>
             {resultados.length > 0 && (
                 <ul className="absolute bg-white border border-gray-300 rounded-md mt-1 z-10">
-                    {resultados.map((ingrediente, index) => (
+                    {resultados.map((receita, index) => (
                         <li 
                             key={index} 
                             className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                            onClick={() => handleClick(ingrediente)}  // Chama a função handleClick
+                            onClick={() => handleClick(receita)}  // Chama a função handleClick
                         >
-                            {ingrediente}  {/* Exibe o nome do ingrediente */}
+                            {receita}  {/* Exibe o nome do ingrediente */}
                         </li>
                     ))}
                 </ul>

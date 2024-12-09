@@ -42,19 +42,19 @@ const SliderCard = () => {
       <div className="flex overflow-hidden ">
         <div
           className="flex transition-transform duration-1000 mr-11"
-          style={{ transform: `translateX(-${currentIndex * 101.5}%)` }}
+          style={{ transform: `translateX(-${currentIndex * 100.7}%)` }}
         >
           {cards.map((card, index) => (
             <div
               key={index}
-              className="flex flex-shrink-0 w-full gap-3 bg-transparent rounded-lg mx-1"
+              className="flex flex-shrink-0 w-full gap-2 bg-transparent rounded-lg mx-1 justify-center"
             >
               <img
                 src={card.imgUrl}
                 alt={card.title}
-                className="w-1/2 h-80 object-cover rounded-l-lg mb-4"
+                className="w-[45%] max-w-[50%] h-80 object-cover rounded-l-lg mb-4"
               />
-              <div className='w-1/2 h-80 bg-slate-100'>
+              <div className='w-[45%] max-w-[50%] h-80 bg-slate-100'>
                 <div className='flex flex-col justify-center items-center w-full h-full gap-2'>
                   <div className="w-full">
                     <img className="w-16 h-16 justify-self-center " src={Garfo} alt="" />
