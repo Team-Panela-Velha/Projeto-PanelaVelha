@@ -187,7 +187,7 @@ def mostrar_receita_pesquisa(pesquisa):
         ).fetchall()
 
         receitas = [
-            {"id_receita": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
+            {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
             for row in receitas_array
         ]
 
@@ -336,9 +336,51 @@ def ingredientes():
         db.fechar_conexao()
 
 
-@app.route("/api/favorito", methods=["POST"])
-def favorito():
-    ...
+@app.route("/api/favorito/<id_receita>", methods=["POST"])
+def favorito(id_receita):
+    try:
+        data = request.get_json()
+        id_usuario = data.get("id_usuario")
+
+        db = CriarDB("PanelaVelha.db")
+        checarFavorito = db.cursor.execute("SELECT * from favoritos WHERE id_usuario = ? AND id_receita = ?", (id_usuario, id_receita)).fetchone()
+
+        if not checarFavorito:
+            db.cursor.execute("INSERT into favoritos (id_usuario, id_receita) values (?, ?)", (id_usuario, id_receita))
+            db.conexao.commit()
+
+            return jsonify({"mensagem": "receita favoritada"}), 200
+        else:
+            db.cursor.execute("DELETE from favoritos WHERE id_usuario = ?", (id_usuario,))
+            db.conexao.commit()
+            return jsonify({"mensagem": "receita desfavoritada"})
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
+    
+
+@app.route("/api/checar_favorito/<id_receita>", methods=["GET"])
+def verificar_favorito(id_receita):
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({"message": "Token is missing"}), 401
+   
+        decoded = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+        id_usuario = decoded["usuario_id"]
+
+        db = CriarDB("PanelaVelha.db")
+        checarFavorito = db.cursor.execute("SELECT * from favoritos WHERE id_usuario = ? AND id_receita = ?", (id_usuario, id_receita)).fetchone()
+
+        if not checarFavorito:
+            db.cursor.execute("INSERT into favoritos (id_usuario, id_receita) values (?, ?)", (id_usuario, id_receita))
+            db.conexao.commit()
+
+            return jsonify({"mensagem": "receita favoritada"}), 200
+        else:
+            db.cursor.execute("DELETE from favoritos WHERE id_usuario = ?", (id_usuario,))
+            db.conexao.commit()
+            return jsonify({"mensagem": "receita desfavoritada"})
 
 
 if __name__ == "__main__":

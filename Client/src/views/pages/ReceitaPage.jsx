@@ -9,9 +9,32 @@ import { useParams } from "react-router-dom";
 
 const ReceitaPage = () => {
 
-    const[receitaData, setReceitaData] = useState(null);
+    const [receitaData, setReceitaData] = useState(null);
+    const [favorito, setFavorito] = useState(false);
+    const [usuario, setUsuario] = useState(null)
     const { id } = useParams();             // constante id definida com base no url da pag
+
+    const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
     
+
+    async function fetchUsuario(){           // para favoritar e avaliar receitas
+        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {       
+            headers: {
+            "Authorization": token, // Passa o token no cabeçalho Authorization
+            },
+        })
+        .then(response => {
+            setUsuario(response.data);
+            console.log(response.data);
+        })
+        .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
+    };    
+
+    useEffect(() => {
+        fetchUsuario();
+    }, []);
+
+
     async function fetchReceita() {
         axios.get(`http://127.0.0.1:5000/api/receita/${id}`)
         .then(response => {
@@ -24,6 +47,32 @@ const ReceitaPage = () => {
     useEffect(() => {
         fetchReceita();
     }, []);
+
+
+    async function favoritar(e) {
+        e.preventDefault()
+
+        axios.post(`http://127.0.0.1:5000/api/favorito/${id}`, {
+            "id_usuario": usuario.id
+        })
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(err => console.log(err))
+    }
+
+    async function checarFavorito() {
+        axios.get(`http://127.0.0.1:5000/api/checar_favorito/${id}`, {       
+            headers: {
+            "Authorization": token, // Passa o token no cabeçalho Authorization
+            },
+        })
+        .then(response => {
+            setFavorito(response.data.favorito);
+            console.log(response.data);
+        })
+        .catch(err => console.log(err))
+    }
     
 
     return (
