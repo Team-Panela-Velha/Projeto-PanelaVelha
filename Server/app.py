@@ -166,7 +166,14 @@ def mostrar_receitas():
 def mostrar_receitas_populares():
     try:
         db = CriarDB("PanelaVelha.db")
-        receitas_array = db.cursor.execute("SELECT id_receita, nome_receita, imagem_receita from receitas").fetchmany(6)
+        favoritos = db.cursor.execute("SELECT id_receita, count(*) as num_favoritos from favoritos GROUP BY id_receita").fetchall()
+        receitas_favoritas = [str(fav[0]) for fav in favoritos[0:6]]
+
+        receitas_array = db.cursor.execute(
+            f"""SELECT DISTINCT r.id_receita, r.nome_receita, r.imagem_receita from receitas r
+               inner join favoritos f on r.id_receita = f.id_receita
+               WHERE r.id_receita in ({', '.join(receitas_favoritas)})
+               ORDER BY (SELECT count(*) from favoritos WHERE id_receita = r.id_receita) DESC""").fetchall()  # ordenando as receitas de acordo com os favoritos
 
         receitas = [
             {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
@@ -179,6 +186,22 @@ def mostrar_receitas_populares():
     finally:
         db.fechar_conexao()
 
+
+@app.route("/api/mostrar_receitas_mais", methods=["GET"])
+def mostrar_receitas_mais():
+    try:
+        db = CriarDB("PanelaVelha.db")
+        receitas_array = db.cursor.execute("SELECT id_receita, nome_receita, imagem_receita from receitas").fetchmany(6)
+        receitas = [
+                {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
+                for row in receitas_array
+            ]
+
+        return jsonify({"receitas": receitas}), 200
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
 
 @app.route("/api/mostrar_receitas/<pesquisa>", methods=["GET"])
 def mostrar_receita_pesquisa(pesquisa):
@@ -229,9 +252,9 @@ def mostrar_receitas_favoritas(id_usuario):
         db = CriarDB("PanelaVelha.db")
         receitas_array = db.cursor.execute(
             """SELECT r.id_receita, r.nome_receita, r.imagem_receita from receitas r
-            inner join favoritos f on r.id_usuario = f.id_usuario
-            WHERE f.id_usuario = ?""", (id_usuario)
-        ).fetchall()
+               inner join favoritos f on r.id_receita = f.id_receita     
+               WHERE f.id_usuario = ?""", (id_usuario, )
+        ).fetchall()           # a relacao do join deve ser feita pelo id_receita, e n id_usuario, q acessa todas as receitas relacionadas ao usuario
 
         receitas = [
                 {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}

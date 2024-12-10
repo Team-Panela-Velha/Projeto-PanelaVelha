@@ -15,7 +15,7 @@ const Home = () => (
             </div>
             <div>
                 <SectionTitle
-                    text="receitas mais procuradas"
+                    text="receitas populares"
                 />
                 <Receita_Populares />
             </div>

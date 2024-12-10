@@ -8,7 +8,7 @@ const MaisReceitas = () => {
     const [receitas, setReceitas] = useState([]);
 
     async function fetchReceitas(){
-        axios.get("http://127.0.0.1:5000/api/mostrar_receitas_populares")
+        axios.get("http://127.0.0.1:5000/api/mostrar_receitas_mais")
         .then(response => {
             setReceitas(response.data.receitas);
             console.log(response.data);

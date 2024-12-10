@@ -95,7 +95,7 @@ const Usuario = () => {
                                 <h1 className="uppercase font-semibold text-redwood text-3xl">Favoritas</h1>
                             </div>
                             {receitasFavoritas.length > 0 ? (
-                                <div className="bg-redwood w-[94%] relative left-8 mt-8 rounded-sm">
+                                <div className="bg-redwood w-[94%] relative left-8 mt-8 rounded-sm mb-6">
                                     <div className="flex flex-wrap justify-start relative left-3 gap-2 w-full p-3 rounded-md">
                                         {receitasFavoritas.map((receita) => (
                                             <CardReceitasFav key={receita.id} receita={receita}/>
