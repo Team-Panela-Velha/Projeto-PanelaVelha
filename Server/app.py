@@ -56,9 +56,12 @@ criar_tabela.cursor.execute("""
 """)
 
 criar_tabela.cursor.execute("""
-    CREATE TABLE IF NOT EXISTS ingredientes (
-        id_ingrediente INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT
+    CREATE TABLE IF NOT EXISTS favoritos (
+        id_favorito integer PRIMARY KEY autoincrement,
+        id_usuario integer not null,
+        id_receita integer not null,
+        FOREIGN KEY (id_usuario) references usuarios(id),
+        FOREIGN KEY (id_receita) references rececitas(id_receita)
     )
 """)
 
@@ -220,6 +223,28 @@ def mostrar_receitas_usuario(id_usuario):
         db.fechar_conexao()
 
 
+@app.route("/api/mostrar_receitas_favoritas/<id_usuario>", methods=["GET"])
+def mostrar_receitas_favoritas(id_usuario):
+    try: 
+        db = CriarDB("PanelaVelha.db")
+        receitas_array = db.cursor.execute(
+            """SELECT r.id_receita, r.nome_receita, r.imagem_receita from receitas r
+            inner join favoritos f on r.id_usuario = f.id_usuario
+            WHERE f.id_usuario = ?""", (id_usuario)
+        ).fetchall()
+
+        receitas = [
+                {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
+                for row in receitas_array
+            ]
+
+        return jsonify({"receitas": receitas}), 200
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
+
+
 @app.route("/api/receita/<id_receita>", methods=["GET"])
 def receita(id_receita):
     try:
@@ -322,20 +347,6 @@ def excluir_receita(id_receita):
         return jsonify({"erro": f"Não foi possível excluir a receita: {e}"}), 500
 
 
-@app.route("/api/ingredientes", methods=["GET"])   # para a postagem de receitas
-def ingredientes():
-    try:
-        db = CriarDB("PanelaVelha.db")
-        db.cursor.execute("SELECT name FROM ingredientes")  # Consulta os ingredientes existentes
-        rows = db.cursor.fetchall()
-        ingredientes = [row[0] for row in rows]  # Extrai apenas os nomes
-        return jsonify(ingredientes), 200
-    except sqlite3.Error as e:
-        return jsonify({"erro": f"Erro ao buscar ingredientes: {e}"}), 500
-    finally:
-        db.fechar_conexao()
-
-
 @app.route("/api/favorito/<id_receita>", methods=["POST"])
 def favorito(id_receita):
     try:
@@ -371,16 +382,13 @@ def verificar_favorito(id_receita):
 
         db = CriarDB("PanelaVelha.db")
         checarFavorito = db.cursor.execute("SELECT * from favoritos WHERE id_usuario = ? AND id_receita = ?", (id_usuario, id_receita)).fetchone()
+        
+        db.fechar_conexao()
 
         if not checarFavorito:
-            db.cursor.execute("INSERT into favoritos (id_usuario, id_receita) values (?, ?)", (id_usuario, id_receita))
-            db.conexao.commit()
-
-            return jsonify({"mensagem": "receita favoritada"}), 200
+            return jsonify({"favorito": False}), 200
         else:
-            db.cursor.execute("DELETE from favoritos WHERE id_usuario = ?", (id_usuario,))
-            db.conexao.commit()
-            return jsonify({"mensagem": "receita desfavoritada"})
+            return jsonify({"favorito": True}), 200
 
 
 if __name__ == "__main__":

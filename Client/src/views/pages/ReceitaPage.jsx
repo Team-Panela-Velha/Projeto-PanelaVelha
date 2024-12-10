@@ -52,6 +52,8 @@ const ReceitaPage = () => {
     async function favoritar(e) {
         e.preventDefault()
 
+        setFavorito(!favorito);
+
         axios.post(`http://127.0.0.1:5000/api/favorito/${id}`, {
             "id_usuario": usuario.id
         })
@@ -61,7 +63,7 @@ const ReceitaPage = () => {
         .catch(err => console.log(err))
     }
 
-    async function checarFavorito() {
+    async function checarFavorito() {         // para verificar quando o usuario acessar a pag
         axios.get(`http://127.0.0.1:5000/api/checar_favorito/${id}`, {       
             headers: {
             "Authorization": token, // Passa o token no cabeçalho Authorization
@@ -74,6 +76,9 @@ const ReceitaPage = () => {
         .catch(err => console.log(err))
     }
     
+    useEffect(() => {
+        checarFavorito();
+    }, []);
 
     return (
         <div className="w-full h-screen">
@@ -102,7 +107,7 @@ const ReceitaPage = () => {
                                 
                             </div>
                             <div className="flex justify-start gap-3 mt-2 pl-3">
-                                <button className="font-semibold text-lg"><i class="bi bi-heart text-redwood"></i></button>
+                                <button className="font-semibold text-lg" onClick={favoritar}><i class={`bi text-redwood ${favorito ? "bi-heart-fill" : "bi-heart"}`}></i></button>
                             </div>
                         </div>
                         <div className="flex flex-col w-[35rem] relative bottom-3">

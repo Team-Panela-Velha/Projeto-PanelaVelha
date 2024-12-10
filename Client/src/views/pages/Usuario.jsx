@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Card from "../../components/CardReceitasUser";
+import CardReceitasFav from "../../components/CardReceitasFav";
 
 const Usuario = () => {
 
     const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
     const [usuario, setUsuario] = useState(null);
     const [receitasUsuario, setReceitasUsuario] = useState([]);
+    const [receitasFavoritas, setReceitasFavoritas] = useState([]);
 
     async function fetchUsuario(){
         axios.get('http://127.0.0.1:5000/api/verificar_usuario', {       
@@ -36,9 +38,18 @@ const Usuario = () => {
         })
     }
 
+    async function fetchReceitasFavoritas(){
+        axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_favoritas/${usuario.id}`)
+        .then(response => {
+            setReceitasFavoritas(response.data.receitas);
+            console.log(response.data);
+        })
+    }
+
     useEffect(() => {
         if (usuario) {
             fetchReceitasUsuario();
+            fetchReceitasFavoritas();
         }
     }, [usuario]);
 
@@ -83,6 +94,19 @@ const Usuario = () => {
                             <div className="flex relative left-24">
                                 <h1 className="uppercase font-semibold text-redwood text-3xl">Favoritas</h1>
                             </div>
+                            {receitasFavoritas.length > 0 ? (
+                                <div className="bg-redwood w-[94%] relative left-8 mt-8 rounded-sm">
+                                    <div className="flex flex-wrap justify-start relative left-3 gap-2 w-full p-3 rounded-md">
+                                        {receitasFavoritas.map((receita) => (
+                                            <CardReceitasFav key={receita.id} receita={receita}/>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="flex justify-center mt-16 mb-24">
+                                    <h1 className="text-3xl text-zinc-600">Sem receitas favoritas</h1>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className="">
