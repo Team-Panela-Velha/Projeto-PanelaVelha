@@ -37,7 +37,7 @@ const CriarReceita = () => {
         .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
     };    
 
-    async function fetchCategorias() {
+    async function fetchCategorias() {                 // pegar as todas as acategorias do banco de dados
         axios.get("http://127.0.0.1:5000/api/categorias")
         .then(response => {
             setTiposCategoria(response.data.categorias)
@@ -53,6 +53,11 @@ const CriarReceita = () => {
 
     async function criarReceita(e) {
         e.preventDefault()
+
+        if(categoria.length === 0){
+            alert("Selecione ao menos uma categoria para sua receita")
+            return;
+        }
 
         axios.post("http://127.0.0.1:5000/api/postar_receita", 
             {

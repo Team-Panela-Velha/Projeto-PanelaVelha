@@ -406,6 +406,26 @@ def editar_receita(id_receita):
         return jsonify({"mensagem": "Receita atualizada com sucesso"}), 200
     except sqlite3.Error as e:
         return jsonify({"erro": f"Não foi possível alterar os dados: {e}"}), 500
+    finally:
+        db.fechar_conexao()
+    
+
+@app.route("/api/editar_categoria/<id_receita>", methods=["PATCH"])
+def editar_categoria(id_receita):
+    try:
+        db = CriarDB("PanelaVelha.db")
+        data = request.get_json()
+        categoria = data.get("categoria")
+
+        db.cursor.execute("DELETE from receita_categoria WHERE id_receita = ?", id_receita)
+        
+        for id_categoria in categoria:
+            db.cursor.execute("INSERT INTO receita_categoria (id_categoria, id_receita) values (?, ?)", (id_categoria, id_receita))
+
+        db.conexao.commit()
+        return jsonify({"mensagem": "categoria atualizada"}), 200
+    except sqlite3.Error as e:
+        return jsonify({"erro": f"Não foi possível alterar categoria: {e}"}), 500
 
 
 @app.route("/api/deletar_receita/<id_receita>", methods=["DELETE"])
