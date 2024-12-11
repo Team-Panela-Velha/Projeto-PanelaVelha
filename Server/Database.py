@@ -24,12 +24,13 @@ class Usuario:
         
 
 class Receita:
-    def __init__(self, nome, imagem, ingredientes, passos, porcao, categoria, dificuldade, hora, min, desc, id_usuario, db):
+    def __init__(self, nome, imagem, ingredientes, passos, porcao, tipo_porcao, categoria, dificuldade, hora, min, desc, id_usuario, db):
         self.nome = nome
         self.imagem = imagem
         self.ingredientes = ingredientes
         self.passos = passos
         self.num_porcao = porcao
+        self.tipo_porcao = tipo_porcao
         self.categoria = categoria
         self.dificuldade = dificuldade
         self.tempo_hora = hora
@@ -40,10 +41,21 @@ class Receita:
 
     def postar_receita(self):
         try:
-            self.db.cursor.execute("INSERT INTO receitas (nome_receita, imagem_receita, ingredientes, passos_receita, num_porcao, categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (self.nome, self.imagem, self.ingredientes, self.passos, self.num_porcao, self.categoria, self.dificuldade, self.tempo_hora, self.tempo_min, self.desc, self.id_usuario))
+            categoria = json.dumps(self.categoria)
+
+            self.db.cursor.execute("INSERT INTO receitas (nome_receita, imagem_receita, ingredientes, passos_receita, num_porcao, tipo_porcao, id_categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (self.nome, self.imagem, self.ingredientes, self.passos, self.num_porcao, self.tipo_porcao, categoria, self.dificuldade, self.tempo_hora, self.tempo_min, self.desc, self.id_usuario))
             self.db.conexao.commit()
         except sqlite3.Error as e:
             raise Exception(f"Erro ao tentar postar receita: {e}")
+        
+    def inserir_categoria(self, id_receita):
+        try:
+            for id_categoria in self.categoria:
+                self.db.cursor.execute("INSERT INTO receita_categoria (id_categoria, id_receita) values (?, ?)", (id_categoria, id_receita))
+            
+            self.db.conexao.commit()
+        except sqlite3.Error as e:
+            raise Exception(f"Erro ao inserir categoria: {e}")
         
 
 class Ingredientes:  # Renomeando a classe para seguir a convenção

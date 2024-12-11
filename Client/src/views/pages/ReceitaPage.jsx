@@ -90,7 +90,7 @@ const ReceitaPage = () => {
                     </div>
                     <div className="flex justify-between pr-3">
                         <div>
-                            07/12/2024
+                            
                         </div>
                         <div>
                             <i class="bi bi-star-fill"></i>
@@ -146,7 +146,7 @@ const ReceitaPage = () => {
                                 <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
                                     <img className="relative bottom-7 w-12 h-12" src={Chefe} alt="" />
                                     <p className="relative bottom-4 uppercase text-center text-xs w-16 font-semibold">Serve</p>
-                                    <p className="relative bottom-4 uppercase font-bold mt-5">{receitaData.num_porcao} {receitaData.categoria}</p>
+                                    <p className="relative bottom-4 uppercase font-bold mt-5">{receitaData.num_porcao} {receitaData.tipo_porcao}</p>
                                 </div>
                                 
                             </div>

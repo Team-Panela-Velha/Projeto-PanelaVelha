@@ -45,23 +45,42 @@ criar_tabela.cursor.execute("""
         ingredientes text not null,
         passos_receita text not null,
         num_porcao int not null,
-        categoria text not null,
+        tipo_porcao text not null,
+        id_categoria text not null,
         dificuldade text not null,
         tempo_hora int,
         tempo_min int,
         desc text not null,
         id_usuario integer not null,
-        FOREIGN KEY (id_usuario) references usuarios(id)
+        FOREIGN KEY (id_usuario) references usuarios(id),
+        FOREIGN KEY (id_categoria) references categorias(id_categoria)
     )
 """)
 
 criar_tabela.cursor.execute("""
     CREATE TABLE IF NOT EXISTS favoritos (
-        id_favorito integer PRIMARY KEY autoincrement,
         id_usuario integer not null,
         id_receita integer not null,
+        PRIMARY KEY (id_usuario, id_receita),
         FOREIGN KEY (id_usuario) references usuarios(id),
         FOREIGN KEY (id_receita) references rececitas(id_receita)
+    )
+""")
+
+criar_tabela.cursor.execute("""
+    CREATE TABLE IF NOT EXISTS categorias (
+        id_categoria integer PRIMARY KEY autoincrement,
+        nome_categoria text not null
+    )
+""")
+
+criar_tabela.cursor.execute("""
+    CREATE TABLE IF NOT EXISTS receita_categoria (
+        id_categoria integer not null,
+        id_receita integer not null,
+        PRIMARY KEY (id_categoria, id_receita),
+        FOREIGN KEY (id_categoria) references categorias(id_categoria),
+        FOREIGN KEY (id_receita) references receitas(id_receita)
     )
 """)
 
@@ -273,7 +292,7 @@ def receita(id_receita):
     try:
         db = CriarDB("PanelaVelha.db")
         receita_array = db.cursor.execute(
-            """SELECT r.id_receita, r.nome_receita, r.imagem_receita, r.ingredientes, r.passos_receita, r.num_porcao, r.categoria, r.dificuldade, r.tempo_min, r.tempo_hora, r.desc, u.id, u.nome from receitas r
+            """SELECT r.id_receita, r.nome_receita, r.imagem_receita, r.ingredientes, r.passos_receita, r.num_porcao, r.tipo_porcao, r.dificuldade, r.tempo_min, r.tempo_hora, r.desc, u.id, u.nome from receitas r
                inner join usuarios u on r.id_usuario = u.id
                where r.id_receita = ?""", (id_receita)
         ).fetchone()
@@ -285,7 +304,7 @@ def receita(id_receita):
             "ingredientes": receita_array[3],
             "passos_receita": receita_array[4],
             "num_porcao": receita_array[5],
-            "categoria": receita_array[6],
+            "tipo_porcao": receita_array[6],
             "dificuldade": receita_array[7],
             "tempo_min": receita_array[8],
             "tempo_hora": receita_array[9],
@@ -302,6 +321,19 @@ def receita(id_receita):
         db.fechar_conexao()
 
 
+@app.route("/api/categorias", methods=["GET"])
+def categorias():
+    db = CriarDB("PanelaVelha.db")
+    categorias_array = db.cursor.execute("SELECT * from categorias").fetchall()
+
+    categorias = [
+        {"id_categoria": row[0], "nome_categoria": row[1]}
+        for row in categorias_array
+    ]
+
+    return jsonify({"categorias": categorias})
+
+
 @app.route("/api/postar_receita", methods=["POST"])
 def postar_receita():
     data = request.get_json()
@@ -310,6 +342,7 @@ def postar_receita():
     ingredientes_receita = data.get("ingredientes")
     passos_receita = data.get("passos_receita")
     num_porcao = int(data.get("num_porcao"))
+    tipo_porcao = data.get("tipo_porcao")
     categoria = data.get("categoria")
     dificuldade = data.get("dificuldade")
     tempo_min = int(data.get("tempo_min"))
@@ -324,10 +357,15 @@ def postar_receita():
         return jsonify({"error": "Dados insuficientes"}), 400
     
     db = CriarDB("PanelaVelha.db")
-    receita = Receita(nome, imagem, ingredientes, passos, num_porcao, categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario, db)  # seria melhor fazer o desempacotamento do data aqui, mas alguns dados precisam ser ajustados
+    receita = Receita(nome, imagem, ingredientes, passos, num_porcao, tipo_porcao, categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario, db)  # seria melhor fazer o desempacotamento do data aqui, mas alguns dados precisam ser ajustados
 
     try:
+        db.cursor.execute("INSERT INTO categorias (nome_categoria) values (?)", ("doce",))       #teste
         receita.postar_receita()
+
+        id_receita = db.cursor.lastrowid
+
+        receita.inserir_categoria(id_receita)
         return jsonify({"sucesso": "Receita postada com sucesso!"}), 201
     except Exception as e:
         return jsonify({"erro": str(e)}), 500

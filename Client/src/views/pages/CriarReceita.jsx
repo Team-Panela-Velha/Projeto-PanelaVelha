@@ -9,7 +9,7 @@ const CriarReceita = () => {
         descricao: "",
         imagemReceita: "",
         numeroPessoas: "",
-        categoria: "",
+        tipoPorcao: "",
         dificuldade: "",
         tempoPreparoH: "",
         tempoPreparoM: "",
@@ -20,6 +20,8 @@ const CriarReceita = () => {
     const [enviado, setEnviado] = useState(false); // Estado para verificar se o formulário foi enviado
     const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
     const [usuario, setUsuario] = useState(null);
+    const [tiposCategoria, setTiposCategoria] = useState([]);
+    const [categoria, setCategoria] = useState([]);
 
 
     async function fetchUsuario(){            // pegando nome e id do usuario
@@ -35,10 +37,20 @@ const CriarReceita = () => {
         .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
     };    
 
+    async function fetchCategorias() {
+        axios.get("http://127.0.0.1:5000/api/categorias")
+        .then(response => {
+            setTiposCategoria(response.data.categorias)
+            console.log(response.data.categorias)
+        })
+        .catch(err => console.log(err))
+    }
+    
     useEffect(() => {
         fetchUsuario();
+        fetchCategorias();
     }, []);
-    
+
     async function criarReceita(e) {
         e.preventDefault()
 
@@ -49,7 +61,8 @@ const CriarReceita = () => {
                 "ingredientes": items,
                 "passos_receita": steps,
                 "num_porcao": formReceita.numeroPessoas,
-                "categoria": formReceita.categoria,
+                "tipo_porcao": formReceita.tipoPorcao,
+                "categoria": categoria,
                 "dificuldade": formReceita.dificuldade,
                 "tempo_min": formReceita.tempoPreparoM,
                 "tempo_hora": formReceita.tempoPreparoH,
@@ -69,6 +82,17 @@ const CriarReceita = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormReceita({ ...formReceita, [name]: value });
+    };
+
+    // atualiza o valor a ser enviado da categoria da receita
+    const handleCategoriaChange = (e, id_categoria) => {
+        if (e.target.checked) {
+            setCategoria([...categoria, id_categoria]);
+        } else {
+            setCategoria(
+                categoria.filter((catId) => catId !== id_categoria)
+            );
+        }
     };
 
     // Adiciona um novo passo vazio ao estado
@@ -115,12 +139,13 @@ const CriarReceita = () => {
             descricao: "",
             imagemReceita: "",
             numeroPessoas: "",
-            categoria: "",
+            tipoPorcao: "",
             dificuldade: "",
             tempoPreparoH: "",
             tempoPreparoM: "",
             desc: ""
         });
+        setCategoria([]);
         setSteps([]);
         setItems([]);
     };
@@ -202,65 +227,80 @@ const CriarReceita = () => {
                             />
                         </div>
                         <div className="flex w-full justify-start relative left-8">
-                            <div className="p-2 w-[40%] pl-5">
-                                <h2 className="uppercase font-bold text-redwood text-xl pb-5">
-                                    Informações Adicionais
-                                </h2>
-                                <div className=" w-[30%]">
-                                    <fieldset className="pb-3" >
-                                        <legend className="font-semibold text-chocolate-cosmos pb-1">
-                                            <h2>Dificuldade*</h2>
-                                        </legend>
-                                        <select
-                                            id="dificuldade"
-                                            name="dificuldade"
+                            <div className="p-2 w-[40%] pl-5 flex justify-start gap-16">       
+                                <div>
+                                    <h2 className="uppercase font-bold text-redwood text-xl pb-5">
+                                        Informações Adicionais
+                                    </h2>
+                                    <div className=" w-[30%]">
+                                        <fieldset className="pb-3" >
+                                            <legend className="font-semibold text-chocolate-cosmos pb-1">
+                                                <h2>Dificuldade*</h2>
+                                            </legend>
+                                            <select
+                                                id="dificuldade"
+                                                name="dificuldade"
+                                                required
+                                                onChange={handleChange}
+                                                value={formReceita.dificuldade}
+                                                className="w-28 text-xs p-1  text-jet border border-collapse border-gray-300 focus:ring-redwood focus:border-redwood focus:outline-none"
+                                            >
+                                                <option value="">Selecione</option>
+                                                <option value="Muito Fácil">Muito Facíl</option>
+                                                <option value="Fácil">Facíl</option>
+                                                <option value="Médio">Médio</option>
+                                                <option value="Difícil">Díficil</option>
+                                                <option value="Muito Difícil">Muito Díficil</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+
+                                    <fieldset className="font-semibold text-chocolate-cosmos pb-1 pt-3 ">
+                                        <legend>Tempo de Preparo*</legend>
+
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            id="tempoPreparoH"
+                                            name="tempoPreparoH"
                                             required
+                                            value={formReceita.tempoPreparoH}
                                             onChange={handleChange}
-                                            value={formReceita.dificuldade}
-                                            className="w-28 text-xs p-1  text-jet border border-collapse border-gray-300 focus:ring-redwood focus:border-redwood focus:outline-none"
-                                        >
-                                            <option value="">Selecione</option>
-                                            <option value="Muito Fácil">Muito Facíl</option>
-                                            <option value="Fácil">Facíl</option>
-                                            <option value="Médio">Médio</option>
-                                            <option value="Difícil">Díficil</option>
-                                            <option value="Muito Difícil">Muito Díficil</option>
-                                        </select>
+                                            className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
+                                        />
+                                        <label htmlFor="tempoPreparoH"
+                                            className="font-normal text-base pr-2 pl-1"
+                                        > Hora(s)</label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max="59"
+                                            required
+                                            id="tempoPreparoM"
+                                            name="tempoPreparoM"
+                                            value={formReceita.tempoPreparoM}
+                                            onChange={handleChange}
+                                            className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
+                                        />
+                                        <label htmlFor="tempoPreparoM"
+                                            className="font-normal text-base pr-2 pl-1"
+                                        > Minuto(s)</label>
                                     </fieldset>
                                 </div>
-
-                                <fieldset className="font-semibold text-chocolate-cosmos pb-1 pt-3 ">
-                                    <legend>Tempo de Preparo*</legend>
-
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        id="tempoPreparoH"
-                                        name="tempoPreparoH"
-                                        required
-                                        value={formReceita.tempoPreparoH}
-                                        onChange={handleChange}
-                                        className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
-                                    />
-                                    <label htmlFor="tempoPreparoH"
-                                        className="font-normal text-base pr-2 pl-1"
-                                    > Hora(s)</label>
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        max="59"
-                                        required
-                                        id="tempoPreparoM"
-                                        name="tempoPreparoM"
-                                        value={formReceita.tempoPreparoM}
-                                        onChange={handleChange}
-                                        className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
-                                    />
-                                    <label htmlFor="tempoPreparoM"
-                                        className="font-normal text-base pr-2 pl-1"
-                                    > Minuto(s)</label>
-                                </fieldset>
-
+                                <div className="relative top-20 h-28">
+                                    <label>Categorias:</label>
+                                    {tiposCategoria.map((categoria) => (
+                                        <div key={categoria.id_categoria}>
+                                            <input
+                                                type="checkbox"
+                                                id={`cat-${categoria.id_categoria}`}
+                                                value={categoria.id_categoria}
+                                                onChange={(e) => handleCategoriaChange(e, categoria.id_categoria)}
+                                            />
+                                            <label htmlFor={`cat-${categoria.id_categoria}`}>{categoria.nome_categoria}</label>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                         <div className="flex justify-around flex-row-reverse items-start p-5 mt-10">
@@ -325,11 +365,11 @@ const CriarReceita = () => {
                                                 className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
                                             />
                                             <select
-                                                id="categoria"
-                                                name="categoria"
+                                                id="tipoPorcao"
+                                                name="tipoPorcao"
                                                 required
                                                 onChange={handleChange}
-                                                value={formReceita.categoria}
+                                                value={formReceita.tipoPorcao}
                                                 className="h-full text-xs p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:border-redwood focus:outline-none"
                                             >
                                                 <option value="">Selecione</option>
