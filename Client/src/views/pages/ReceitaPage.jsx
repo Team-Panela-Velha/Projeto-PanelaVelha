@@ -89,8 +89,12 @@ const ReceitaPage = () => {
                         <hr className="border-[1.5px] border-black mt-7 mr-3" />
                     </div>
                     <div className="flex justify-between pr-3">
-                        <div>
-                            
+                        <div className="flex justify-start gap-3 relative left-2 top-2">
+                            {receitaData.categoria.map((categoria) => (
+                                <div className="border-redwood border-2 rounded-md p-[2px]">
+                                    <h1 key={categoria.id_categoria} className="text-redwood">{categoria.nome_categoria}</h1>
+                                </div>
+                            ))}
                         </div>
                         <div>
                             <i class="bi bi-star-fill"></i>

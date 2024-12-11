@@ -297,6 +297,17 @@ def receita(id_receita):
                where r.id_receita = ?""", (id_receita)
         ).fetchone()
 
+        categoria_array = db.cursor.execute(
+            """SELECT * from categorias c
+               inner join receita_categoria r on c.id_categoria = r.id_categoria
+               WHERE r.id_receita = ?""", (id_receita,)
+        ).fetchall()
+
+        categoria = [
+            {"id_categoria": row[0], "nome_categoria": row[1]}
+            for row in categoria_array
+        ]
+
         receita = {                 # o select devolve uma lista, por isso mudar para um dict
             "id_receita": receita_array[0],
             "nome_receita": receita_array[1],
@@ -305,6 +316,7 @@ def receita(id_receita):
             "passos_receita": receita_array[4],
             "num_porcao": receita_array[5],
             "tipo_porcao": receita_array[6],
+            "categoria": categoria,
             "dificuldade": receita_array[7],
             "tempo_min": receita_array[8],
             "tempo_hora": receita_array[9],
@@ -360,7 +372,7 @@ def postar_receita():
     receita = Receita(nome, imagem, ingredientes, passos, num_porcao, tipo_porcao, categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario, db)  # seria melhor fazer o desempacotamento do data aqui, mas alguns dados precisam ser ajustados
 
     try:
-        db.cursor.execute("INSERT INTO categorias (nome_categoria) values (?)", ("doce",))       #teste
+        # db.cursor.execute("INSERT INTO categorias (nome_categoria) values (?)", ("salgado",))       #teste
         receita.postar_receita()
 
         id_receita = db.cursor.lastrowid
