@@ -25,7 +25,6 @@ const ReceitaPage = () => {
         })
         .then(response => {
             setUsuario(response.data);
-            console.log(response.data);
         })
         .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
     };    
@@ -39,7 +38,6 @@ const ReceitaPage = () => {
         axios.get(`http://127.0.0.1:5000/api/receita/${id}`)
         .then(response => {
             setReceitaData(response.data.receita);
-            console.log(response.data.receita);
         })
         .catch(err => console.log(err));
     };
