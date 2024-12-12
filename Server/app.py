@@ -160,7 +160,7 @@ def get_usuario():
         return jsonify({"message": "Invalid token"}), 401
 
 
-# ROTAS DE RECEITAS
+# ROTAS DE RECEITAS (GET)
 
 
 @app.route("/api/mostrar_receitas", methods=["GET"])
@@ -222,6 +222,7 @@ def mostrar_receitas_mais():
     finally:
         db.fechar_conexao()
 
+
 @app.route("/api/mostrar_receitas/<pesquisa>", methods=["GET"])
 def mostrar_receita_pesquisa(pesquisa):
     try:
@@ -249,8 +250,9 @@ def mostrar_receitas_categoria(categoria):
         db = CriarDB("PanelaVelha.db")
         receitas_array = db.cursor.execute(
             """SELECT r.id_receita, r.nome_receita, r.imagem_receita from receitas r
-                inner join categorias c on r.id_categoria = c.id_categoria
-                WHERE c.nome_categoria = ?""", (categoria, )
+               inner join receita_categoria rc on r.id_receita = rc.id_receita
+               inner join categorias c on rc.id_categoria = c.id_categoria
+               WHERE c.nome_categoria = ?""", (categoria, )
         ).fetchall()
 
         receitas = [
@@ -355,6 +357,9 @@ def receita(id_receita):
         db.fechar_conexao()
 
 
+# ROTA PARA MAPEAR AS CATEGORIAS NA CRIACAO DE RECEITAS
+
+
 @app.route("/api/categorias", methods=["GET"])
 def categorias():
     db = CriarDB("PanelaVelha.db")
@@ -366,6 +371,9 @@ def categorias():
     ]
 
     return jsonify({"categorias": categorias})
+
+
+# ROTAS DE CRIACAO DE RECEITA
 
 
 @app.route("/api/postar_receita", methods=["POST"])
@@ -460,6 +468,9 @@ def excluir_receita(id_receita):
         return jsonify({"sucesso": "Sua receita foi excluída"}), 200
     except sqlite3.Error as e:
         return jsonify({"erro": f"Não foi possível excluir a receita: {e}"}), 500
+
+
+# ROTAS PARA FUNCAO FAVORITO
 
 
 @app.route("/api/favorito/<id_receita>", methods=["POST"])
