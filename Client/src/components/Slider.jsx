@@ -1,6 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 import "./css/Slide.css";
 import 'swiper/css';
@@ -56,14 +57,15 @@ function Slider({ slides }) {
         >
             {slides.map((slide, index) => (
                 <SwiperSlide key={index} className="slide">
-                    <img 
-                        src={slide.image} 
-                        alt={slide.alt} 
-                        className="w-full h-40 sm:h-48 md:h-[224px] lg:h-[272px] xl:h-[298px] imagem" 
-                    />
-                    <div className="absolute bottom-8 left-10 text-3xl text-slate-100 font-thin first-letter:uppercase texto">
-                        {slide.text}
-                    </div>
+                    <Link to={`/receitas/${slide.id_receita}`}>
+                        <img 
+                            src={slide.imagem_receita} 
+                            className="w-full h-40 sm:h-48 md:h-[224px] lg:h-[272px] xl:h-[298px] imagem" 
+                        />
+                        <div className="absolute bottom-8 left-10 text-3xl text-slate-100 font-thin first-letter:uppercase texto">
+                            {slide.nome_receita}
+                        </div>
+                    </Link>
                 </SwiperSlide>
             ))}
         </Swiper>

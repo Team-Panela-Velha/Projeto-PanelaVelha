@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+
 import Garfo from "../../src/assets/img/garfo-e-faca.png";
 
 const SliderCard = () => {
@@ -61,9 +63,11 @@ const SliderCard = () => {
                   </div>
                   <h2 className="text-lg text-center w-4/5 font-semibold">{card.title}</h2>
                   <p className="text-jet text-sm text-center w-5/6">"{card.description}"</p>
-                  <button className='bg-redwoodOP w-28 rounded-2xl h-8 font-medium text-sm text-jet uppercase'>
-                    Ver Receita
-                  </button>
+                  <Link to={`receitas/${card.id_receita}`}>
+                    <button className='bg-redwoodOP w-28 rounded-2xl h-8 font-medium text-sm text-jet uppercase'>
+                      Ver Receita
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

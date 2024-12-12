@@ -54,10 +54,10 @@ const CriarReceita = () => {
     async function criarReceita(e) {
         e.preventDefault()
 
-        if(categoria.length === 0){
-            alert("Selecione ao menos uma categoria para sua receita")
-            return;
-        }
+        // if(categoria.length === 0){
+        //     alert("Selecione ao menos uma categoria para sua receita")
+        //     return;
+        // }
 
         axios.post("http://127.0.0.1:5000/api/postar_receita", 
             {
@@ -262,47 +262,59 @@ const CriarReceita = () => {
 
                                     <fieldset className="font-semibold text-chocolate-cosmos pb-1 pt-3 ">
                                         <legend>Tempo de Preparo*</legend>
-
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            id="tempoPreparoH"
-                                            name="tempoPreparoH"
-                                            required
-                                            value={formReceita.tempoPreparoH}
-                                            onChange={handleChange}
-                                            className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
-                                        />
-                                        <label htmlFor="tempoPreparoH"
-                                            className="font-normal text-base pr-2 pl-1"
-                                        > Hora(s)</label>
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            max="59"
-                                            required
-                                            id="tempoPreparoM"
-                                            name="tempoPreparoM"
-                                            value={formReceita.tempoPreparoM}
-                                            onChange={handleChange}
-                                            className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
-                                        />
-                                        <label htmlFor="tempoPreparoM"
-                                            className="font-normal text-base pr-2 pl-1"
-                                        > Minuto(s)</label>
+                                        <div className="flex"> 
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                id="tempoPreparoH"
+                                                name="tempoPreparoH"
+                                                required
+                                                value={formReceita.tempoPreparoH}
+                                                onChange={handleChange}
+                                                className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
+                                            />
+                                            <label htmlFor="tempoPreparoH"
+                                                className="font-normal text-base pr-2 pl-1"
+                                            > Hora(s)</label>
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                max="59"
+                                                required
+                                                id="tempoPreparoM"
+                                                name="tempoPreparoM"
+                                                value={formReceita.tempoPreparoM}
+                                                onChange={handleChange}
+                                                className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
+                                            />
+                                            <label htmlFor="tempoPreparoM"
+                                                className="font-normal text-base pr-2 pl-1"
+                                            > Minuto(s)</label>
+                                        </div>
+                                        
                                     </fieldset>
                                 </div>
-                                <div className="relative top-20 h-28">
-                                    <label className="font-semibold text-chocolate-cosmos pb-1 mb-1">Categorias*</label>
+                                <div className="relative top-20 grid grid-cols-3 gap-x-36 gap-y-0">
+                                    <div className="col-span-3">
+                                        <label className="block font-semibold text-chocolate-cosmos">
+                                        Categorias*
+                                        </label>
+                                    </div>
                                     {tiposCategoria.map((categoria) => (
-                                        <div key={categoria.id_categoria}>
+                                        <div key={categoria.id_categoria} className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3">
                                             <input
                                                 type="checkbox"
                                                 id={`cat-${categoria.id_categoria}`}
                                                 value={categoria.id_categoria}
+                                                className="w-4 h-4 text-red-500 border-gray-300 rounded focus:ring-red-500"
                                                 onChange={(e) => handleCategoriaChange(e, categoria.id_categoria)}
                                             />
-                                            <label htmlFor={`cat-${categoria.id_categoria}`}>{categoria.nome_categoria}</label>
+                                            <label
+                                                htmlFor={`cat-${categoria.id_categoria}`}
+                                                className="text-gray-700"
+                                            >
+                                                {categoria.nome_categoria}
+                                            </label>
                                         </div>
                                     ))}
                                 </div>

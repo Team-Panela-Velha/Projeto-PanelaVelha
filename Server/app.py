@@ -402,7 +402,6 @@ def postar_receita():
     receita = Receita(nome, imagem, ingredientes, passos, num_porcao, tipo_porcao, categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario, db)  # seria melhor fazer o desempacotamento do data aqui, mas alguns dados precisam ser ajustados
 
     try:
-        # db.cursor.execute("INSERT INTO categorias (nome_categoria) values (?)", ("salgado",))       #teste
         receita.postar_receita()
 
         id_receita = db.cursor.lastrowid

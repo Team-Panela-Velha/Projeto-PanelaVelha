@@ -8,24 +8,24 @@ import SliderCard from "../../components/SliderCard";
 
 const foodSlides = [
     {
-        image: "https://media.istockphoto.com/id/1355483021/pt/foto/feijoada-typical-brazilian-food-traditional-brazilian-food-made-with-black-beans-top-view-copy.jpg?s=612x612&w=0&k=20&c=u_n8MU0TkaLpRDLBrYVSRGtNGwFJtjjSZ-zKZOyL_Qo=",
+        imagem_receita: "https://media.istockphoto.com/id/1355483021/pt/foto/feijoada-typical-brazilian-food-traditional-brazilian-food-made-with-black-beans-top-view-copy.jpg?s=612x612&w=0&k=20&c=u_n8MU0TkaLpRDLBrYVSRGtNGwFJtjjSZ-zKZOyL_Qo=",
         alt: "Feijoada",
-        text: "Deliciosa Feijoada",
+        nome_receita: "Deliciosa Feijoada",
     },
     {
-        image: "https://i0.statig.com.br/bancodeimagens/22/fi/ci/22fici80lylnpviqgv2zo7f84.jpg",
+        imagem_receita: "https://i0.statig.com.br/bancodeimagens/22/fi/ci/22fici80lylnpviqgv2zo7f84.jpg",
         alt: "Coxinhas",
-        text: "Coxinhas crocantes",
+        nome_receita: "Coxinhas crocantes",
     },
     {
-        image: "https://res.cloudinary.com/worldpackers/image/upload/c_limit,f_auto,q_auto,w_1140/irjevh15v2x1usozninu",
+        imagem_receita: "https://res.cloudinary.com/worldpackers/image/upload/c_limit,f_auto,q_auto,w_1140/irjevh15v2x1usozninu",
         alt: "Paella",
-        text: "Tradicional Paella",
+        nome_receita: "Tradicional Paella",
     },
     {
-        image: "https://forbes.com.br/wp-content/uploads/2021/07/Life_Dia-da-Pizza-Veridiana-Margherita_8julho2021_Divulgacao.jpg",
+        imagem_receita: "https://forbes.com.br/wp-content/uploads/2021/07/Life_Dia-da-Pizza-Veridiana-Margherita_8julho2021_Divulgacao.jpg",
         alt: "Pizza",
-        text: "Pizza Margherita",
+        nome_receita: "Pizza Margherita",
     },
 ];
 
