@@ -304,18 +304,28 @@ const EditarReceita = () => {
                                         > Minuto(s)</label>
                                     </fieldset>
                                 </div>
-                                <div className="relative top-20 h-28">
-                                    <label>Categorias:</label>
-                                    {tiposCategoria.map((cat) => (
-                                        <div key={cat.id_categoria}>
+                                <div className="relative top-20 grid grid-cols-3 gap-x-36 gap-y-0">
+                                    <div className="col-span-3">
+                                        <label className="block font-semibold text-chocolate-cosmos">
+                                        Categorias*
+                                        </label>
+                                    </div>
+                                    {tiposCategoria.map((categoria) => (
+                                        <div key={categoria.id_categoria} className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3">
                                             <input
                                                 type="checkbox"
-                                                id={`cat-${cat.id_categoria}`}
-                                                value={cat.id_categoria}
+                                                id={`cat-${categoria.id_categoria}`}
+                                                value={categoria.id_categoria}
                                                 checked={categoria.includes(cat.id_categoria)}   // ja deixar as categorias marcadas
-                                                onChange={(e) => handleCategoriaChange(e, cat.id_categoria)}
+                                                className="w-4 h-4 text-red-500 border-gray-300 rounded focus:ring-red-500"
+                                                onChange={(e) => handleCategoriaChange(e, categoria.id_categoria)}
                                             />
-                                            <label htmlFor={`cat-${cat.id_categoria}`}>{cat.nome_categoria}</label>
+                                            <label
+                                                htmlFor={`cat-${categoria.id_categoria}`}
+                                                className="text-gray-700"
+                                            >
+                                                {categoria.nome_categoria}
+                                            </label>
                                         </div>
                                     ))}
                                 </div>
