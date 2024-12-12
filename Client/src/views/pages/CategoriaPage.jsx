@@ -22,17 +22,20 @@ const ReceitasCategoria = () => {
 
     
 const foodSlides = [
-    {
-        imagem_receita: "https://media.istockphoto.com/id/1355483021/pt/foto/feijoada-typical-brazilian-food-traditional-brazilian-food-made-with-black-beans-top-view-copy.jpg?s=612x612&w=0&k=20&c=u_n8MU0TkaLpRDLBrYVSRGtNGwFJtjjSZ-zKZOyL_Qo=",
-        alt: "Feijoada",
-        nome_receita: "Deliciosa Feijoada",
+    {   
+        id_receita: 6,
+        imagem_receita: "https://frigorificoarvoredo.com.br/blog/wp-content/uploads/2023/07/receita-bife-a-parmegiana-.jpg",
+        alt: "Filé mignon",
+        nome_receita: "Filé Mignon à parmegiana",
     },
     {
-        imagem_receita: "https://i0.statig.com.br/bancodeimagens/22/fi/ci/22fici80lylnpviqgv2zo7f84.jpg",
-        alt: "Coxinhas",
-        nome_receita: "Coxinhas crocantes",
+        id_receita: 5,
+        imagem_receita: "https://www.receiteria.com.br/wp-content/uploads/fondue-de-queijo-simples-1.jpg",
+        alt: "Fondue de queijo",
+        nome_receita: "Fondue de queijo cremoso",
     },
     {
+
         imagem_receita: "https://res.cloudinary.com/worldpackers/image/upload/c_limit,f_auto,q_auto,w_1140/irjevh15v2x1usozninu",
         alt: "Paella",
         nome_receita: "Tradicional Paella",
