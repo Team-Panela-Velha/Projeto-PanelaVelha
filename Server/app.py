@@ -243,6 +243,28 @@ def mostrar_receita_pesquisa(pesquisa):
         db.fechar_conexao()
 
 
+@app.route("/api/mostrar_receitas_categoria/<categoria>", methods=["GET"])
+def mostrar_receitas_categoria(categoria):
+    try:
+        db = CriarDB("PanelaVelha.db")
+        receitas_array = db.cursor.execute(
+            """SELECT r.id_receita, r.nome_receita, r.imagem_receita from receitas r
+                inner join categorias c on r.id_categoria = c.id_categoria
+                WHERE c.nome_categoria = ?""", (categoria, )
+        ).fetchall()
+
+        receitas = [
+            {"id": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
+            for row in receitas_array
+        ]
+
+        return jsonify({"receitas": receitas})
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
+
+
 @app.route("/api/mostrar_receitas_usuario/<id_usuario>", methods=["GET"])
 def mostrar_receitas_usuario(id_usuario):
     try:

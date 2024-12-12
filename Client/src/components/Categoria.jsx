@@ -5,7 +5,7 @@ const CardCategoria = ({ receita }) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Link to={"/receitas"}>
+      <Link to={`/receitas/categoria/${nome_categoria}`}>
         <div className="rounded-full overflow-hidden shadow-2xl shadow-slate-400">
           <img
             className="object-cover w-24 h-24 rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
@@ -15,8 +15,8 @@ const CardCategoria = ({ receita }) => {
         </div>
       </Link>
       <div className="pt-4">
-        <Link to={"/receitas"}>
-          <p className="font-bold text-sm leading-tight text-center font-mono">
+        <Link to={`/receitas/categoria/${nome_categoria}`}>
+          <p className="font-bold text-sm leading-tight text-center font-mono first-letter:uppercase">
             {nome_categoria}
           </p>
         </Link>
@@ -32,32 +32,32 @@ const Categoria = () => {
     {
       id: 1,
       imagem_categoria: "https://www.receiteria.com.br/wp-content/uploads/receitas-de-massas-0.jpg",
-      nome_categoria: "Massas",
+      nome_categoria: "massas",
     },
     {
       id: 2,
       imagem_categoria: "https://st2.depositphotos.com/3833507/7122/i/450/depositphotos_71220693-stock-photo-sole-with-cherry-tomatoes.jpg",
-      nome_categoria:"Peixes",
+      nome_categoria:"peixes",
     },
     {
       id: 2,
       imagem_categoria: "https://www.bahianoticias.com.br/fotos/hall_noticias/3440/mg/WhatsApp%20Image%202023-04-15%20at%2011.07.43..jpg",
-      nome_categoria:"Carnes",
+      nome_categoria:"carnes",
     },
     {
       id: 2,
       imagem_categoria: "https://www.guiadasemana.com.br/contentFiles/image/opt_w1280h960/2021/04/FEA/66992_shutterstock-483777991.jpg",
-      nome_categoria:"Sobremesas",
+      nome_categoria:"sobremesas",
     },
     {
       id: 2,
       imagem_categoria: "https://www.receiteria.com.br/wp-content/uploads/coquetel-de-morango-sem-alcool-01-730x730.jpg",
-      nome_categoria:"Bebidas",
+      nome_categoria:"bebida",
     },
     {
       id: 2,
       imagem_categoria: "https://www.receiteria.com.br/wp-content/uploads/massa-para-empadao-sem-gluten-1-730x730.jpg",
-      nome_categoria:"Sem Gluten",
+      nome_categoria:"sem gluten",
     },
     
     

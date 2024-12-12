@@ -7,6 +7,7 @@ import CriarReceita from "../../views/pages/CriarReceita"
 import Receitas from "../../views/pages/Receitas"
 import EditarReceita from "../../views/pages/EditarReceita"
 import Pesquisa from "../../views/pages/Pesquisa"
+import ReceitasCategoria from "../../views/pages/CategoriaPage"
 
 import { Routes, Route } from "react-router-dom"
 
@@ -23,6 +24,7 @@ const Content = props => (
                 <Route path="/CriarReceita" element={<CriarReceita />} />
                 <Route path="/editar_receita/:id" element={<EditarReceita />} />
                 <Route path="/receitas/pesquisa/:pesquisa" element={<Pesquisa />} />
+                <Route path="/receitas/categoria/:categoria" element={<ReceitasCategoria />} />
             </Routes>
         </main>
     </>
