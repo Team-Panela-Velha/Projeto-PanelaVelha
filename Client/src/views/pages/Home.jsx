@@ -5,13 +5,38 @@ import Regioes from "../../components/Regioes";
 import SectionTitle from "../../components/SectionTitle";
 import Slider from "../../components/Slider";
 import SliderCard from "../../components/SliderCard";
-import { Link } from "react-router-dom"
+
+const foodSlides = [
+    {
+        image: "https://media.istockphoto.com/id/1355483021/pt/foto/feijoada-typical-brazilian-food-traditional-brazilian-food-made-with-black-beans-top-view-copy.jpg?s=612x612&w=0&k=20&c=u_n8MU0TkaLpRDLBrYVSRGtNGwFJtjjSZ-zKZOyL_Qo=",
+        alt: "Feijoada",
+        text: "Deliciosa Feijoada",
+    },
+    {
+        image: "https://i0.statig.com.br/bancodeimagens/22/fi/ci/22fici80lylnpviqgv2zo7f84.jpg",
+        alt: "Coxinhas",
+        text: "Coxinhas crocantes",
+    },
+    {
+        image: "https://res.cloudinary.com/worldpackers/image/upload/c_limit,f_auto,q_auto,w_1140/irjevh15v2x1usozninu",
+        alt: "Paella",
+        text: "Tradicional Paella",
+    },
+    {
+        image: "https://forbes.com.br/wp-content/uploads/2021/07/Life_Dia-da-Pizza-Veridiana-Margherita_8julho2021_Divulgacao.jpg",
+        alt: "Pizza",
+        text: "Pizza Margherita",
+    },
+];
+
 
 const Home = () => (
+
+    
     <>
         <div className="w-full h-screen">
             <div className='mt-6 mr-[3%]'>
-                <Slider />
+            <Slider slides={foodSlides} />
             </div>
             <div>
                 <SectionTitle

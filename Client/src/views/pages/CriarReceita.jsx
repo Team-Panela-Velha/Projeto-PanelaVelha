@@ -293,7 +293,7 @@ const CriarReceita = () => {
                                     </fieldset>
                                 </div>
                                 <div className="relative top-20 h-28">
-                                    <label>Categorias:</label>
+                                    <label className="font-semibold text-chocolate-cosmos pb-1 mb-1">Categorias*</label>
                                     {tiposCategoria.map((categoria) => (
                                         <div key={categoria.id_categoria}>
                                             <input
@@ -344,7 +344,7 @@ const CriarReceita = () => {
                                 <button
                                     type="button"
                                     onClick={addStep}
-                                    className="mt-4 ml-4 px-2 py-2 bg-chocolate-cosmos text-white rounded-md hover:bg-butterscotch"
+                                    className="mt-4  px-2 py-2 bg-chocolate-cosmos text-white rounded-md hover:bg-butterscotch"
                                 >
                                     Adicionar Passo
                                 </button>
@@ -388,7 +388,7 @@ const CriarReceita = () => {
                                     </fieldset>
                                     <div className="space-y-6">
                                     {items.map((item, index) => (
-                                        <div key={index} className="space-y-3 border-b relative left-8 pb-4">
+                                        <div key={index} className="space-y-3 border-b relative mt-2 pb-4">
                                             <div className="flex items-center space-x-4">
                                                 <label className="font-bold uppercase text-chocolate-cosmos">
                                                     Ingrediente {index + 1}:
@@ -419,7 +419,7 @@ const CriarReceita = () => {
                                     <button
                                         type="button"
                                         onClick={addItem}
-                                        className="mt-4 ml-4 px-2 py-2 bg-chocolate-cosmos text-white rounded-md hover:bg-butterscotch"
+                                        className="mt-4 px-2 py-2 bg-chocolate-cosmos text-white rounded-md hover:bg-butterscotch"
                                     >
                                         Adicionar Ingrediente
                                     </button>

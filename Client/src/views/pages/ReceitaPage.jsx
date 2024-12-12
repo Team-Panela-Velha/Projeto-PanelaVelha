@@ -91,8 +91,8 @@ const ReceitaPage = () => {
                     <div className="flex justify-between pr-3">
                         <div className="flex justify-start gap-3 relative left-2 top-2">
                             {receitaData.categoria.map((categoria) => (
-                                <div className="border-redwood border-2 rounded-md p-[2px]">
-                                    <h1 key={categoria.id_categoria} className="text-redwood">{categoria.nome_categoria}</h1>
+                                <div className="border-redwood bg-redwoodOP border-2 rounded-full p-[2px] px-2 text-center">
+                                    <h1 key={categoria.id_categoria} className="text-jet">{categoria.nome_categoria}</h1>
                                 </div>
                             ))}
                         </div>
