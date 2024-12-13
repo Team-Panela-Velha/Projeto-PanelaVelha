@@ -461,7 +461,7 @@ def editar_categoria(id_receita):
 def excluir_receita(id_receita):
     try:
         db = CriarDB("PanelaVelha.db")
-        db.cursor.execute("DELETE from receitas WHERE id_receita = ?", id_receita)
+        db.cursor.execute("DELETE from receitas WHERE id_receita = ?", (id_receita, ))
         db.conexao.commit()
 
         return jsonify({"sucesso": "Sua receita foi excluída"}), 200
