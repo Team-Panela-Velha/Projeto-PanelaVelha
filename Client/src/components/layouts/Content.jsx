@@ -18,13 +18,15 @@ const Content = props => (
                 <Route path="/" element={<Home />} />
                 <Route path="/receitas" element={<Receitas />} />
                 <Route path="/receitas/:id" element={<ReceitaPage />} />
+                <Route path="/receitas/pesquisa/:pesquisa" element={<Pesquisa />} />
+                <Route path="/receitas/categoria/:categoria" element={<ReceitasCategoria />} />
+
                 <Route path="/usuario" element={<Usuario />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
+                
                 <Route path="/CriarReceita" element={<CriarReceita />} />
                 <Route path="/editar_receita/:id" element={<EditarReceita />} />
-                <Route path="/receitas/pesquisa/:pesquisa" element={<Pesquisa />} />
-                <Route path="/receitas/categoria/:categoria" element={<ReceitasCategoria />} />
             </Routes>
         </main>
     </>

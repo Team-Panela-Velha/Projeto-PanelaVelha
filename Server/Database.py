@@ -1,30 +1,32 @@
 import sqlite3
 import json
 
+from extensions import db
+
 class Usuario:
-    def __init__(self, nome, senha, db):
+    def __init__(self, nome, senha):
         self.nome = nome
         self.senha = senha
-        self.db = db
 
     def cadastrar(self):
         try:
-            self.db.cursor.execute("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.nome, self.senha))
-            self.db.conexao.commit()
-            
+            db.insert("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.nome, self.senha))
         except sqlite3.Error as e:
             raise Exception(f"Erro ao cadastrar usuário no banco: {e}")
         
     def logar(self):
         try:
-            user = self.db.cursor.execute("SELECT * from usuarios where nome = ?", (self.nome,)).fetchone()
+            user = db.consulta_one("SELECT * from usuarios where nome = ?", (self.nome,))
             return user
         except sqlite3.Error as e:
             raise Exception(f"Erro no login: {e}")
         
 
+# -------------------------------------------
+
+
 class Receita:
-    def __init__(self, nome, imagem, ingredientes, passos, porcao, tipo_porcao, categoria, dificuldade, hora, min, desc, id_usuario, db):
+    def __init__(self, nome, imagem, ingredientes, passos, porcao, tipo_porcao, categoria, dificuldade, hora, min, desc, id_usuario):
         self.nome = nome
         self.imagem = imagem
         self.ingredientes = ingredientes
@@ -37,49 +39,19 @@ class Receita:
         self.tempo_min = min
         self.desc = desc
         self.id_usuario = id_usuario
-        self.db = db
 
     def postar_receita(self):
         try:
             categoria = json.dumps(self.categoria)
 
-            self.db.cursor.execute("INSERT INTO receitas (nome_receita, imagem_receita, ingredientes, passos_receita, num_porcao, tipo_porcao, id_categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (self.nome, self.imagem, self.ingredientes, self.passos, self.num_porcao, self.tipo_porcao, categoria, self.dificuldade, self.tempo_hora, self.tempo_min, self.desc, self.id_usuario))
-            self.db.conexao.commit()
+            db.insert("INSERT INTO receitas (nome_receita, imagem_receita, ingredientes, passos_receita, num_porcao, tipo_porcao, id_categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (self.nome, self.imagem, self.ingredientes, self.passos, self.num_porcao, self.tipo_porcao, categoria, self.dificuldade, self.tempo_hora, self.tempo_min, self.desc, self.id_usuario))
         except sqlite3.Error as e:
             raise Exception(f"Erro ao tentar postar receita: {e}")
         
     def inserir_categoria(self, id_receita):
         try:
             for id_categoria in self.categoria:
-                self.db.cursor.execute("INSERT INTO receita_categoria (id_categoria, id_receita) values (?, ?)", (id_categoria, id_receita))
-            
-            self.db.conexao.commit()
+                db.insert("INSERT INTO receita_categoria (id_categoria, id_receita) values (?, ?)", (id_categoria, id_receita))
+                
         except sqlite3.Error as e:
             raise Exception(f"Erro ao inserir categoria: {e}")
-        
-
-class Ingredientes:  # Renomeando a classe para seguir a convenção
-    def __init__(self, db):
-        self.db = db
-    
-    def adicionar_ingredientes(self, lista_ingredientes):
-        try:
-            self.db.cursor.executemany("INSERT INTO ingredientes (name) VALUES (?)", [(item,) for item in lista_ingredientes])
-            self.db.conexao.commit()
-        except sqlite3.Error as e:
-            raise Exception(f"Erro ao adicionar ingredientes no banco: {e}")
-
-# Lista de ingredientes
-ingredientes = [
-    "apples", "bananas", "clemintines", "dill", "eggs", "flour", "granola",
-    "honey", "ice cream", "juice", "ketchup", "lemon", "margarine", "onion",
-    "potatoes", "rosmary", "salt", "thyme", "vinegar", "watermelon", "pears",
-    "cucumbers", "garlic", "carrots", "pastries", "eggplants", "milk", "coffee",
-    "tea", "rice", "noodles", "lentils", "sweet potatoes", "strawberries",
-    "cranberries", "mangos", "pappers", "zuccinis", "lime", "broth", "mushrooms",
-    "chicken", "beef", "pork", "fish", "cream", "paprika", "tumeric", "cinamon",
-    "pumpkin", "basil", "tomatoes", "bread", "cake", "chocolate", "gum", 
-    "pinapple", "oranges", "lettuce", "cheese", "cilantro"
-]
-
-ingredientes = sorted(ingredientes)
