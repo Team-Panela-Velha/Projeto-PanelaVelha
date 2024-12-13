@@ -8,10 +8,10 @@ import SliderCard from "../../components/SliderCard";
 
 const foodSlides = [
     {   
-        id_receita: 1,
-        imagem_receita: "https://media.istockphoto.com/id/1355483021/pt/foto/feijoada-typical-brazilian-food-traditional-brazilian-food-made-with-black-beans-top-view-copy.jpg?s=612x612&w=0&k=20&c=u_n8MU0TkaLpRDLBrYVSRGtNGwFJtjjSZ-zKZOyL_Qo=",
-        alt: "Feijoada",
-        nome_receita: "Deliciosa Feijoada",
+        id_receita: 9,
+        imagem_receita: "https://static.itdg.com.br/images/1200-630/ff1aa29e21777518048d18d63075e9c6/327648-original.jpg",
+        alt: "Caipirinha de Morango",
+        nome_receita: "Caipirinha de Morango",
     },
     {
         id_receita: 2,

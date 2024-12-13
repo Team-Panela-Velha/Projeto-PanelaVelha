@@ -267,6 +267,40 @@ def mostrar_receitas_categoria(categoria):
         db.fechar_conexao()
 
 
+@app.route("/api/slider_categoria/<categoria>", methods=["GET"])
+def slider_categoria(categoria):
+    try:
+        db = CriarDB("PanelaVelha.db")
+        favoritos = db.cursor.execute(
+            """SELECT f.id_receita, count(*) as num_favoritos from favoritos f
+               inner join receitas r on f.id_receita = r.id_receita
+               inner join receita_categoria rc on r.id_receita = rc.id_receita
+               inner join categorias c on rc.id_categoria = c.id_categoria
+               WHERE c.nome_categoria = ?
+               GROUP BY f.id_receita""", (categoria, )).fetchall()
+       
+        receitas_favoritas = [str(fav[0]) for fav in favoritos[0:4]]
+
+        receitas_array = db.cursor.execute(
+            f"""SELECT DISTINCT r.id_receita, r.nome_receita, r.imagem_receita from receitas r
+                inner join favoritos f on r.id_receita = f.id_receita
+                inner join receita_categoria rc on r.id_receita = rc.id_receita
+                inner join categorias c on rc.id_categoria = c.id_categoria
+                WHERE r.id_receita in ({', '.join(receitas_favoritas)}) and c.nome_categoria = ?
+                ORDER BY (SELECT count(*) from favoritos WHERE id_receita = r.id_receita) DESC""", (categoria, )).fetchall()
+                
+        receitas = [
+                {"id_receita": row[0], "nome_receita": row[1], "imagem_receita": row[2]}
+                for row in receitas_array
+            ]
+
+        return jsonify({"receitas": receitas})
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
+    finally:
+        db.fechar_conexao()
+
+
 @app.route("/api/mostrar_receitas_usuario/<id_usuario>", methods=["GET"])
 def mostrar_receitas_usuario(id_usuario):
     try:

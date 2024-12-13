@@ -34,11 +34,11 @@ const Card_Regiao = ({ title, image }) => {
 
 const Regioes = () => {
     const receitas = [
-        { id: 1, title: "Norte", link: "/RegioesPage/Norte", image: "https://minhasreceitinhas.com.br/wp-content/uploads/2023/02/Pato-no-tucupi-2-730x365.png" },
-        { id: 2, title: "Nordeste", link: "/RegioesPage/Nordeste", image: "https://superbomsupermercado.com.br/assets/blog/baiao---60.jpg" },
-        { id: 3, title: "Centro-Oeste", link: "/RegioesPage/Centro-Oeste", image: "https://territoriosecreto.com.br/wp-content/uploads/2021/04/arroz-com-pequi-1510596202.jpg" },
-        { id: 4, title: "Sudeste", link: "/RegioesPage/Sudeste", image: "https://images.pexels.com/photos/15656545/pexels-photo-15656545/free-photo-of-comida-alimento-refeicao-jantar.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" },
-        { id: 5, title: "Sul", link: "/RegioesPage/Sul", image: "https://www.minhareceita.com.br/app/uploads/2024/03/barreado990-portal-minha-receita.jpg" },
+        { id: 1, title: "norte", link: "/RegioesPage/Norte", image: "https://minhasreceitinhas.com.br/wp-content/uploads/2023/02/Pato-no-tucupi-2-730x365.png" },
+        { id: 2, title: "nordeste", link: "/RegioesPage/Nordeste", image: "https://superbomsupermercado.com.br/assets/blog/baiao---60.jpg" },
+        { id: 3, title: "centro-oeste", link: "/RegioesPage/Centro-Oeste", image: "https://territoriosecreto.com.br/wp-content/uploads/2021/04/arroz-com-pequi-1510596202.jpg" },
+        { id: 4, title: "sudeste", link: "/RegioesPage/Sudeste", image: "https://images.pexels.com/photos/15656545/pexels-photo-15656545/free-photo-of-comida-alimento-refeicao-jantar.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" },
+        { id: 5, title: "sul", link: "/RegioesPage/Sul", image: "https://www.minhareceita.com.br/app/uploads/2024/03/barreado990-portal-minha-receita.jpg" },
     ];
 
     return (
