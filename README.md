@@ -38,7 +38,8 @@ O site utiliza uma arquitetura moderna, combinando **React** no front-end, **Fla
       - Linux/MacOS: source venv/bin/activate
   - Instale as dependências: pip install -r requirements.txt
   - Inicie o servidor Flask: python app.py
-**Configuração do Cliente (Front-End):**
+
+**Configuração do Cliente (FrontEnd):**
   - Acesse a pasta cliente pelo terminal.
   - Instale as dependências do projeto: npm install
   - Inicie o ambiente de desenvolvimento: npm run dev
