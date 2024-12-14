@@ -1,4 +1,4 @@
-# Projeto---Panela-Velha
+# Projeto Panela Velha
   <html>
     <head></head>
             <body>
@@ -16,18 +16,18 @@
   - [Ferramentas Utilizadas](#tecnologias-utilizadas)
 
 # Descrição
-O Panela Velha é um projeto semestral desenvolvido na disciplina de Desenvolvimento Front-End do curso de Análise e Desenvolvimento de Sistemas do IFSP. Este website foi projetado para ser um ponto de encontro para os apaixonados por culinária, oferecendo um espaço interativo para compartilhar e explorar receitas.
+O **Panela Velha** é um projeto semestral desenvolvido na disciplina de **Desenvolvimento Web Front-End** do curso de **Análise e Desenvolvimento de Sistemas** do **IFSP**. Este website foi projetado para ser um ponto de encontro para os apaixonados por culinária, oferecendo um espaço interativo para compartilhar e explorar receitas.
 Os principais recursos incluem:
 
-   - Explorar receitas: Navegue por receitas postadas pela comunidade.
-   - Cadastro de usuários: Crie uma conta para gerenciar suas receitas favoritas.
-   - Envio de receitas: Contribua com suas próprias receitas, detalhando:
+   - **Explorar receitas**: Navegue por receitas postadas pela comunidade.
+   - **Cadastro de usuários**: Crie uma conta para gerenciar suas receitas favoritas.
+   - **Envio de receitas**: Contribua com suas próprias receitas, detalhando:
        - Descrição;
        - Dificuldade;
        - Tempo de preparo;
        - Quantidade de porções.
 
-O site utiliza uma arquitetura moderna, combinando React no front-end, Flask no back-end e SQLite como banco de dados.
+O site utiliza uma arquitetura moderna, combinando **React** no front-end, **Flask** no back-end e **SQLite** como banco de dados.
 
 # Instruções
 **Configuração do Servidor (Back-End):**
