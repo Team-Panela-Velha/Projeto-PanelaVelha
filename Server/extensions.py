@@ -23,6 +23,7 @@ class GerenciadorDB:                    # classe usada para estabelecer conexao 
         try: 
             cursor.execute(consulta, parametros)
             conexao.commit()
+            return cursor.lastrowid
         finally:
             self.fechar_conexao(conexao)
 
@@ -52,6 +53,7 @@ class GerenciadorDB:                    # classe usada para estabelecer conexao 
             return resultados
         finally:
             self.fechar_conexao(conexao)
+
 # ----------------------------------
 
 db = GerenciadorDB("PanelaVelha.db")              # criando o banco de dados principal do sistema

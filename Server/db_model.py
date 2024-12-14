@@ -1,4 +1,3 @@
-import sqlite3
 from extensions import db
 
 db.cursor.execute("PRAGMA foreign_keys = ON;")

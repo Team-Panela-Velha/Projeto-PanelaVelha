@@ -32,7 +32,6 @@ const CriarReceita = () => {
         })
         .then(response => {
             setUsuario(response.data);
-            console.log(response.data);
         })
         .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
     };    
@@ -41,7 +40,6 @@ const CriarReceita = () => {
         axios.get("http://127.0.0.1:5000/api/categorias")
         .then(response => {
             setTiposCategoria(response.data.categorias)
-            console.log(response.data.categorias)
         })
         .catch(err => console.log(err))
     }
