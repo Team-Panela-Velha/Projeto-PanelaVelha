@@ -1,6 +1,8 @@
 from extensions import db
 import json
+
 from models.recipe_model import Receita
+from controllers.recipe_controller import Recipe_controller
 
 class RecipeService:
     @staticmethod
@@ -205,6 +207,8 @@ class RecipeService:
 
         return {"categorias": categorias}, 200
     
+    # ================ serviços que precisam do controlador ======================
+    
     def postar_receita(data):
         nome = data.get("nome_receita")
         imagem = data.get("imagem_receita")
@@ -223,26 +227,27 @@ class RecipeService:
         passos = json.dumps(passos_receita)  # transformar a lista em formato string JSON. o banco n recebe valores list
         
         receita = Receita(nome, imagem, ingredientes, passos, num_porcao, tipo_porcao, categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario)  # seria melhor fazer o desempacotamento do data aqui, mas alguns dados precisam ser ajustados
+        controlador = Recipe_controller(receita)
 
         try:
-            id_receita = receita.postar_receita()
+            id_receita = controlador.postar_receita()
 
-            receita.inserir_categoria(id_receita)
+            controlador.inserir_categoria(id_receita)
             return {"sucesso": "Receita postada com sucesso!"}, 201
-        except Exception as e:
+        except Exception as e:  
             return {"erro": str(e)}, 500
         
     @staticmethod
     def editar_receita(colunas, valores, id_receita):
-        Receita.editar_receita(colunas, valores, id_receita)
+        Recipe_controller.editar_receita(colunas, valores, id_receita)
         return {"mensagem": "Receita atualizada com sucesso"}, 200
     
     @staticmethod
     def editar_categoria(id_receita, categoria):
-        Receita.editar_categoria(id_receita, categoria)
+        Recipe_controller.editar_categoria(id_receita, categoria)
         return {"mensagem": "categoria atualizada"}, 200
     
     @staticmethod
     def excluir_receita(id_receita):
-        Receita.excluir_receita(id_receita)
+        Recipe_controller.excluir_receita(id_receita)
         return {"sucesso": "Sua receita foi excluída"}, 200

@@ -1,5 +1,4 @@
-from flask import Flask, request, jsonify
-from extensions import db
+from flask import Flask
 # from dotenv import load_dotenv
 from flask_cors import CORS
 
