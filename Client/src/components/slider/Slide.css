@@ -1,0 +1,21 @@
+.slide{
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), /* Sombra mais leve */
+                0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra ainda mais leve */
+}
+
+.slide .texto{
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.slide .imagem{
+    transition: filter 0.5s ease;
+}
+
+.slide:hover .imagem{
+    filter: brightness(70%);
+}
+
+.slide:hover .texto{
+    opacity: 1;
+}

@@ -1,0 +1,28 @@
+form::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #490007ff;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+    border-radius: 1px;
+}
+
+form:focus-within::before {
+    transform: scaleX(1);
+}
+
+form{
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), /* Sombra mais leve */
+                0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra ainda mais leve */
+    transition: border-radius 0.5s ease, box-shadow 0.5s ease;
+}
+
+form:focus-within{
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 8px 40px rgba(0, 0, 0, 0.2);
+}

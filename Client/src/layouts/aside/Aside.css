@@ -1,0 +1,14 @@
+/* No seu arquivo CSS */
+.aside-fixo {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.icons{
+    transition: color 0.5s ease;
+}
+
+.icons:hover{
+    color: #eed4c1;
+}
