@@ -2,7 +2,7 @@ from extensions import db
 import json
 
 from models.recipe_model import Receita
-from controllers.recipe_controller import Recipe_controller
+from controllers.recipe_controller import Recipe_Controller
 
 class RecipeService:
     @staticmethod
@@ -227,7 +227,7 @@ class RecipeService:
         passos = json.dumps(passos_receita)  # transformar a lista em formato string JSON. o banco n recebe valores list
         
         receita = Receita(nome, imagem, ingredientes, passos, num_porcao, tipo_porcao, categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario)  # seria melhor fazer o desempacotamento do data aqui, mas alguns dados precisam ser ajustados
-        controlador = Recipe_controller(receita)
+        controlador = Recipe_Controller(receita)
 
         try:
             id_receita = controlador.postar_receita()
@@ -239,15 +239,15 @@ class RecipeService:
         
     @staticmethod
     def editar_receita(colunas, valores, id_receita):
-        Recipe_controller.editar_receita(colunas, valores, id_receita)
+        Recipe_Controller.editar_receita(colunas, valores, id_receita)
         return {"mensagem": "Receita atualizada com sucesso"}, 200
     
     @staticmethod
     def editar_categoria(id_receita, categoria):
-        Recipe_controller.editar_categoria(id_receita, categoria)
+        Recipe_Controller.editar_categoria(id_receita, categoria)
         return {"mensagem": "categoria atualizada"}, 200
     
     @staticmethod
     def excluir_receita(id_receita):
-        Recipe_controller.excluir_receita(id_receita)
+        Recipe_Controller.excluir_receita(id_receita)
         return {"sucesso": "Sua receita foi excluída"}, 200

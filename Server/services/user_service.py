@@ -1,5 +1,8 @@
 from flask import current_app
+
 from models.user_model import Usuario
+from controllers.user_controller import User_Controller
+
 import jwt
 import datetime
 
@@ -9,9 +12,10 @@ class UserService:
             return {"mensagem": "Username and password are required"}, 400
         
         usuario = Usuario(nome, senha)
+        controlador = User_Controller(usuario)
 
         try:
-            user = usuario.logar()
+            user = controlador.logar()
             
             if not user:
                 return {"mensagem": "Usuário não encontrado"}, 404
@@ -33,9 +37,10 @@ class UserService:
             return {"error": "Dados inválidos ou ausentes"}, 400
 
         usuario = Usuario(nome, senha)
+        controlador = User_Controller(usuario)
     
         try:
-            usuario.cadastrar()
+            controlador.cadastrar()
             return {"sucesso": "Cadastro realizado com sucesso!"}, 201
         except Exception as e:
             return {"erro": str(e)}, 500

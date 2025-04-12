@@ -4,7 +4,7 @@ import json
 from extensions import db
 from models.recipe_model import Receita
 
-class Recipe_controller:
+class Recipe_Controller:
     def __init__(self, receita: Receita):
         self.receita = receita
 
