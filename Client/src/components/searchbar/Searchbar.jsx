@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-
+import { useSidebar } from '../../context/SidebarContext';
 import '../searchbar/Searchbar.css'
 
 function Searchbar() {
     const [input, setInput] = useState("");
     const [nomeReceitas, setNomeReceitas] = useState([]);
     const [resultados, setResultados] = useState([]);
+    const { isAsideOpen } = useSidebar();
 
     useEffect(() => {
         const fetchNomeReceitas = async () => {
@@ -49,7 +50,7 @@ function Searchbar() {
 
     return (
         <div className="relative">
-            <form className="relative flex items-center w-[180px] h-[35px] bg-white rounded-2xl" onSubmit={pesquisar}>
+            <form className={`relative flex items-center bg-white  ${isAsideOpen ?'w-[180px] h-[35px] rounded-2xl' : 'w-[45px] h-[45px] rounded-full' }`} onSubmit={pesquisar}>
                 <button className="text-[#8b8ba7] p-0 pl-2 bg-none border-none">
                     <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
                         <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round"></path>
