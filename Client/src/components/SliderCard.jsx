@@ -45,40 +45,41 @@ const SliderCard = () => {
 
   return (
     <div className="relative w-full mx-3">
-      <div className="flex overflow-hidden ">
+  <div className="flex justify-center overflow-hidden">
+    <div
+      className="flex transition-transform duration-[800ms] sm:duration-1000 "
+      style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+    >
+      {cards.map((card, index) => (
         <div
-          className="flex transition-transform duration-1000 mr-11"
-          style={{ transform: `translateX(-${currentIndex * 100.7}%)` }}
+          key={index}
+          className="flex flex-col sm:flex-row flex-shrink-0 w-full bg-transparent rounded-lg  justify-center items-center gap-2"
         >
-          {cards.map((card, index) => (
-            <div
-              key={index}
-              className="flex flex-shrink-0 w-full gap-2 bg-transparent rounded-lg mx-1 justify-center"
-            >
-              <img
-                src={card.imgUrl}
-                alt={card.title}
-                className="w-[45%] max-w-[50%] h-80 object-cover rounded-l-lg mb-4"
-              />
-              <div className='w-[45%] max-w-[50%] h-80 bg-slate-100'>
-                <div className='flex flex-col justify-center items-center w-full h-full gap-2'>
-                  <div className="w-full">
-                    <img className="w-16 h-16 justify-self-center " src={Garfo} alt="" />
-                  </div>
-                  <h2 className="text-lg text-center w-4/5 font-semibold">{card.title}</h2>
-                  <p className="text-jet text-sm text-center w-5/6">"{card.description}"</p>
-                  <Link to={`receitas/${card.id_receita}`}>
-                    <button className='bg-redwoodOP w-28 rounded-2xl h-8 font-medium text-sm text-jet uppercase'>
-                      Ver Receita
-                    </button>
-                  </Link>
-                </div>
+          <img
+            src={card.imgUrl}
+            alt={card.title}
+            className="w-[300px] sm:w-[45%] h-48 sm:h-80  sm:px-0 object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none"
+          />
+
+          <div className="w-[300px] sm:w-[45%] h-auto sm:h-80 p-2 mr-2 sm:mr-0 bg-slate-100">
+            <div className="flex flex-col justify-center items-center w-full h-full gap-2 p-2">
+              <div className="w-full flex justify-center">
+                <img className="w-8 h-8 sm:w-16 sm:h-16" src={Garfo} alt="Ícone de garfo" />
               </div>
+              <h2 className=" text-sm sm:text-lg text-center font-semibold">{card.title}</h2>
+              <p className="text-jet text-xs sm:text-sm text-justify px-5">"{card.description}"</p>
+              <Link to={`receitas/${card.id_receita}`}>
+                <button className="bg-redwoodOP px-4 py-2 rounded-2xl font-medium text-sm text-jet uppercase">
+                  Ver Receita
+                </button>
+              </Link>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
+      ))}
     </div>
+  </div>
+</div>
   );
 };
 

@@ -4,11 +4,11 @@ const CardCategoria = ({ receita }) => {
   const { imagem_categoria, nome_categoria } = receita;
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center snap-start">
       <Link to={`/receitas/categoria/${nome_categoria}`}>
-        <div className="rounded-full overflow-hidden shadow-2xl shadow-slate-400">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-2xl shadow-slate-400">
           <img
-            className="object-cover w-24 h-24 rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
+            className="w-full h-full object-cover object-center rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
             src={imagem_categoria}
             alt={nome_categoria}
           />
@@ -21,13 +21,13 @@ const CardCategoria = ({ receita }) => {
           </p>
         </Link>
       </div>
-      
+
     </div>
   );
 };
 
 const Categoria = () => {
- 
+
   const receitas = [
     {
       imagem_categoria: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT08fR75SUnu2iqnXVV7GYuad7tpdVqhuDV7w&s",
@@ -39,33 +39,39 @@ const Categoria = () => {
     },
     {
       imagem_categoria: "https://www.bahianoticias.com.br/fotos/hall_noticias/3440/mg/WhatsApp%20Image%202023-04-15%20at%2011.07.43..jpg",
-      nome_categoria:"carne",
+      nome_categoria: "carne",
     },
     {
       imagem_categoria: "https://st2.depositphotos.com/3833507/7122/i/450/depositphotos_71220693-stock-photo-sole-with-cherry-tomatoes.jpg",
-      nome_categoria:"lanche",
+      nome_categoria: "lanche",
     },
     {
       imagem_categoria: "https://www.receiteria.com.br/wp-content/uploads/massa-para-empadao-sem-gluten-1-730x730.jpg",
-      nome_categoria:"salada",
+      nome_categoria: "salada",
     },
     {
       imagem_categoria: "https://www.guiadasemana.com.br/contentFiles/image/opt_w1280h960/2021/04/FEA/66992_shutterstock-483777991.jpg",
-      nome_categoria:"doce",
+      nome_categoria: "doce",
     },
     {
       imagem_categoria: "https://www.receiteria.com.br/wp-content/uploads/coquetel-de-morango-sem-alcool-01-730x730.jpg",
-      nome_categoria:"bebida",
+      nome_categoria: "bebida",
     },
-    
+
   ];
 
+
   return (
-    <div className="w-full flex ml-3 bg-slate-100 rounded-md justify-around p-5">
-      {receitas.map((receita) => (
-        <CardCategoria key={receita.nome_categoria} receita={receita} />
-      ))}
+
+    <div className="w-full overflow-x-auto bg-slate-100 rounded-md">
+      <div className="flex gap-4 p-5 sm:justify-between min-w-[250px] flex-shrink-0 snap-x snap-mandatory">
+        {receitas.map((receita) => (
+          <CardCategoria key={receita.nome_categoria} receita={receita} />
+        ))}
+      </div>
+
     </div>
+
   );
 };
 

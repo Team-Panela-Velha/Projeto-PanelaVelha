@@ -20,14 +20,13 @@ const MaisReceitas = () => {
     }, []);
 
     return (
-        <div className="flex justify-center gap-2 ml-3 w-[96%] h-48 p-2 bg-slate-100 relative shadow-lg rounded-md">
-            {receitas.map((receita) => (
-                <Card 
-                    key={receita.id} 
-                    receita={receita}
-                />
-            ))}
-        </div>
+       <div className="w-full overflow-x-auto snap-x snap-mandatory bg-slate-100 rounded-md">
+      <div className="flex gap-3 p-4">
+        {receitas.map((receita) => (
+          <Card key={receita.id} receita={receita} />
+        ))}
+      </div>
+    </div>
     );
 };
 

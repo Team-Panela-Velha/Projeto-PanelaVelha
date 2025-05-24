@@ -58,9 +58,9 @@ function Slider({ slides }) {
                     <Link to={`/receitas/${slide.id_receita}`}>
                         <img 
                             src={slide.imagem_receita} 
-                            className="w-full h-40 sm:h-48 md:h-[224px] lg:h-[272px] xl:h-[298px] imagem" 
+                            className="w-full h-36 sm:h-48 md:h-[224px] lg:h-[272px] xl:h-[298px] imagem object-cover" 
                         />
-                        <div className="absolute bottom-8 left-10 text-3xl text-slate-100 font-thin first-letter:uppercase texto">
+                        <div className="absolute p-2 bottom-8 left-4 sm:left-10 text-sm sm:text-3xl text-slate-100 font-thin first-letter:uppercase texto">
                             {slide.nome_receita}
                         </div>
                     </Link>

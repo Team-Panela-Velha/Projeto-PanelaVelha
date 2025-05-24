@@ -24,7 +24,7 @@ const Receitas = () => {
                     <h1 className="uppercase text-4xl font-bold text-chocolate-cosmos">Receitas</h1>
                 </div>
                 <div className="flex justify-center">
-                    <div className="flex flex-wrap justify-center gap-10 w-[86.7%] bg-slate-100 pt-5 pb-4 rounded-md">
+                    <div className="flex flex-wrap justify-center gap-4 sm:gap-10 w-[98%] sm:w-[86.7%] bg-slate-100 pt-5 pb-4 rounded-md">
                         {receitas.map((receita) => (
                             <Card  key={receita.id} receita={receita} />
                         ))}

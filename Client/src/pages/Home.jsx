@@ -42,7 +42,7 @@ const Home = () => (
             <div className='mt-6 mr-[3%]'>
             <Slider slides={foodSlides} />
             </div>
-            <div>
+            <div className="mr-[3%] sm:mr-0">
                 <SectionTitle
                     text="receitas populares"
                 />
@@ -65,7 +65,7 @@ const Home = () => (
             <div className="flex w-full my-10 justify-center">
                 <SliderCard />
             </div>
-            <div className="pb-10">
+            <div className="pb-10 mr-[3%] sm:mr-0">
                 <SectionTitle
                     text="você também pode gostar"
                 />
