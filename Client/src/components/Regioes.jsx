@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 const Card_Regiao = ({ title, image }) => {
     return (
-        <div className="flex flex-col items-center">
+        <div>
             <Link to={`/receitas/categoria/${title}`}>
                 <div 
-                    className="h-[11rem] w-[14vw] rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg flex justify-start items-end text-white uppercase relative overflow-hidden"
+                    className="h-[15vw] w-[16rem] sm:h-[11rem] sm:w-[14vw]  rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg flex text-white uppercase relative overflow-hidden"
                 >
                 
                     <div 
@@ -42,7 +42,7 @@ const Regioes = () => {
     ];
 
     return (
-        <div className="flex flex-wrap justify-between w-[97%] h-[13rem] p-3">
+        <div className="flex sm:flex-wrap flex-col gap-2 items-center sm:justify-between w-[97%] h-[19rem] sm:h-[13rem] p-3">
             {receitas.map((receita) => (
                 <Card_Regiao
                     key={receita.id} 

@@ -48,7 +48,7 @@ const Home = () => (
                 />
                 <Receita_Populares />
             </div>
-            <div className="mt-12">
+            <div className="mt-12 mb-12">
                 <SectionTitle
                     text="Experimente o melhor de cada Região"
                 />

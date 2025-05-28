@@ -22,7 +22,10 @@ export default {
       },
       objectPosition: {
         'center-center': 'center center',
-      }
+      },
+       screens: {
+      'xs': '400px',        // novo breakpoint
+    },
     },
   },
   plugins: [],
