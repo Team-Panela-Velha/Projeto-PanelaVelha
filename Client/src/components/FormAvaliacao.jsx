@@ -29,7 +29,7 @@ const FormAvaliacao = () => {
                 className="w-full h-full bg-red-100"
             >
                 <h1 className="uppercase font-semibold text-redwood text-3xl text-center mt-1">Comentarios</h1>
-                <div className="m-6 w-[30%]">
+                <div className="m-6 w-full sm:w-[30%]">
                     <label className="block text-lg font-bold text-jet mb-2">
                         <h2>o que você achou dessa receita?</h2>
                     </label>
@@ -58,12 +58,12 @@ const FormAvaliacao = () => {
                     </label>
                 </div>
                 <div className="flex w-full justify-start">
-                    <div className="flex w-10/12 h-full">
-                        <div className="w-1/4 flex flex-col justify-start items-center text-center m-6">
+                    <div className="flex max-sm:flex-col w-full sm:w-10/12 h-full">
+                        <div className="w-full sm:w-1/4 flex flex-col justify-start items-center text-center max-sm:mb-3 sm:m-6">
                             <img className="rounded-full w-14 h-14 mb-2" src={ Logo } alt="Logo Panela Velha" />
                             <p>Matheus Lopes</p>
                         </div>
-                        <div className="w-3/4">
+                        <div className="flex flex-col items-center w-full sm:w-3/4">
                             <div className="mb-4">
 
                                 <input
@@ -92,7 +92,7 @@ const FormAvaliacao = () => {
                                 />
                             </div>
 
-                            <div className="mb-4 w-full">
+                            <div className="mb-4 max-sm:w-[90%] w-full">
 
                                 <textarea
                                     id="comentario"

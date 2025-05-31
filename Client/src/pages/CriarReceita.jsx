@@ -174,17 +174,17 @@ const CriarReceita = () => {
                     </button>
                 </div>
             ) : (
-            <div className="flex flex-col h-full w-[95%]">
+            <div className="flex flex-col h-full w-full max-sm:pr-[8%] sm:w-[95%]">
                 <div className="flex flex-col mt-10">
 
                     <h1 className="font-bold text-jet text-6xl text-center">Envie sua Receita</h1>
                     <form
                         onSubmit={criarReceita}
-                        className="w-full h-auto my-10 bg-red-100"
+                        className="w-full h-auto max-sm:p-2 my-10 bg-red-100"
                     >
                         <div className="flex justify-center items-center flex-col mt-10">
-                            <h2 className="uppercase font-bold text-redwood text-xl ml-8 pb-5 self-start p-5">Sua Receita</h2>
-                            <label className="w-[50%] relative right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
+                            <h2 className="uppercase font-bold text-redwood text-xl sm:ml-8 pb-5 max-sm:self-center self-start p-5">Sua Receita</h2>
+                            <label className="w-full sm:w-[50%] relative sm:right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
                                 Nome da receita*
                             </label>
                             <input
@@ -193,13 +193,13 @@ const CriarReceita = () => {
                                 name="titulo"
                                 value={formReceita.titulo}
                                 onChange={handleChange}
-                                className="bg-transparent relative right-32 mt-1 block w-[50%] h-10 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                className="bg-transparent relative sm:right-32 mt-1 block w-full sm:w-[50%] h-10 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
                                 placeholder="Título da Receita"
                                 required
                             />
                         </div>
                         <div className="flex justify-center items-center flex-col mb-3">
-                            <label className="w-[50%] relative right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
+                            <label className="w-full sm:w-[50%] relative sm:right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
                                 Imagem*
                             </label>
                             <input
@@ -208,13 +208,13 @@ const CriarReceita = () => {
                                 name="imagemReceita"
                                 value={formReceita.imagemReceita}
                                 onChange={handleChange}
-                                className="bg-transparent block relative right-32 w-[50%] h-10 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                className="bg-transparent block relative sm:right-32 w-full sm:w-[50%] h-10 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
                                 placeholder="https://example.com"
                                 required
                             />
                         </div>
                         <div className="flex justify-center items-center flex-col mb-10">
-                            <label className="w-[50%] relative right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
+                            <label className="w-full sm:w-[50%] relative sm:right-32 px-3 mb-1 mt-2 font-semibold text-gray-700">
                                 Descrição da receita*
                             </label>
                             <textarea
@@ -224,13 +224,13 @@ const CriarReceita = () => {
                                 value={formReceita.desc}
                                 onChange={handleChange}
                                 onInput={textAreaResize}
-                                className="bg-transparent relative right-32 mt-1 block w-[50%] h-auto overflow-hidden px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
+                                className="bg-transparent relative sm:right-32 mt-1 block w-full sm:w-[50%] h-auto overflow-hidden px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm"
                                 placeholder="Fale um pouco sobre a receita"
                                 required
                             />
                         </div>
-                        <div className="flex w-full justify-start relative left-8">
-                            <div className="p-2 w-[40%] pl-5 flex justify-start gap-16">       
+                        <div className="flex w-full justify-start relative sm:left-8">
+                            <div className="p-2 w-full sm:w-[40%] sm:pl-5 flex max-sm:flex-col justify-start sm:gap-16">       
                                 <div>
                                     <h2 className="uppercase font-bold text-redwood text-xl pb-5">
                                         Informações Adicionais
@@ -292,14 +292,14 @@ const CriarReceita = () => {
                                         
                                     </fieldset>
                                 </div>
-                                <div className="relative top-20 grid grid-cols-3 gap-x-36 gap-y-0">
+                                <div className="relative top-10 sm:top-20 sm:grid sm:grid-cols-3 sm:gap-x-36 sm:gap-y-0">
                                     <div className="col-span-3">
-                                        <label className="block font-semibold text-chocolate-cosmos">
+                                        <label className="block font-semibold text-chocolate-cosmos max-sm:my-5">
                                         Categorias*
                                         </label>
                                     </div>
                                     {tiposCategoria.map((categoria) => (
-                                        <div key={categoria.id_categoria} className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3">
+                                        <div key={categoria.id_categoria} className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3 max-sm:mb-2">
                                             <input
                                                 type="checkbox"
                                                 id={`cat-${categoria.id_categoria}`}
@@ -318,12 +318,12 @@ const CriarReceita = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex justify-around flex-row-reverse items-start p-5 mt-10">
-                            <div className="w-1/3">
+                        <div className="flex max-sm:flex-col-reverse justify-around flex-row-reverse items-start p-5 mt-10">
+                            <div className="w-full sm:w-1/3">
                                 <h2 className="uppercase font-bold text-redwood text-xl pb-5">Modo de Preparo</h2>
                                 <div className="space-y-6">
                                     {steps.map((step, index) => (
-                                        <div key={index} className="space-y-3 border-b relative left-8 pb-4">
+                                        <div key={index} className="space-y-3 border-b relative sm:left-8 pb-4">
                                             <div className="flex items-center space-x-4">
                                                 <label className="font-bold uppercase text-chocolate-cosmos">
                                                     Passo {index + 1}:
@@ -359,12 +359,12 @@ const CriarReceita = () => {
                                     Adicionar Passo
                                 </button>
                             </div>
-                            <div className="w-1/3">
-                                <div className="w-full p-2 relative bottom-3">
+                            <div className="w-full sm:w-1/3 max-sm:mb-10">
+                                <div className="w-full sm:p-2 relative bottom-3">
                                     <h2 className="uppercase font-bold text-redwood text-xl pb-5">
                                         Ingredientes
                                     </h2>
-                                    <fieldset className="mb-10">
+                                    <fieldset className="mb-10 max-sm:mb-20">
                                         <div className="h-6">
                                             <legend className="font-semibold text-chocolate-cosmos pb-1">
                                                 Número de pessoas ou porções*

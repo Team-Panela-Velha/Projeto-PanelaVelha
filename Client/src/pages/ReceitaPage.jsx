@@ -113,45 +113,45 @@ const ReceitaPage = () => {
                             </div>
                             <div className="w-full text-xs text-center">
                                 <p className="text-sm font-semibold mt-3">Enviada por {receitaData.nome_usuario}</p>
-                                <p className="w-96 justify-self-center mt-2 first-letter:uppercase">
+                                <p className="w-80 max-sm:text-[14px] sm:w-96 justify-self-center max-sm:p-2 mt-2 first-letter:uppercase">
                                     {receitaData.desc}
                                 </p>
                             </div>
                             <div className="flex gap-5 justify-center mt-10">
-                                <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
-                                    <img className="relative bottom-6 w-12 h-12" src={Relogio} alt="" />
+                                <div className="flex flex-col justify-center items-center w-20 h-20 sm:w-28 sm:h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
+                                    <img className="relative bottom-3 w-10 h-10 sm:bottom-6 sm:w-12 sm:h-12" src={Relogio} alt="" />
                                     <p className="relative bottom-4 uppercase text-center text-xs w-16 font-semibold">Tempo de Preparo</p>
                                     {receitaData.tempo_hora > 0 ? (
                                         receitaData.tempo_min > 0 ? (
-                                            <p className="relative bottom-6 uppercase font-bold mt-5">{receitaData.tempo_hora}h {receitaData.tempo_min}min</p>
+                                            <p className="relative max-sm:text-sm bottom-6 uppercase font-bold mt-5">{receitaData.tempo_hora}h {receitaData.tempo_min}min</p>
                                         ) : (
-                                            <p className="relative bottom-6 uppercase font-bold mt-5">{receitaData.tempo_hora}h</p>
+                                            <p className="relative max-sm:text-sm bottom-6 uppercase font-bold mt-5">{receitaData.tempo_hora}h</p>
                                         )
                                     ) : (
-                                        <p className="relative bottom-6 uppercase font-bold mt-5">{receitaData.tempo_min}min</p>
+                                        <p className="relative max-sm:text-sm bottom-6 uppercase font-bold mt-5">{receitaData.tempo_min}min</p>
                                     )}
                                 </div>
-                                <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
-                                    <img className="relative bottom-6 w-12 h-12" src={Nivel} alt="" />
+                                <div className="flex flex-col justify-center items-center w-20 h-20 sm:w-28 sm:h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
+                                    <img className="relative bottom-3 w-10 h-10 sm:bottom-6 sm:w-12 sm:h-12" src={Nivel} alt="" />
                                     <p className="relative bottom-4 right-1 uppercase text-xs w-16 font-semibold">Dificuldade</p>
                                     {receitaData.dificuldade == "Muito Difícil" ? (
-                                        <p className="relative bottom-6 left-7 uppercase font-bold mt-5">{receitaData.dificuldade}</p>
+                                        <p className="relative max-sm:text-sm bottom-6 left-7 uppercase font-bold mt-5">{receitaData.dificuldade}</p>
                                     ) : (
-                                        <p className="relative bottom-4 uppercase font-bold mt-5">{receitaData.dificuldade}</p>
+                                        <p className="relative max-sm:text-sm bottom-4 uppercase font-bold mt-5">{receitaData.dificuldade}</p>
                                     )}
                                 </div>
-                                <div className="flex flex-col justify-center items-center w-28 h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
-                                    <img className="relative bottom-7 w-12 h-12" src={Chefe} alt="" />
-                                    <p className="relative bottom-4 uppercase text-center text-xs w-16 font-semibold">Serve</p>
-                                    <p className="relative bottom-4 uppercase font-bold mt-5">{receitaData.num_porcao} {receitaData.tipo_porcao}</p>
+                                <div className="flex flex-col justify-center items-center w-20 h-20 sm:w-28 sm:h-28 border-[1px] border-redwood shadow-lg rounded-2xl">
+                                    <img className="relative bottom-2 w-9 h-9 sm:bottom-7 sm:w-12 sm:h-12" src={Chefe} alt="" />
+                                    <p className="relative max-sm:bottom-1 bottom-4 uppercase text-center text-xs w-16 font-semibold">Serve</p>
+                                    <p className="relative max-sm:text-sm max-sm:text-center max-sm:bottom-6 bottom-4 uppercase font-bold mt-5">{receitaData.num_porcao} {receitaData.tipo_porcao}</p>
                                 </div>
 
                             </div>
                         </div>
                     </div>
                     <div className="flex max-sm:flex-col justify-between mr-3 ml-3 mt-3 mb-10">
-                        <div className="flex flex-col sm:border-r-2 border-r-jet mb-1 w-1/2 font-semibold">
-                            <h2 className="uppercase">ingredientes</h2>
+                        <div className="flex flex-col sm:border-r-2 border-r-jet mb-1 w-full max-sm:p-2 sm:w-1/2 ">
+                            <h2 className="uppercase text-lg font-semibold">ingredientes</h2>
                             <div>
                                 <ul className="list-disc ml-5 mt-4 font-normal text-jet">
                                     {JSON.parse(receitaData.ingredientes).map((ingrediente) => (
@@ -160,8 +160,8 @@ const ReceitaPage = () => {
                                 </ul>
                             </div>
                         </div>
-                        <div className=" flex flex-col w-1/2 mx-3">
-                            <h2 className=" uppercase font-semibold">modo de preparo</h2>
+                        <div className=" flex flex-col w-full sm:w-1/2 sm:mx-3">
+                            <h2 className=" uppercase font-semibold text-lg max-sm:py-4">modo de preparo</h2>
                             <div className="flex flex-col">
                                 <ul className="font-normal text-jet mt-3 list-decimal ml-5 ">
                                     {JSON.parse(receitaData.passos_receita).map((passo) => (    // JSON.parse transforma o tipo do arquivo JSON em um array normal novamente (os passos sao enviados como json para o banco)
