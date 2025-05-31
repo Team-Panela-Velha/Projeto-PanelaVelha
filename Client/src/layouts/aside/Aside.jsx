@@ -21,7 +21,8 @@ function Aside() {
             },
         })
             .then(response => {
-                setUser(response.data.usuario);
+                setUser(response.data);
+                console.log(response);
             })
     }
 
@@ -75,7 +76,7 @@ function Aside() {
                         <li className='pb-2 duration-100 hover:text-chocolate-cosmos'>
                             {user ? (
                                 <Link to="/usuario" className={`flex items-center ${!isAsideOpen && 'justify-center w-full pb-3'}`}>
-                                    {isAsideOpen ? user : <i className="bi bi-person-fill"></i>}
+                                    {isAsideOpen ? user.usuario : <i className="bi bi-person-fill"></i>}
                                 </Link>
                             ) : (
                                 <Link to="/login" className={`flex items-center ${!isAsideOpen && 'justify-center w-full pb-3'}`}>
@@ -83,6 +84,9 @@ function Aside() {
                                 </Link>
                             )}
                         </li>
+                        {user && user.admin === 1 && (
+                            <p>é admin</p>
+                        )}
                     </ul>
                 </nav>
 

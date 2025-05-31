@@ -10,7 +10,8 @@ class User_Controller:
 
     def cadastrar(self):
         try:
-            db.insert("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.usuario.nome, self.usuario.senha))
+            db.query("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.usuario.nome, self.usuario.senha))
+            # db.query("INSERT INTO usuarios (nome, senha, admin) values (?, ?, ?)", ("teste_admin", "teste123", 1))
         except sqlite3.Error as e:
             raise Exception(f"Erro ao cadastrar usuário no banco: {e}")
         
