@@ -22,7 +22,6 @@ function Aside() {
         })
             .then(response => {
                 setUser(response.data);
-                console.log(response);
             })
     }
 
@@ -84,9 +83,13 @@ function Aside() {
                                 </Link>
                             )}
                         </li>
-                        {user && user.admin === 1 && (
-                            <p>é admin</p>
-                        )}
+                        <li>
+                            {user && user.admin === 1 && (
+                                <Link to="/gerenciador" className={`flex items-center ${!isAsideOpen && 'justify-center w-full pb-3'}`}>
+                                    {isAsideOpen ? 'Gerenciador' : <i className='bi bi-person-fill'></i>}
+                                </Link>
+                            )}
+                        </li>
                     </ul>
                 </nav>
 

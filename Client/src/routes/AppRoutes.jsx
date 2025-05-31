@@ -8,6 +8,7 @@ import Receitas from "../pages/Receitas"
 import EditarReceita from "../pages/EditarReceita"
 import Pesquisa from "../pages/Pesquisa"
 import ReceitasCategoria from "../pages/CategoriaPage"
+import Gerenciador from "../pages/Gerenciador"
 
 import { Routes, Route } from "react-router-dom"
 
@@ -24,6 +25,7 @@ const AppRoutes = props => (
                 <Route path="/usuario" element={<Usuario />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
+                <Route path="/gerenciador" element={<Gerenciador />} />
                 
                 <Route path="/CriarReceita" element={<CriarReceita />} />
                 <Route path="/editar_receita/:id" element={<EditarReceita />} />
