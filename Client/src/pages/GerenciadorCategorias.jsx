@@ -7,24 +7,72 @@ function GerenciadorCategorias() {
     const [itemName, setItemName] = useState("Nome Original");
     const [newName, setNewName] = useState(itemName);
 
+    const [showModalCriar, setShowModalCriar] = useState(false);
+    const [categoria, setCategoria] = useState("");
+
 
     const handleDelete = () => {
-        console.log("Item deletado");
+        console.log("Categoria deletada");
         setShowModalDeletar(false);
     };
 
 
     const handleSave = () => {
-        setItemName(newName);
         setShowEditModal(false);
-        console.log("Item atualizado:", newName);
+        console.log("Categoria atualizado:", newName);
     };
+
+    const handleCreate = () => {
+        if (categoria.trim() === "") return alert("O nome da categoria é obrigatório!");
+        console.log("Nova categoria criada:", categoria);
+        setShowModalCriar(false);
+    };
+
     return (
         <>
             <div className="flex flex-col w-full h-full items-center gap-10 mt-12">
                 <h1 className="text-5xl font-semibold text-chocolate-cosmos">Categorias</h1>
                 <div className="flex flex-col w-full h-auto bg-red-100 mr-[3%] p-5">
-                    <h2 className="text-redwood text-sm uppercase font-bold p-5 ">Categorias existentes :</h2>
+                    <div className="flex p-5 justify-between">
+                        <h2 className="text-redwood text-sm uppercase font-bold">Categorias existentes :</h2>
+                        {/* CRIAR CATEGORIA */}
+                        <button className="flex justify-center items-center bg-white rounded-full w-8 h-8 text-xl" onClick={() => setShowModalCriar(true)}>+</button>
+
+                        {showModalCriar && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                <div className="bg-white p-6 rounded-lg w-80 shadow-lg">
+                                    <h2 className="text-xl font-semibold mb-4">Criar nova categoria</h2>
+
+                                    <input
+                                        type="text"
+                                        placeholder="Nome da categoria"
+                                        value={categoria}
+                                        onChange={(e) => setCategoria(e.target.value)}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded mb-4"
+                                    />
+
+                                    <div className="flex justify-end gap-2">
+                                        <button
+                                            onClick={() => {
+                                                setCategoria("");
+                                                setShowModalCriar(false);
+                                            }}
+                                            className="px-4 py-2 rounded bg-butterscotch hover:bg-gray-400"
+                                        >
+                                            Cancelar
+                                        </button>
+                                        <button
+                                            onClick={handleCreate}
+                                            className="px-4 py-2 rounded bg-redwood text-white hover:bg-red-700"
+                                        >
+                                            Criar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                    </div>
                     <div className="flex justify-between px-5 py-2">
                         <h3>Sudeste</h3>
                         <div className="flex">
