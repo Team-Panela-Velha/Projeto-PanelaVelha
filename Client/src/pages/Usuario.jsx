@@ -12,35 +12,35 @@ const Usuario = () => {
     const [receitasUsuario, setReceitasUsuario] = useState([]);
     const [receitasFavoritas, setReceitasFavoritas] = useState([]);
 
-    async function fetchUsuario(){
-        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {       
+    async function fetchUsuario() {
+        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
             headers: {
-            "Authorization": token, // Passa o token no cabeçalho Authorization
+                "Authorization": token, // Passa o token no cabeçalho Authorization
             },
         })
-        .then(response => {
-            setUsuario(response.data);
-        })
-        .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
-    };    
+            .then(response => {
+                setUsuario(response.data);
+            })
+            .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
+    };
 
     useEffect(() => {
         fetchUsuario();
     }, []);
 
 
-    async function fetchReceitasUsuario(){
+    async function fetchReceitasUsuario() {
         axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_usuario/${usuario.id}`)
-        .then(response => {
-            setReceitasUsuario(response.data.receitas);
-        })
+            .then(response => {
+                setReceitasUsuario(response.data.receitas);
+            })
     }
 
-    async function fetchReceitasFavoritas(){
+    async function fetchReceitasFavoritas() {
         axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_favoritas/${usuario.id}`)
-        .then(response => {
-            setReceitasFavoritas(response.data.receitas);
-        })
+            .then(response => {
+                setReceitasFavoritas(response.data.receitas);
+            })
     }
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const Usuario = () => {
     }, [usuario]);
 
 
-    function logout() { 
+    function logout() {
         localStorage.removeItem("jwtToken");
         window.location.href = "/";
     }
@@ -61,19 +61,19 @@ const Usuario = () => {
             {usuario ? (              // as vezes a pag carregava antes de processar os dados, e n gerava o usuario no fetchUsuario
                 <div className="flex flex-col items-center gap-10 mt-12 max-sm:mr-3">
                     <div className="w-11/12 relative sm:left-3">
-                        <h1 className="text-5xl max-sm:text-4xl font-semibold text-chocolate-cosmos">{usuario.usuario}</h1>  
+                        <h1 className="text-5xl max-sm:text-4xl font-semibold text-chocolate-cosmos">{usuario.usuario}</h1>
                     </div>
                     <div className="bg-slate-100 w-full sm:w-11/12 flex flex-col gap-9 max-sm:p-5 rounded-md">
                         <div>
                             <div className="flex justify-between w-5/6 relative max-sm:ml-5  sm:left-24 mt-6">
                                 <h1 className="uppercase font-semibold text-redwood text-3xl">Minhas receitas</h1>
                                 <Link to="/CriarReceita"><div className="relative top-2 bg-slate-100 text-3xl text-redwood w-6 h-6 sm:h-8 sm:w-8 rounded-full flex justify-center items-end hover:bg-redwood hover:text-slate-100 duration-200">+</div></Link>
-                            </div>  
+                            </div>
                             {receitasUsuario.length > 0 ? (
                                 <div className="bg-redwood w-full sm:w-[94%] relative sm:left-8 mt-8 rounded-sm">
                                     <div className="flex sm:flex-wrap justify-start relative sm:left-3 gap-2 w-full p-3 rounded-md overflow-x-auto snap-x snap-mandatory">
                                         {receitasUsuario.map((receita) => (
-                                            <Card key={receita.id} receita={receita}/>
+                                            <Card key={receita.id} receita={receita} />
                                         ))}
                                     </div>
                                 </div>
@@ -82,8 +82,8 @@ const Usuario = () => {
                                     <h1 className="text-3xl text-zinc-600">Você ainda não possui receitas</h1>
                                 </div>
                             )}
-                      
-                        </div>                       
+
+                        </div>
                         <div className="flex justify-center">
                             <hr className="h-[2px] bg-redwood w-2/3"></hr>
                         </div>
@@ -95,7 +95,7 @@ const Usuario = () => {
                                 <div className="bg-redwood w-full sm:w-[94%] relative sm:left-8 mt-8 rounded-sm mb-6">
                                     <div className="flex sm:flex-wrap justify-start relative sm:left-3 gap-2 w-full p-3 rounded-md overflow-x-auto snap-x snap-mandatory">
                                         {receitasFavoritas.map((receita) => (
-                                            <CardReceitasFav key={receita.id} receita={receita}/>
+                                            <CardReceitasFav key={receita.id} receita={receita} />
                                         ))}
                                     </div>
                                 </div>
