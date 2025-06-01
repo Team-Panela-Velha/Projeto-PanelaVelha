@@ -1,0 +1,99 @@
+import { useState } from "react";
+function GerenciadorCategorias() {
+
+    const [showModalDeletar, setShowModalDeletar] = useState(false);
+
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [itemName, setItemName] = useState("Nome Original");
+    const [newName, setNewName] = useState(itemName);
+
+
+    const handleDelete = () => {
+        console.log("Item deletado");
+        setShowModalDeletar(false);
+    };
+
+
+    const handleSave = () => {
+        setItemName(newName);
+        setShowEditModal(false);
+        console.log("Item atualizado:", newName);
+    };
+    return (
+        <>
+            <div className="flex flex-col w-full h-full items-center gap-10 mt-12">
+                <h1 className="text-5xl font-semibold text-chocolate-cosmos">Categorias</h1>
+                <div className="flex flex-col w-full h-auto bg-red-100 mr-[3%] p-5">
+                    <h2 className="text-redwood text-sm uppercase font-bold p-5 ">Categorias existentes :</h2>
+                    <div className="flex justify-between px-5 py-2">
+                        <h3>Sudeste</h3>
+                        <div className="flex">
+                            <div className="flex gap-3">
+                                {/* EDIÇÃO DE CATEGORIA */}
+                                <i className="bi bi-pencil" onClick={() => {
+                                    setNewName(itemName); // pré-preenche com valor atual
+                                    setShowEditModal(true);
+                                }}></i>
+
+                                {showEditModal && (
+                                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                                        <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+                                            <h2 className="text-lg font-semibold mb-4">Editar Categoria</h2>
+                                            <input
+                                                type="text"
+                                                value={newName}
+                                                onChange={(e) => setNewName(e.target.value)}
+                                                className="w-full px-3 py-2 mb-4 rounded-md text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
+                                            />
+                                            <div className="flex justify-end gap-2">
+                                                <button
+                                                    onClick={() => setShowEditModal(false)}
+                                                    className="px-4 py-2 rounded bg-butterscotch hover:bg-gray-400"
+                                                >
+                                                    Cancelar
+                                                </button>
+                                                <button
+                                                    onClick={handleSave}
+                                                    className="px-4 py-2 rounded bg-redwood text-white hover:bg-red-700"
+                                                >
+                                                    Salvar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* DELETAR CATEGORIA */}
+                                <i className="bi bi-trash" onClick={() => setShowModalDeletar(true)}></i>
+                                {showModalDeletar && (
+                                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                                            <h2 className="text-lg font-semibold mb-4">Tem certeza que deseja deletar essa categoria?</h2>
+                                            <div className="flex justify-center gap-2">
+                                                <button
+                                                    onClick={() => setShowModalDeletar(false)}
+                                                    className="px-4 py-2 rounded bg-butterscotch hover:bg-gray-400"
+                                                >
+                                                    Cancelar
+                                                </button>
+                                                <button
+                                                    onClick={handleDelete}
+                                                    className="px-4 py-2 rounded bg-redwood text-white hover:bg-red-700"
+                                                >
+                                                    Deletar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default GerenciadorCategorias;

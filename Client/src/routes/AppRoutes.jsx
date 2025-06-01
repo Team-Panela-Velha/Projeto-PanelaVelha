@@ -11,6 +11,9 @@ import ReceitasCategoria from "../pages/CategoriaPage"
 import Gerenciador from "../pages/Gerenciador"
 
 import { Routes, Route } from "react-router-dom"
+import GerenciadorUsuarios from "../pages/GerenciadorUsuarios"
+import GerenciadorCategorias from "../pages/GerenciadorCategorias"
+import GerenciadorHistorico from "../pages/GerenciadorHistorico"
 
 const AppRoutes = props => (
     <>
@@ -26,6 +29,9 @@ const AppRoutes = props => (
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/gerenciador" element={<Gerenciador />} />
+                <Route path="/gerenciadorUsuarios" element={<GerenciadorUsuarios />} />
+                <Route path="/gerenciadorCategorias" element={<GerenciadorCategorias />} />
+                <Route path="/gerenciadorHistorico" element={<GerenciadorHistorico />} />
                 
                 <Route path="/CriarReceita" element={<CriarReceita />} />
                 <Route path="/editar_receita/:id" element={<EditarReceita />} />
