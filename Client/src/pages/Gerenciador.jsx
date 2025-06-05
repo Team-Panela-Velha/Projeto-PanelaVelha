@@ -14,7 +14,6 @@ function Gerenciador() {
             },
         })
             .then(response => {
-                console.log(response.data)
                 setUser(response.data);
             })
     }

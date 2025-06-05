@@ -21,7 +21,7 @@ function GerenciadorUsuarios() {
         e.preventDefault();
 
         try {
-            axios.post("http://127.0.0.1:5000/api/is_admin", 
+            await axios.post("http://127.0.0.1:5000/api/is_admin", 
             {
                 "id_usuario": id,
                 "admin": admin
