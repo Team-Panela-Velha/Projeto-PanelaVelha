@@ -7,7 +7,7 @@ const Card_Regiao = ({ title, image }) => {
         <div>
             <Link to={`/receitas/categoria/${title}`}>
                 <div 
-                    className="h-[15vw] w-[16rem] sm:h-[11rem] sm:w-[14vw]  rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg flex text-white uppercase relative overflow-hidden"
+                    className=" h-[15vw] w-[16rem] sm:w-[16vw] sm:h-[11rem] lg:w-[14vw] rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg flex text-white uppercase relative overflow-hidden"
                 >
                 
                     <div 

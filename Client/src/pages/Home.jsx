@@ -39,7 +39,7 @@ const Home = () => (
     
     <>
         <div className="w-full h-screen">
-            <div className='mt-6 mr-[3%]'>
+            <div className='mt-6 mr-[3%] sm:mr-[1%] lg:mr-[3%]'>
             <Slider slides={foodSlides} />
             </div>
             <div className="mr-[3%] sm:mr-0">
@@ -48,7 +48,7 @@ const Home = () => (
                 />
                 <Receita_Populares />
             </div>
-            <div className="mt-12 mb-12">
+            <div className="mt-12 mb-12 sm:mb-0 lg:mb-12">
                 <SectionTitle
                     text="Experimente o melhor de cada Região"
                 />
@@ -58,7 +58,7 @@ const Home = () => (
                 <SectionTitle
                     text="O que deseja cozinhar hoje?"
                 />
-                <div className="mr-[5%]">
+                <div className="mr-[5%] sm:mr-[1%] lg:mr-[3%]">
                 <Categoria />
                 </div>
             </div>

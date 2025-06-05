@@ -58,13 +58,13 @@ const SliderCard = () => {
           <img
             src={card.imgUrl}
             alt={card.title}
-            className="w-[300px] sm:w-[45%] h-48 sm:h-80  sm:px-0 object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none"
+            className="w-[300px] sm:w-[45%] h-48 sm:h-96 lg:h-80  sm:px-0 object-cover rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none"
           />
 
-          <div className="w-[300px] sm:w-[45%] h-auto sm:h-80 p-2 mr-2 sm:mr-0 bg-slate-100">
-            <div className="flex flex-col justify-center items-center w-full h-full gap-2 p-2">
+          <div className="w-[300px] sm:w-[45%] h-auto sm:h-96 lg:h-80 p-2 mr-2 sm:mr-0 bg-slate-100">
+            <div className="flex flex-col justify-center items-center w-full h-full gap-2 p-2 sm:p-5 lg:p-2">
               <div className="w-full flex justify-center">
-                <img className="w-8 h-8 sm:w-16 sm:h-16" src={Garfo} alt="Ícone de garfo" />
+                <img className="w-8 h-8 sm:w-14 sm:h-14 lg:w-16 lg:h-16" src={Garfo} alt="Ícone de garfo" />
               </div>
               <h2 className=" text-sm sm:text-lg text-center font-semibold">{card.title}</h2>
               <p className="text-jet text-xs sm:text-sm text-justify px-5">"{card.description}"</p>

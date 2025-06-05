@@ -113,7 +113,7 @@ const ReceitaPage = () => {
                             </div>
                             <div className="w-full text-xs text-center">
                                 <p className="text-sm font-semibold mt-3">Enviada por {receitaData.nome_usuario}</p>
-                                <p className="w-80 max-sm:text-[14px] sm:w-96 justify-self-center max-sm:p-2 mt-2 first-letter:uppercase">
+                                <p className="w-72 max-sm:text-[13px] sm:w-96 justify-self-center max-sm:p-2 mt-2 first-letter:uppercase">
                                     {receitaData.desc}
                                 </p>
                             </div>
