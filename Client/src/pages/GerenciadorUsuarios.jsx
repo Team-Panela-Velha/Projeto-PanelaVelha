@@ -21,17 +21,13 @@ function GerenciadorUsuarios() {
         e.preventDefault();
 
         try {
-            await axios.post("http://127.0.0.1:5000/api/is_admin", 
+            await axios.post("http://127.0.0.1:5000/api/is_admin",         // realiza a requisicao e pausa a continuacao do codigo ate receber uma resposta
             {
                 "id_usuario": id,
                 "admin": admin
             });
 
-            setUsuarios((prevUsuarios) => 
-                prevUsuarios.map((usuario) => 
-                    usuario.id === id ? {...usuario, admin: !usuario.admin} : usuario
-                )
-            );
+            fetchUsuarios();                      // depois de receber um ok, faz fetch usuarios de novo e atualiza as checkboxes
             
         } catch (err) {
             console.log("erro ao atualizar admin: ", err);
