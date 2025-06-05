@@ -7,7 +7,6 @@ class GerenciadorDB:                    # classe usada para estabelecer conexao 
     def conectar(self):
         conexao = sqlite3.connect(self.nome, check_same_thread=False)
         cursor = conexao.cursor()
-
         return conexao, cursor
 
     def fechar_conexao(self, conexao):
@@ -17,7 +16,7 @@ class GerenciadorDB:                    # classe usada para estabelecer conexao 
 # evitar multiplos cursores
 
 
-    def insert(self, consulta, parametros=None):
+    def query(self, consulta, parametros=None):
         conexao, cursor = self.conectar()
 
         try: 

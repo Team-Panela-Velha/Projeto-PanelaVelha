@@ -9,10 +9,10 @@ class FavoriteService:
             checarFavorito = db.consulta_one("SELECT * from favoritos WHERE id_usuario = ? AND id_receita = ?", (id_usuario, id_receita))
 
             if not checarFavorito:
-                db.insert("INSERT into favoritos (id_usuario, id_receita) values (?, ?)", (id_usuario, id_receita))
+                db.query("INSERT into favoritos (id_usuario, id_receita) values (?, ?)", (id_usuario, id_receita))
                 return {"mensagem": "receita favoritada"}, 200
             else:
-                db.insert("DELETE from favoritos WHERE id_receita = ?", (id_receita,))
+                db.query("DELETE from favoritos WHERE id_receita = ?", (id_receita,))
                 return {"mensagem": "receita desfavoritada"}, 200
         except Exception as e:
             return {"erro": str(e)}, 500

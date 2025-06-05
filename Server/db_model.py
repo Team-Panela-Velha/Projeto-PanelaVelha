@@ -1,16 +1,17 @@
 from extensions import db
 
-db.cursor.execute("PRAGMA foreign_keys = ON;")
+db.query("PRAGMA foreign_keys = ON;")
 
-db.cursor.execute("""
+db.query("""
     CREATE TABLE if not exists usuarios(
         id integer primary key autoincrement, 
         nome text not null,
-        senha text not null
+        senha text not null,
+        admin boolean default 0
     )
 """)
 
-db.cursor.execute("""                     
+db.query("""                     
     CREATE TABLE if not exists receitas(
         id_receita integer primary key autoincrement,
         nome_receita text not null,
@@ -30,7 +31,7 @@ db.cursor.execute("""
     )
 """)
 
-db.cursor.execute("""
+db.query("""
     CREATE TABLE IF NOT EXISTS favoritos (
         id_usuario integer not null,
         id_receita integer not null,
@@ -40,14 +41,14 @@ db.cursor.execute("""
     )
 """)
 
-db.cursor.execute("""
+db.query("""
     CREATE TABLE IF NOT EXISTS categorias (
         id_categoria integer PRIMARY KEY autoincrement,
         nome_categoria text not null
     )
 """)
 
-db.cursor.execute("""
+db.query("""
     CREATE TABLE IF NOT EXISTS receita_categoria (
         id_categoria integer not null,
         id_receita integer not null,
@@ -56,5 +57,3 @@ db.cursor.execute("""
         FOREIGN KEY (id_receita) references receitas(id_receita)
     )
 """)
-
-db.conexao.commit()
