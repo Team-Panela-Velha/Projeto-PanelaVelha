@@ -21,3 +21,11 @@ class User_Controller:
             return user
         except sqlite3.Error as e:
             raise Exception(f"Erro no login: {e}")
+        
+    @staticmethod
+    def admin(id_usuario, is_admin):
+        try:
+            if is_admin == 0: db.query("UPDATE usuarios SET admin = 1 WHERE id = ?", (id_usuario,))
+            if is_admin == 1: db.query("UPDATE usuarios SET admin = 0 WHERE id = ?", (id_usuario,))
+        except sqlite3.Error as e:
+            raise Exception(f"Erro ao alterar admin: {e}")

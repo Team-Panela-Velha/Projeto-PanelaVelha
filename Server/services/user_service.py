@@ -1,5 +1,7 @@
 from flask import current_app
 
+from extensions import db
+
 from models.user_model import Usuario
 from controllers.user_controller import User_Controller
 
@@ -57,3 +59,24 @@ class UserService:
             return {"message": "Token expired"}, 401
         except jwt.InvalidTokenError:
             return {"message": "Invalid token"}, 401
+        
+    @staticmethod
+    def listar_usuarios():
+        try:
+            lista_usuarios = db.consulta_all("SELECT id, nome, admin FROM usuarios")
+
+            usuarios = [
+                {"id": row[0], "nome": row[1], "admin": row[2]}
+                for row in lista_usuarios
+            ]
+
+            return {"usuarios": usuarios}, 200
+        except Exception as e:
+            return {"erro": str(e)}, 500
+
+    def is_admin(id_usuario, is_admin):
+        try:
+            User_Controller.admin(id_usuario, is_admin)
+            return{"sucesso": "admin alterado"}, 200
+        except Exception as e:
+            return{"erro": str(e)}, 500
