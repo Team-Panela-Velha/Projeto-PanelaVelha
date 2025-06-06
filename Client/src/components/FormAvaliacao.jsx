@@ -30,7 +30,7 @@ const FormAvaliacao = () => {
             >
                 <h1 className="uppercase font-semibold text-redwood text-3xl text-center mt-1">Comentarios</h1>
                 <div className="m-6 w-full sm:w-[30%]">
-                    <label className="block text-lg font-bold text-jet mb-2">
+                    <label className="block text-lg sm:text-xl lg:text-lg font-bold text-jet mb-2">
                         <h2>o que você achou dessa receita?</h2>
                     </label>
 
@@ -43,7 +43,7 @@ const FormAvaliacao = () => {
                                 fill={formData.avaliacao >= star ? "gold" : "gray"}
                                 viewBox="0 0 576 512"
                                 height="1em"
-                                class="star-solid"
+                                class="star-solid w-6 h-6"
                             >
                                 <path
                                     d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
@@ -53,7 +53,7 @@ const FormAvaliacao = () => {
                     </div>
                     <label
                         htmlFor="comentario"
-                        className="block text-lg mt-10 text-jet font-bold">
+                        className="block text-lg sm:text-xl lg:text-lg mt-10 text-jet font-bold">
                         deixe seu comentario
                     </label>
                 </div>
@@ -61,7 +61,7 @@ const FormAvaliacao = () => {
                     <div className="flex max-sm:flex-col w-full sm:w-10/12 h-full">
                         <div className="w-full sm:w-1/4 flex flex-col justify-start items-center text-center max-sm:mb-3 sm:m-6">
                             <img className="rounded-full w-14 h-14 mb-2" src={ Logo } alt="Logo Panela Velha" />
-                            <p>Matheus Lopes</p>
+                            <p className="text-lg">Matheus Lopes</p>
                         </div>
                         <div className="flex flex-col items-center w-full sm:w-3/4">
                             <div className="mb-4">
@@ -72,7 +72,7 @@ const FormAvaliacao = () => {
                                     name="nome"
                                     value={formData.nome}
                                     onChange={handleChange}
-                                    className="bg-transparent mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood"
+                                    className="bg-transparent mt-1 block w-full sm:text-xl px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood"
                                     placeholder="Seu nome"
                                     required
                                 />
@@ -86,7 +86,7 @@ const FormAvaliacao = () => {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="bg-transparent mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood"
+                                    className="bg-transparent mt-1 block w-full sm:text-xl px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood"
                                     placeholder="Seu e-mail"
                                     required
                                 />
