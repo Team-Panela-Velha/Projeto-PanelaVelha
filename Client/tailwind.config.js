@@ -25,6 +25,7 @@ export default {
       },
        screens: {
       'xs': '400px',        // novo breakpoint
+      // 'mdd': '830px',  
     
     },
     },

@@ -20,7 +20,7 @@ const Receita_Populares = () => {
 
   return (
     
-       <div className="flex flex-wrap md:flex-nowrap justify-center gap-4 p-4 sm:pl-12 lg:pl-0 mr-10 bg-slate-100 rounded-md shadow-lg w-[98%] md:overflow-x-auto md:snap-x md:snap-mandatory">
+       <div className="flex flex-wrap md:flex-nowrap justify-center gap-4 p-4 sm:pl-20 lg:pl-0 mr-10 bg-slate-100 rounded-md shadow-lg w-[98%] md:overflow-x-auto md:snap-x md:snap-mandatory">
       {receitas.map((receita) => (
         <Card key={receita.id} receita={receita} />
       ))}

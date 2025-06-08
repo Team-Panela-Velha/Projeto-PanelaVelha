@@ -21,7 +21,7 @@ const MaisReceitas = () => {
 
     return (
        <div className="w-[98%] overflow-x-auto snap-x snap-mandatory bg-slate-100 rounded-md">
-      <div className="flex sm:justify-center gap-3 p-4 sm:ml-5 lg:ml-0">
+      <div className="flex sm:justify-center gap-3 p-4 sm:ml-12 lg:ml-0">
         {receitas.map((receita) => (
           <Card key={receita.id} receita={receita} />
         ))}
