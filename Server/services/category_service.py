@@ -24,10 +24,10 @@ class CategoryService:
     @staticmethod
     def mostrar_categorias():
         try:
-            categorias_array =  db.consulta_all("SELECT id_categoria, nome_categoria, imagem_categoria from categorias")
+            categorias_array =  db.consulta_all("SELECT id_categoria, nome_categoria from categorias")
 
             categorias = [
-                {"id": row[0], "nome_categoria": row[1], "imagem_receita": row[2]}
+                {"id": row[0], "nome_categoria": row[1]}
                 for row in categorias_array
             ]
 

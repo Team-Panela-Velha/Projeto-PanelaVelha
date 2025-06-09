@@ -17,7 +17,7 @@ def mostrar_categorias():
     return jsonify(response), status
 
 
-@category_route.route("/api/mostrar_recemostrar_categorias_popularesitas_populares", methods=["GET"])     
+@category_route.route("/api/mostrar_categorias_populares", methods=["GET"])     
 def mostrar_categorias_populares():
     response, status = CategoryService.mostrar_categorias_populares()
     return jsonify(response), status

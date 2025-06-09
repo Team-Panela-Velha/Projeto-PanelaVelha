@@ -1,5 +1,39 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
+
 function GerenciadorCategorias() {
+
+    const [categorias, setCategorias] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // useEffect(() => {
+    //     axios.get('http://localhost:5000/api/mostrar_categorias')
+    //     .then(res => {
+    //         if (!res.ok) throw new Error(`Erro ${res.status}`);
+    //         return res.json();
+    //     })
+    //     .then(data => {
+    //         setCategorias(data.categorias);
+    //         setLoading(false);
+    //     })
+    //     .catch(err => {
+    //         console.error(err);
+    //         setError(err.message);
+    //         setLoading(false);
+    //     });
+    // }, []);
+    async function fetchCategorias() {
+        axios.get("http://127.0.0.1:5000/api/mostrar_categorias")
+        .then(response => {
+            setCategorias(response.data.categorias);
+        })
+        .catch((err) => console.log(err));
+    }
+
+    useEffect(() => {
+        fetchCategorias();
+    }, []);
 
     const [showModalDeletar, setShowModalDeletar] = useState(false);
 
@@ -35,6 +69,13 @@ function GerenciadorCategorias() {
                 <div className="flex flex-col w-full h-auto bg-red-100 mr-[3%] p-5">
                     <div className="flex p-5 justify-between">
                         <h2 className="text-redwood text-sm uppercase font-bold">Categorias existentes :</h2>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
+                                {categorias.map(cat => (
+                                    <div key={cat.id} className="border rounded-lg p-2 shadow-sm">
+                                    <h3 className="mt-2 text-center font-semibold">{cat.nome_categoria}</h3>
+                                    </div>
+                                ))}
+                            </div>
                         {/* CRIAR CATEGORIA */}
                         <button className="flex justify-center items-center bg-white rounded-full w-8 h-8 text-xl" onClick={() => setShowModalCriar(true)}>+</button>
 

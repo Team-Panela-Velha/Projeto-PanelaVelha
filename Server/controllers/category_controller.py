@@ -10,7 +10,7 @@ class Category_Controller:
     def criar_categoria(self):
         try:
             categoria = json.dumps(self.receita.categoria)
-            lastrowid = db.insert("INSERT INTO categoria (nome_categoria, imagem_categoria) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (self.categoria.nome, self.categoria.imagem))
+            lastrowid = db.insert("INSERT INTO categoria (nome_categoria) values (?)", (self.categoria.nome))
             return lastrowid
         except sqlite3.Error as e:
             raise Exception(f"Erro ao tentar criar categoria: {e}")
