@@ -189,7 +189,7 @@ const EditarReceita = () => {
             <div className="flex flex-col h-full w-full max-sm:pr-[8%] lg:w-[95%]">
                 <div className="flex flex-col mt-10">
 
-                    <h1 className="font-bold text-jet text-6xl text-center">Envie sua Receita</h1>
+                    <h1 className="font-bold text-jet text-6xl text-center ">Envie sua Receita</h1>
                     <form
                         onSubmit={editarReceita}
                         className="w-full h-auto max-sm:p-2 my-10 bg-red-100"
