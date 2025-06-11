@@ -7,22 +7,6 @@ function GerenciadorCategorias() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:5000/api/mostrar_categorias')
-    //     .then(res => {
-    //         if (!res.ok) throw new Error(`Erro ${res.status}`);
-    //         return res.json();
-    //     })
-    //     .then(data => {
-    //         setCategorias(data.categorias);
-    //         setLoading(false);
-    //     })
-    //     .catch(err => {
-    //         console.error(err);
-    //         setError(err.message);
-    //         setLoading(false);
-    //     });
-    // }, []);
     async function fetchCategorias() {
         axios.get("http://127.0.0.1:5000/api/mostrar_categorias")
         .then(response => {
@@ -68,14 +52,95 @@ function GerenciadorCategorias() {
                 <h1 className="text-5xl font-semibold text-chocolate-cosmos">Categorias</h1>
                 <div className="flex flex-col w-full h-auto bg-red-100 mr-[3%] p-5">
                     <div className="flex p-5 justify-between">
-                        <h2 className="text-redwood text-sm uppercase font-bold">Categorias existentes :</h2>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
-                                {categorias.map(cat => (
-                                    <div key={cat.id} className="border rounded-lg p-2 shadow-sm">
-                                    <h3 className="mt-2 text-center font-semibold">{cat.nome_categoria}</h3>
+                            <div className="w-full mx-auto px-4">
+                                <h2 className="text-redwood text-sm uppercase font-bold">Categorias existentes :</h2>
+                                {categorias.map((cat) => (
+                                    <div
+                                    key={cat.id}
+                                    className="flex justify-between items-center px-2 py-1 border-b border-gray-300"
+                                    >
+                                    {/* Nome da categoria */}
+                                    <h3 className="text-base text-gray-800">{cat.nome_categoria}</h3>
+
+                                    {/* Ações */}
+                                    <div className="flex items-center gap-4 text-lg text-gray-600">
+                                        {/* Editar */}
+                                        <i
+                                        className="bi bi-pencil hover:text-blue-600 cursor-pointer"
+                                        onClick={() => {
+                                            setNewName(itemName);
+                                            setShowEditModal(true);
+                                        }}
+                                        ></i>
+
+                                        {/* Modal de Edição */}
+                                        {showEditModal && (
+                                        // Troca o fundo preto do modal por um blur
+                                        // <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm z-50">
+                                            // <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+                                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                                            <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+                                            <h2 className="text-lg font-semibold mb-4">Editar Categoria</h2>
+                                            <input
+                                                type="text"
+                                                value={newName}
+                                                onChange={(e) => setNewName(e.target.value)}
+                                                className="w-full px-3 py-2 mb-4 rounded-md border border-gray-300 focus:ring-2 focus:ring-red-600 focus:outline-none"
+                                            />
+                                            <div className="flex justify-end gap-2">
+                                                <button
+                                                onClick={() => setShowEditModal(false)}
+                                                className="px-4 py-2 rounded bg-yellow-400 hover:bg-yellow-500 text-black"
+                                                >
+                                                Cancelar
+                                                </button>
+                                                <button
+                                                onClick={handleSave}
+                                                className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+                                                >
+                                                Salvar
+                                                </button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        )}
+
+                                        {/* Excluir */}
+                                        <i
+                                        className="bi bi-trash hover:text-red-600 cursor-pointer"
+                                        onClick={() => setShowModalDeletar(true)}
+                                        ></i>
+
+                                        {/* Modal de Exclusão */}
+                                        {showModalDeletar && (
+                                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                                            <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+                                            <h2 className="text-lg font-semibold mb-4">
+                                                Tem certeza que deseja deletar essa categoria?
+                                            </h2>
+                                            <div className="flex justify-center gap-2">
+                                                <button
+                                                onClick={() => setShowModalDeletar(false)}
+                                                className="px-4 py-2 rounded bg-yellow-400 hover:bg-yellow-500 text-black"
+                                                >
+                                                Cancelar
+                                                </button>
+                                                <button
+                                                onClick={handleDelete}
+                                                className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+                                                >
+                                                Deletar
+                                                </button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        )}
+                                    </div>
                                     </div>
                                 ))}
                             </div>
+
+
                         {/* CRIAR CATEGORIA */}
                         <button className="flex justify-center items-center bg-white rounded-full w-8 h-8 text-xl" onClick={() => setShowModalCriar(true)}>+</button>
 
@@ -112,72 +177,6 @@ function GerenciadorCategorias() {
                                 </div>
                             </div>
                         )}
-
-                    </div>
-                    <div className="flex justify-between px-5 py-2">
-                        <h3>Sudeste</h3>
-                        <div className="flex">
-                            <div className="flex gap-3">
-                                {/* EDIÇÃO DE CATEGORIA */}
-                                <i className="bi bi-pencil" onClick={() => {
-                                    setNewName(itemName); // pré-preenche com valor atual
-                                    setShowEditModal(true);
-                                }}></i>
-
-                                {showEditModal && (
-                                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                                        <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-                                            <h2 className="text-lg font-semibold mb-4">Editar Categoria</h2>
-                                            <input
-                                                type="text"
-                                                value={newName}
-                                                onChange={(e) => setNewName(e.target.value)}
-                                                className="w-full px-3 py-2 mb-4 rounded-md text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
-                                            />
-                                            <div className="flex justify-end gap-2">
-                                                <button
-                                                    onClick={() => setShowEditModal(false)}
-                                                    className="px-4 py-2 rounded bg-butterscotch hover:bg-gray-400"
-                                                >
-                                                    Cancelar
-                                                </button>
-                                                <button
-                                                    onClick={handleSave}
-                                                    className="px-4 py-2 rounded bg-redwood text-white hover:bg-red-700"
-                                                >
-                                                    Salvar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* DELETAR CATEGORIA */}
-                                <i className="bi bi-trash" onClick={() => setShowModalDeletar(true)}></i>
-                                {showModalDeletar && (
-                                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                                        <div className="bg-white p-6 rounded-lg shadow-lg">
-                                            <h2 className="text-lg font-semibold mb-4">Tem certeza que deseja deletar essa categoria?</h2>
-                                            <div className="flex justify-center gap-2">
-                                                <button
-                                                    onClick={() => setShowModalDeletar(false)}
-                                                    className="px-4 py-2 rounded bg-butterscotch hover:bg-gray-400"
-                                                >
-                                                    Cancelar
-                                                </button>
-                                                <button
-                                                    onClick={handleDelete}
-                                                    className="px-4 py-2 rounded bg-redwood text-white hover:bg-red-700"
-                                                >
-                                                    Deletar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-                        </div>
                     </div>
                 </div>
             </div>
