@@ -45,7 +45,7 @@ function Aside() {
                 ${isAsideOpen ? 'w-64' : 'w-16'} duration-300 z-50`}>
                 <div className='flex justify-center items-center gap-5 pt-6'>
                     <Link to="/">
-                        <img className="rounded-full w-14 h-14 border-2 border-chocolate-cosmos" src={Logo} alt="Logo Panela Velha" />
+                        <img className={`rounded-full w-14 h-14 border-2 border-chocolate-cosmos  ${isAsideOpen ? 'pt-0' : 'mt-10'}`} src={Logo} alt="Logo Panela Velha" />
                     </Link>
                     <Link to="/" className={`${isAsideOpen ? 'w-[40%]' : 'hidden'}`}>
                         {isAsideOpen && (
@@ -61,7 +61,7 @@ function Aside() {
                 </div>
                 <nav className={`flex justify-start w-full ${isAsideOpen ? 'pl-7' : 'pl-0'}`}>
                     <ul className={`flex flex-col items-start uppercase font-semibold text-peaches 
-                    ${isAsideOpen ? 'text-lg' : 'text-4xl w-full items-center'}`}>
+                    ${isAsideOpen ? 'text-lg sm:text-2xl lg:text-lg' : 'text-4xl w-full items-center'}`}>
                         <li className="pb-2 duration-100 hover:text-chocolate-cosmos">
                             <Link to="/" className={`flex items-center ${!isAsideOpen && 'justify-center w-full pb-3'}`}>
                                 {isAsideOpen ? 'Início' : <i className="bi bi-house"></i>}
@@ -93,22 +93,24 @@ function Aside() {
                     </ul>
                 </nav>
 
-                <div className={`flex flex-col justify-end items-start pl-7 pb-5 w-full h-full ${!isAsideOpen && 'pl-0 items-center'} `}>
-                    <div className='flex'>
-                        <a href='#'><i className="icons bi bi-instagram pr-2 text-jet"></i></a>
-                        <a href="#"><i className="icons bi bi-github text-jet"></i></a>
-                    </div>
-                    <div>
-                        <p className='text-xs text-snow pt-2'>
-                            © Panela Velha, Todos os direitos reservados.
-                        </p>
-                    </div>
-                </div>
+                {isAsideOpen && (
+  <div className="flex flex-col justify-end items-start pl-7 pb-5 w-full h-full">
+    <div className='flex'>
+      <a href="#"><i className="icons bi bi-instagram pr-2 text-jet max-lg:text-2xl"></i></a>
+      <a href="#"><i className="icons bi bi-github text-jet max-lg:text-2xl"></i></a>
+    </div>
+    <div>
+      <p className='text-sm sm:text-lg lg:text-sm  text-snow pt-2'>
+        © Panela Velha, Todos os direitos reservados.
+      </p>
+    </div>
+  </div>
+)}
 
                 {/* Botão para alternar a sidebar em dispositivos móveis */}
                 {isMobile && (
-                    <button onClick={toggleAside} className='absolute top-3 right-[-10px] rounded-full w-6 h-6 flex justify-center items-center border-none cursor-pointer'>
-                        <i className={`bi ${isAsideOpen ? 'bi-chevron-left' : 'bi-chevron-right'}`}></i>
+                    <button onClick={toggleAside} className={`absolute top-3 ${isAsideOpen?  'right-[-12px] ' :  'right-[10px]'} text-4xl rounded-full w-10 h-10 flex justify-center items-center border-none cursor-pointer text-peaches`}>
+                        <i className={`bi ${isAsideOpen ? 'bi-chevron-left' : 'bi-chevron-right '}`}></i>
                     </button>
                 )}
             </aside>

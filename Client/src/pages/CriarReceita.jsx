@@ -318,7 +318,7 @@ const CriarReceita = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex max-lg:flex-col-reverse justify-around flex-row-reverse items-start p-5 mt-10">
+                        <div className="flex max-lg:flex-col-reverse justify-around flex-row-reverse items-start p-5 mt-10 xl:mt-20">
                             <div className="w-full lg:w-1/3">
                                 <h2 className="uppercase font-bold text-redwood pb-5  text-xl sm:text-2xl lg:text-xl">Modo de Preparo</h2>
                                 <div className="space-y-6">
@@ -364,7 +364,7 @@ const CriarReceita = () => {
                                     <h2 className="uppercase font-bold text-redwood pb-5  text-xl sm:text-2xl lg:text-xl">
                                         Ingredientes
                                     </h2>
-                                    <fieldset className="mb-10 max-lg:mb-20">
+                                    <fieldset className="mb-10 max-2xl:mb-20">
                                         <div className="h-6">
                                             <legend className="font-semibold text-chocolate-cosmos pb-1 text-md sm:text-xl lg:text-md">
                                                 Número de pessoas ou porções*
