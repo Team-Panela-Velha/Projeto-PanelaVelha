@@ -1,4 +1,4 @@
-import AppRoutes from "../../routes/appRoutes";
+import AppRoutes from "../../routes/AppRoutes";
 
 
 

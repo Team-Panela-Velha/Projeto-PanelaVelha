@@ -60,18 +60,18 @@ const Usuario = () => {
         <div className="w-full h-screen">
             {usuario ? (              // as vezes a pag carregava antes de processar os dados, e n gerava o usuario no fetchUsuario
                 <div className="flex flex-col items-center gap-10 mt-12 max-sm:mr-3">
-                    <div className="w-11/12 relative sm:left-3">
+                    <div className="w-11/12 relative lg:left-3">
                         <h1 className="text-5xl max-sm:text-4xl font-semibold text-chocolate-cosmos">{usuario.usuario}</h1>
                     </div>
-                    <div className="bg-slate-100 w-full sm:w-11/12 flex flex-col gap-9 max-sm:p-5 rounded-md">
+                    <div className="bg-slate-100 w-full sm:w-11/12 flex flex-col gap-9 max-lg:p-5 rounded-md">
                         <div>
-                            <div className="flex justify-between w-5/6 relative max-sm:ml-5  sm:left-24 mt-6">
+                            <div className="flex justify-between w-5/6 relative max-sm:ml-5  lg:left-24 mt-6">
                                 <h1 className="uppercase font-semibold text-redwood text-3xl">Minhas receitas</h1>
                                 <Link to="/CriarReceita"><div className="relative top-2 bg-slate-100 text-3xl text-redwood w-6 h-6 sm:h-8 sm:w-8 rounded-full flex justify-center items-end hover:bg-redwood hover:text-slate-100 duration-200">+</div></Link>
                             </div>
                             {receitasUsuario.length > 0 ? (
-                                <div className="bg-redwood w-full sm:w-[94%] relative sm:left-8 mt-8 rounded-sm">
-                                    <div className="flex sm:flex-wrap justify-start relative sm:left-3 gap-2 w-full p-3 rounded-md overflow-x-auto snap-x snap-mandatory">
+                                <div className="bg-redwood w-full lg:w-[94%] relative lg:left-8 mt-8 rounded-sm">
+                                    <div className="flex sm:flex-wrap justify-start relative lg:left-3 gap-2 w-full p-3 rounded-md overflow-x-auto snap-x snap-mandatory">
                                         {receitasUsuario.map((receita) => (
                                             <Card key={receita.id} receita={receita} />
                                         ))}
@@ -88,12 +88,12 @@ const Usuario = () => {
                             <hr className="h-[2px] bg-redwood w-2/3"></hr>
                         </div>
                         <div>
-                            <div className="flex relative sm:left-24">
+                            <div className="flex relative lg:left-24">
                                 <h1 className="uppercase font-semibold text-redwood text-3xl">Favoritas</h1>
                             </div>
                             {receitasFavoritas.length > 0 ? (
-                                <div className="bg-redwood w-full sm:w-[94%] relative sm:left-8 mt-8 rounded-sm mb-6">
-                                    <div className="flex sm:flex-wrap justify-start relative sm:left-3 gap-2 w-full p-3 rounded-md overflow-x-auto snap-x snap-mandatory">
+                                <div className="bg-redwood w-full lg:w-[94%] relative lg:left-8 mt-8 rounded-sm mb-6">
+                                    <div className="flex sm:flex-wrap justify-start relative lg:left-3 gap-2 w-full p-3 rounded-md overflow-x-auto snap-x snap-mandatory">
                                         {receitasFavoritas.map((receita) => (
                                             <CardReceitasFav key={receita.id} receita={receita} />
                                         ))}
@@ -107,7 +107,7 @@ const Usuario = () => {
                         </div>
                     </div>
                     <div className="">
-                        <button onClick={logout} className="text-slate-100 text-lg bg-redwood pt-1 pb-1 pl-4 pr-4 rounded-sm mb-6">Sair</button>
+                        <button onClick={logout} className="text-slate-100 text-lg sm:text-2xl lg:text-lg bg-redwood pt-1 pb-1 pl-4 pr-4 rounded-sm mb-6">Sair</button>
                     </div>
                 </div>
             ) : (

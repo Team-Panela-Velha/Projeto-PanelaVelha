@@ -69,7 +69,7 @@ const foodSlides = [
             </div>
                 
                 <div className="flex justify-center">
-                    <div className="flex flex-wrap justify-start gap-2 w-[97%] h-auto p-3 bg-slate-100 relative shadow-lg rounded-md mr-[3%] mb-6">
+                    <div className="flex flex-wrap justify-center gap-2 w-[97%] h-auto p-3 bg-slate-100 relative shadow-lg rounded-md lg:mr-[3%] mb-6">
                         {receitas.map((receita) => (
                             <Card  key={receita.id} receita={receita} />
                         ))}

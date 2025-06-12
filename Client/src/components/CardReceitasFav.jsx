@@ -10,7 +10,7 @@ const CardReceitasFav = ({ receita }) => {
     <div className="flex flex-col items-center bg-red-100 p-1 rounded-md shadow-xl">
       <Link to={`/receitas/${id}`}>
       <div
-        className="bg-orange-200 w-44 h-32 sm:h-[120px] sm:w-[12vw] rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
+        className="bg-orange-200 w-44 h-32 lg:h-[120px] lg:w-[12vw] rounded-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
         style={{
           backgroundImage: `url(${imagem_receita})`,
           backgroundSize: "cover",
@@ -18,7 +18,7 @@ const CardReceitasFav = ({ receita }) => {
         }}
       ></div></Link>
       <div className="pt-4 w-full">
-        <p className="font-bold text-sm leading-tight text-center first-letter:uppercase font-mono">
+        <p className="font-bold text-sm sm:text-lg lg:text-sm leading-tight text-center first-letter:uppercase font-mono">
           <Link to={`/receitas/${id}`}>{nome_receita}</Link>
         </p>    
       </div>

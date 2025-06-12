@@ -27,3 +27,17 @@ def get_usuario():
 
     response, status = UserService.verificar_usuario(token)
     return jsonify(response), status
+
+@user_route.route("/api/listar_usuarios", methods=["GET"])
+def listar_usuarios():
+    response, status = UserService.listar_usuarios()
+    return jsonify(response), status
+
+@user_route.route("/api/is_admin", methods=["POST"])
+def is_admin():
+    data = request.get_json()
+    id_usuario = data.get("id_usuario")
+    is_admin = int(data.get("admin"))
+
+    response, status = UserService.is_admin(id_usuario, is_admin)
+    return jsonify(response), status
