@@ -66,28 +66,26 @@ def receita(id_categoria):
 @category_route.route("/api/criar_categoria", methods=["POST"])
 def criar_categoria():
     data = request.get_json()
+    nome_categoria = data.get("nome_categoria")
     
-    response, status = CategoryService.criar_categoria(data)
+    response, status = CategoryService.criar_categoria(nome_categoria)
     return jsonify(response), status
 
 
-@category_route.route("/api/editar_categoria/<id_categoria>", methods=["PATCH"])
-def editar_categoria(id_categoria):
+@category_route.route("/api/editar_categoria", methods=["PATCH"])
+def editar_categoria():
     data = request.get_json()
-    colunas = ", ".join([f"{coluna} = ?" for coluna in data.keys()])
-    data = {key: (json.dumps(value) if isinstance(value, list) else value) for key, value in data.items()}
+    nome_categoria = data.get("nome_categoria")
+    id_categoria = data.get("id_categoria")
 
-    # for item in data.values():              # n altera o valor corretamente
-    #     if isinstance(item, list):
-    #         item = json.dumps(item)
-
-    valores = tuple(data.values())    
-
-    response, status = CategoryService.editar_categoria(colunas, valores, id_categoria)
+    response, status = CategoryService.editar_categoria(nome_categoria, id_categoria)
     return jsonify(response), status
 
 
-@category_route.route("/api/excluir_categoria/<id_categoria>", methods=["DELETE"])
-def excluir_categoria(id_categoria):
+@category_route.route("/api/excluir_categoria", methods=["DELETE"])
+def excluir_categoria():
+    data = request.get_json()
+    id_categoria = data.get("id_categoria")
+
     response, status = CategoryService.excluir_categoria(id_categoria)
     return jsonify(response), status

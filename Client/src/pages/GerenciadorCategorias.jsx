@@ -19,30 +19,71 @@ function GerenciadorCategorias() {
         fetchCategorias();
     }, []);
 
+    async function criarCategoria(e, nome) {
+        e.preventDefault();
+
+        await axios.post("http://127.0.0.1:5000/api/criar_categoria", {
+            "nome_categoria": nome
+        })
+        .then(response => {
+            console.log(response);
+        });
+
+        axios.get("http://127.0.0.1:5000/api/mostrar_categorias")
+        .then(response => {
+            setCategorias(response.data.categorias);
+        });
+    }
+
+    async function editarCategoria(e, id, nome) {
+        e.preventDefault();
+        
+        await axios.patch("http://127.0.0.1:5000/api/editar_categoria", {
+            "id_categoria": id,
+            "nome_categoria": nome
+        });
+
+        axios.get("http://127.0.0.1:5000/api/mostrar_categorias")
+        .then(response => {
+            setCategorias(response.data.categorias);
+        })
+    }
+
+    async function excluirCategoria(e, id) {
+        e.preventDefault();
+
+        await axios.delete("http://127.0.0.1:5000/api/excluir_categoria", {
+            data: {
+                "id_categoria": id
+            }
+        })
+        .then(response => {
+            setCategorias(prev => prev.filter(categoria => categoria.id !== id));
+            console.log(response);
+        })
+    }
+
     const [showModalDeletar, setShowModalDeletar] = useState(false);
 
     const [showEditModal, setShowEditModal] = useState(false);
-    const [itemName, setItemName] = useState("Nome Original");
-    const [newName, setNewName] = useState(itemName);
+    const [newName, setNewName] = useState("");
 
     const [showModalCriar, setShowModalCriar] = useState(false);
     const [categoria, setCategoria] = useState("");
+    const [currentCategoria, setCurrentCategoria] = useState(null);
 
 
     const handleDelete = () => {
-        console.log("Categoria deletada");
         setShowModalDeletar(false);
     };
 
 
     const handleSave = () => {
-        setShowEditModal(false);
         console.log("Categoria atualizado:", newName);
     };
 
     const handleCreate = () => {
         if (categoria.trim() === "") return alert("O nome da categoria é obrigatório!");
-        console.log("Nova categoria criada:", categoria);
         setShowModalCriar(false);
     };
 
@@ -54,13 +95,13 @@ function GerenciadorCategorias() {
                     <div className="flex p-5 justify-between">
                             <div className="w-full mx-auto px-4">
                                 <h2 className="text-redwood text-sm uppercase font-bold">Categorias existentes :</h2>
-                                {categorias.map((cat) => (
+                                {categorias.map((categoria) => (
                                     <div
-                                    key={cat.id}
+                                    key={categoria.id}
                                     className="flex justify-between items-center px-2 py-1 border-b border-gray-300"
                                     >
                                     {/* Nome da categoria */}
-                                    <h3 className="text-base text-gray-800">{cat.nome_categoria}</h3>
+                                    <h3 className="text-base text-gray-800">{categoria.nome_categoria}</h3>
 
                                     {/* Ações */}
                                     <div className="flex items-center gap-4 text-lg text-gray-600">
@@ -68,7 +109,8 @@ function GerenciadorCategorias() {
                                         <i
                                         className="bi bi-pencil hover:text-blue-600 cursor-pointer"
                                         onClick={() => {
-                                            setNewName(itemName);
+                                            setNewName(categoria.nome_categoria);
+                                            setCurrentCategoria(categoria.id);
                                             setShowEditModal(true);
                                         }}
                                         ></i>
@@ -95,7 +137,11 @@ function GerenciadorCategorias() {
                                                 Cancelar
                                                 </button>
                                                 <button
-                                                onClick={handleSave}
+                                                onClick={(e) => {
+                                                    editarCategoria(e, currentCategoria, newName);
+                                                    setShowEditModal(false);
+                                                    handleSave();
+                                                }}
                                                 className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
                                                 >
                                                 Salvar
@@ -108,7 +154,10 @@ function GerenciadorCategorias() {
                                         {/* Excluir */}
                                         <i
                                         className="bi bi-trash hover:text-red-600 cursor-pointer"
-                                        onClick={() => setShowModalDeletar(true)}
+                                        onClick={() => {
+                                            setCurrentCategoria(categoria.id);
+                                            setShowModalDeletar(true)
+                                        }}
                                         ></i>
 
                                         {/* Modal de Exclusão */}
@@ -126,7 +175,10 @@ function GerenciadorCategorias() {
                                                 Cancelar
                                                 </button>
                                                 <button
-                                                onClick={handleDelete}
+                                                onClick={(e) => {
+                                                    excluirCategoria(e, currentCategoria);
+                                                    handleDelete();
+                                                }}
                                                 className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
                                                 >
                                                 Deletar
@@ -168,7 +220,11 @@ function GerenciadorCategorias() {
                                             Cancelar
                                         </button>
                                         <button
-                                            onClick={handleCreate}
+                                            onClick={(e) => {
+                                                criarCategoria(e, categoria);
+                                                setCategoria("");
+                                                handleCreate();
+                                            }}
                                             className="px-4 py-2 rounded bg-redwood text-white hover:bg-red-700"
                                         >
                                             Criar
