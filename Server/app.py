@@ -1,6 +1,6 @@
 from flask import Flask
-# from dotenv import load_dotenv
 from flask_cors import CORS
+from extensions import db, migrate
 
 def create_app():
     app = Flask(__name__)
@@ -8,7 +8,14 @@ def create_app():
     app.secret_key = "chave_secreta_padrao"
     app.config["SECRET_KEY"] = "chave_secreta_padrao"
 
-    CORS(app)             # necessario por conta da interaçao entre react e flask
+    # Configuração do banco de dados MySQL
+    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:1234@localhost/db_panela_velha"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    db.init_app(app)  # Inicializa o banco com o app
+    migrate.init_app(app, db)
+
+    CORS(app)  # necessário por conta da interação entre React e Flask
 
     def registrar_rotas(app):
         from routes.favorite_route import favorite_route

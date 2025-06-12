@@ -1,22 +1,22 @@
-import sqlite3
-
 from extensions import db
-from models.user_model import Usuario
+from db_model import Usuario
 
 
-class User_Controller:
+class UserController:
     def __init__(self, usuario: Usuario):
         self.usuario = usuario
 
     def cadastrar(self):
         try:
-            db.insert("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.usuario.nome, self.usuario.senha))
-        except sqlite3.Error as e:
+            db.session.add(self.usuario)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
             raise Exception(f"Erro ao cadastrar usuário no banco: {e}")
-        
+
     def logar(self):
         try:
-            user = db.consulta_one("SELECT * from usuarios where nome = ?", (self.usuario.nome,))
+            user = Usuario.query.filter_by(nome=self.usuario.nome).first()
             return user
-        except sqlite3.Error as e:
+        except Exception as e:
             raise Exception(f"Erro no login: {e}")
