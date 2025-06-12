@@ -17,47 +17,10 @@ def mostrar_categorias():
     return jsonify(response), status
 
 
-@category_route.route("/api/mostrar_categorias_populares", methods=["GET"])     
-def mostrar_categorias_populares():
-    response, status = CategoryService.mostrar_categorias_populares()
+@category_route.route("/api/pesquisar_categoria/<pesquisa>", methods=["GET"])
+def pesquisar_categoria(pesquisa):
+    response, status = CategoryService.pesquisar_categoria(pesquisa)
     return jsonify(response), status
-
-
-@category_route.route("/api/mostrar_categorias_mais", methods=["GET"])
-def mostrar_categorias_mais():
-    response, status = CategoryService.mostrar_categorias_mais()
-    return jsonify(response), status
-
-
-@category_route.route("/api/mostrar_categoria_pesquisa/<pesquisa>", methods=["GET"])
-def mostrar_categoria_pesquisa(pesquisa):
-    response, status = CategoryService.mostrar_categoria_pesquisa(pesquisa)
-    return jsonify(response), status
-
-
-@category_route.route("/api/mostrar_receita_categoria/<categoria>", methods=["GET"])
-def mostrar_receita_categoria(categoria):
-    response, status = CategoryService.mostrar_receita_categoria(categoria)
-    return jsonify(response), status
-
-
-@category_route.route("/api/slider_categoria/<categoria>", methods=["GET"])
-def slider_categoria(categoria):
-    response, status = CategoryService.slider_categoria(categoria)
-    return jsonify(response), status
-
-
-@category_route.route("/api/mostrar_categorias_listadas/<id_receita>", methods=["GET"])
-def mostrar_categorias_listadas(id_receita):
-    response, status = CategoryService.mostrar_categorias_listadas(id_receita)
-    return jsonify(response), status
-
-
-@category_route.route("/api/categoria/<id_categoria>", methods=["GET"])
-def receita(id_categoria):
-    response, status = CategoryService.categoria(id_categoria)
-    return jsonify(response), status
-
 
 
 # ROTAS DE CRIACAO DE RECEITA
