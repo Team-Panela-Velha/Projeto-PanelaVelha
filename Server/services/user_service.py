@@ -2,8 +2,9 @@ from flask import current_app
 
 from extensions import db
 
-from models.user_model import Usuario
+
 from controllers.user_controller import UserController
+from db_model import Usuario
 
 import jwt
 import datetime
