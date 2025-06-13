@@ -1,16 +1,15 @@
-from flask import request, jsonify, Blueprint
-from services.user_service import UserService
+from flask import request, jsonify, Blueprint, session
+from services.user_service import UserService, login
+from db_model import Usuario
 
 user_route = Blueprint("usuario", __name__)
 
 @user_route.route("/api/login", methods=["POST"])
-def login():
+def login_route():
     data = request.get_json()
     nome = data.get("nome")
     senha = data.get("senha")
-
-    response, status = UserService.login(nome, senha)
-    return jsonify(response), status
+    return login(nome, senha)
 
 @user_route.route("/api/cadastro", methods=["POST"])
 def cadastro():
@@ -41,3 +40,17 @@ def is_admin():
 
     response, status = UserService.is_admin(id_usuario, is_admin)
     return jsonify(response), status
+
+@user_route.route('/api/perfil', methods=['GET'])
+def perfil_route():
+    id_usuario = session.get('id_usuario')
+    if not id_usuario:
+        return {"erro": "Não autenticado"}, 401
+    usuario = Usuario.query.get(id_usuario)
+    if not usuario:
+        return {"erro": "Usuário não encontrado"}, 404
+    return {
+        "id": usuario.id_usuario,
+        "nome": usuario.nome_usuario,
+        "adm": usuario.adm_usuario
+    }, 200
