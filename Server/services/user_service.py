@@ -75,9 +75,9 @@ class UserService:
         except Exception as e:
             return {"erro": str(e)}, 500
 
-    def is_admin(id_usuario, is_admin):
-        try:
-            User_Controller.admin(id_usuario, is_admin)
-            return{"sucesso": "admin alterado"}, 200
-        except Exception as e:
-            return{"erro": str(e)}, 500
+    # def is_admin(id_usuario, is_admin):
+    #     try:
+    #         User_Controller.admin(id_usuario, is_admin)
+    #         return{"sucesso": "admin alterado"}, 200
+    #     except Exception as e:
+    #         return{"erro": str(e)}, 500
