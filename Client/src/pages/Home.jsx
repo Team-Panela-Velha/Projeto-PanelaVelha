@@ -1,10 +1,10 @@
-import Categoria from "../components/Categoria";
 import MaisReceitas from "../components/MaisReceitas";
-import Receita_Populares from "../components/Receita_Populares";
-import Regioes from "../components/Regioes";
+import SectionRegioes from "../components/SectionRegioes";
 import SectionTitle from "../components/SectionTitle";
 import Slider from "../components/slider/Slider";
 import SliderCard from "../components/SliderCard";
+import ReceitasPopulares from "../components/ReceitasPopulares";
+import SectionCategoria from "../components/SectionCategoria";
 
 const foodSlides = [
     {   
@@ -33,33 +33,32 @@ const foodSlides = [
     },
 ];
 
-
 const Home = () => (
-
-    
     <>
         <div className="w-full h-screen">
             <div className='mt-6 mr-[3%] sm:mr-[1%] lg:mr-[3%]'>
-            <Slider slides={foodSlides} />
+                <Slider 
+                    slides={foodSlides} 
+                />
             </div>
             <div className="mr-[3%] sm:mr-0">
                 <SectionTitle
                     text="receitas populares"
                 />
-                <Receita_Populares />
+                <ReceitasPopulares />
             </div>
             <div className="mt-12 mb-12 sm:mb-0 lg:mb-12">
                 <SectionTitle
                     text="Experimente o melhor de cada Região"
                 />
-                <Regioes />
+                <SectionRegioes/>
             </div>
             <div className='my-6 flex flex-col'>
                 <SectionTitle
                     text="O que deseja cozinhar hoje?"
                 />
                 <div className="mr-[5%] sm:mr-[1%] lg:mr-[3%]">
-                <Categoria />
+                    <SectionCategoria />
                 </div>
             </div>
             <div className="flex w-full my-10 justify-center">

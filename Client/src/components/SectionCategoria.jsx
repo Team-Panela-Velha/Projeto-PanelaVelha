@@ -5,28 +5,29 @@ const CardCategoria = ({ receita }) => {
 
   return (
     <div className="flex flex-col items-center justify-center snap-start">
-      <Link to={`/receitas/categoria/${nome_categoria}`}>
-        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-2xl shadow-slate-400">
-          <img
-            className="w-full h-full object-cover object-center rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
-            src={imagem_categoria}
-            alt={nome_categoria}
-          />
+      <Link 
+        to={`/receitas/categoria/${nome_categoria}`}>
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-2xl shadow-slate-400">
+            <img
+              className="w-full h-full object-cover object-center rounded-full transition-transform duration-500 ease-in-out transform hover:scale-110"
+                src={imagem_categoria}
+              alt={nome_categoria}
+            />
         </div>
       </Link>
       <div className="pt-4">
-        <Link to={`/receitas/categoria/${nome_categoria}`}>
-          <p className="font-bold text-sm leading-tight text-center font-mono first-letter:uppercase">
-            {nome_categoria}
-          </p>
+        <Link 
+          to={`/receitas/categoria/${nome_categoria}`}>
+            <p className="font-bold text-sm leading-tight text-center font-mono first-letter:uppercase">
+              {nome_categoria}
+            </p>
         </Link>
       </div>
-
     </div>
   );
 };
 
-const Categoria = () => {
+const SectionCategoria = () => {
 
   const receitas = [
     {
@@ -59,20 +60,19 @@ const Categoria = () => {
     },
 
   ];
-
-
+  
   return (
 
     <div className="w-full overflow-x-auto bg-slate-100 rounded-md">
       <div className="flex gap-4 p-5 sm:justify-between min-w-[250px] flex-shrink-0 snap-x snap-mandatory">
         {receitas.map((receita) => (
-          <CardCategoria key={receita.nome_categoria} receita={receita} />
+          <CardCategoria 
+            key={receita.nome_categoria} 
+            receita={receita} />
         ))}
       </div>
-
     </div>
-
   );
 };
 
-export default Categoria;
+export default SectionCategoria;

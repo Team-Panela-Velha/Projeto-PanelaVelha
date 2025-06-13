@@ -121,9 +121,6 @@ const EditarReceita = () => {
         })
         .catch(err => console.log(err))
     }
-    
-
-
     // Atualiza os campos do formulário principal
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -185,10 +182,8 @@ const EditarReceita = () => {
 
     return (
         <div className="w-full h-screen flex justify-center items-center">
-            
             <div className="flex flex-col h-full w-full max-sm:pr-[8%] lg:w-[95%]">
                 <div className="flex flex-col mt-10">
-
                     <h1 className="font-bold text-jet text-6xl text-center ">Envie sua Receita</h1>
                     <form
                         onSubmit={editarReceita}
@@ -269,7 +264,6 @@ const EditarReceita = () => {
                                             </select>
                                         </fieldset>
                                     </div>
-
                                     <fieldset className="font-semibold text-chocolate-cosmos pb-1 pt-3 text-md sm:text-xl lg:text-md ">
                                         <legend>Tempo de Preparo*</legend>
                                         <div className="flex"> 
@@ -283,9 +277,12 @@ const EditarReceita = () => {
                                                 onChange={handleChange}
                                                 className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
                                             />
-                                            <label htmlFor="tempoPreparoH"
+                                            <label 
+                                                htmlFor="tempoPreparoH"
                                                 className="font-normal text-base pr-2 pl-1 text-md sm:text-xl lg:text-base"
-                                            > Hora(s)</label>
+                                            > 
+                                                Hora(s)
+                                            </label>
                                             <input
                                                 type="number"
                                                 min="0"
@@ -297,21 +294,26 @@ const EditarReceita = () => {
                                                 onChange={handleChange}
                                                 className="w-14 h-full text-sm p-1 text-jet border border-collapse border-gray-300 focus:ring-redwood focus:outline-none"
                                             />
-                                            <label htmlFor="tempoPreparoM"
+                                            <label 
+                                                htmlFor="tempoPreparoM"
                                                 className="font-normal text-base pr-2 pl-1 text-md sm:text-xl lg:text-md"
-                                            > Minuto(s)</label>
+                                            > 
+                                                Minuto(s)
+                                            </label>
                                         </div>
-                                        
                                     </fieldset>
                                 </div>
                                 <div className="relative top-10 lg:top-20 lg:grid lg:grid-cols-3 lg:gap-x-36 lg:gap-y-0">
                                     <div className="col-span-3">
                                         <label className="block font-semibold text-chocolate-cosmos max-lg:my-5 text-md sm:text-xl lg:text-md">
-                                        Categorias*
+                                            Categorias*
                                         </label>
                                     </div>
                                     {tiposCategoria.map((categoria) => (
-                                        <div key={categoria.id_categoria} className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3 max-lg:mb-2 text-md sm:text-xl lg:text-md">
+                                        <div 
+                                            key={categoria.id_categoria} 
+                                            className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3 max-lg:mb-2 text-md sm:text-xl lg:text-md"
+                                        >
                                             <input
                                                 type="checkbox"
                                                 id={`cat-${categoria.id_categoria}`}
@@ -335,7 +337,10 @@ const EditarReceita = () => {
                                 <h2 className="uppercase font-bold text-redwood pb-5  text-xl sm:text-2xl lg:text-xl">Modo de Preparo</h2>
                                 <div className="space-y-6">
                                     {steps.map((step, index) => (
-                                        <div key={index} className="space-y-3 border-b relative lg:left-8 pb-4">
+                                        <div 
+                                            key={index} 
+                                            className="space-y-3 border-b relative lg:left-8 pb-4"
+                                        >
                                             <div className="flex items-center space-x-4">
                                                 <label className="font-bold uppercase text-chocolate-cosmos">
                                                     Passo {index + 1}:
@@ -409,33 +414,36 @@ const EditarReceita = () => {
                                         </div>
                                     </fieldset>
                                     <div className="space-y-6">
-                                    {items.map((item, index) => (
-                                        <div key={index} className="space-y-3 border-b relative mt-2 pb-4">
-                                            <div className="flex items-center space-x-4">
-                                                <label className="font-bold uppercase text-chocolate-cosmos">
-                                                    Ingrediente {index + 1}:
-                                                </label>
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <textarea
-                                                    value={item}
-                                                    onChange={(e) =>
-                                                        handleItemChange(index, e.target.value)
-                                                    }
-                                                    className="bg-transparent block w-full h-11 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm sm:placeholder:text-lg lg:placeholder:text-sm"
-                                                    placeholder={`Quantidade e nome do ingrediente ${index + 1}`}
-                                                    rows="3"
-                                                    required
-                                                ></textarea>
-                                            </div>
-                                            <button
-                                                type="button"
-                                                onClick={() => removeItem(index)}
-                                                className="text-butterscotch hover:text-red-700"
+                                        {items.map((item, index) => (
+                                            <div 
+                                                key={index} 
+                                                className="space-y-3 border-b relative mt-2 pb-4"
                                             >
-                                                Remover Ingrediente
-                                            </button>
-                                        </div>
+                                                <div className="flex items-center space-x-4">
+                                                    <label className="font-bold uppercase text-chocolate-cosmos">
+                                                        Ingrediente {index + 1}:
+                                                    </label>
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <textarea
+                                                        value={item}
+                                                        onChange={(e) =>
+                                                            handleItemChange(index, e.target.value)
+                                                        }
+                                                        className="bg-transparent block w-full h-11 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm sm:placeholder:text-lg lg:placeholder:text-sm"
+                                                        placeholder={`Quantidade e nome do ingrediente ${index + 1}`}
+                                                        rows="3"
+                                                        required
+                                                    ></textarea>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeItem(index)}
+                                                    className="text-butterscotch hover:text-red-700"
+                                                >
+                                                    Remover Ingrediente
+                                                </button>
+                                            </div>
                                     ))}
                                     </div>
                                     <button

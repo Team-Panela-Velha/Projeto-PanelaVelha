@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "../components/CardReceitas"; // Importando o componente Card
 
@@ -23,7 +23,9 @@ const MaisReceitas = () => {
     <div className="w-[98%] overflow-x-auto snap-x snap-mandatory bg-slate-100 rounded-md">
       <div className="flex 2xl:justify-center gap-3 p-4 ">
         {receitas.map((receita) => (
-          <Card key={receita.id} receita={receita} />
+          <Card 
+            key={receita.id} 
+            receita={receita} />
         ))}
       </div>
     </div>

@@ -67,13 +67,19 @@ const Usuario = () => {
                         <div>
                             <div className="flex justify-between w-5/6 relative max-sm:ml-5  lg:left-24 mt-6">
                                 <h1 className="uppercase font-semibold text-redwood text-3xl">Minhas receitas</h1>
-                                <Link to="/CriarReceita"><div className="relative top-2 bg-slate-100 text-3xl text-redwood w-6 h-6 sm:h-8 sm:w-8 rounded-full flex justify-center items-end hover:bg-redwood hover:text-slate-100 duration-200">+</div></Link>
+                                <Link 
+                                    to="/CriarReceita"
+                                >
+                                    <div className="relative top-2 bg-slate-100 text-3xl text-redwood w-6 h-6 sm:h-8 sm:w-8 rounded-full flex justify-center items-end hover:bg-redwood hover:text-slate-100 duration-200">+</div></Link>
                             </div>
                             {receitasUsuario.length > 0 ? (
                                 <div className="bg-redwood w-full lg:w-[94%] relative lg:left-8 mt-8 rounded-sm">
                                     <div className="flex sm:flex-wrap justify-start relative lg:left-3 gap-2 w-full p-3 rounded-md overflow-x-auto snap-x snap-mandatory">
                                         {receitasUsuario.map((receita) => (
-                                            <Card key={receita.id} receita={receita} />
+                                            <Card 
+                                                key={receita.id} 
+                                                receita={receita} 
+                                            />
                                         ))}
                                     </div>
                                 </div>
@@ -95,7 +101,10 @@ const Usuario = () => {
                                 <div className="bg-redwood w-full lg:w-[94%] relative lg:left-8 mt-8 rounded-sm mb-6">
                                     <div className="flex sm:flex-wrap justify-start relative lg:left-3 gap-2 w-full p-3 rounded-md overflow-x-auto snap-x snap-mandatory">
                                         {receitasFavoritas.map((receita) => (
-                                            <CardReceitasFav key={receita.id} receita={receita} />
+                                            <CardReceitasFav 
+                                                key={receita.id} 
+                                                receita={receita}
+                                            />
                                         ))}
                                     </div>
                                 </div>
@@ -107,7 +116,11 @@ const Usuario = () => {
                         </div>
                     </div>
                     <div className="">
-                        <button onClick={logout} className="text-slate-100 text-lg sm:text-2xl lg:text-lg bg-redwood pt-1 pb-1 pl-4 pr-4 rounded-sm mb-6">Sair</button>
+                        <button 
+                            onClick={logout} 
+                            className="text-slate-100 text-lg sm:text-2xl lg:text-lg bg-redwood pt-1 pb-1 pl-4 pr-4 rounded-sm mb-6">
+                            Sair
+                        </button>
                     </div>
                 </div>
             ) : (

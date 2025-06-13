@@ -23,7 +23,6 @@ const FormAvaliacao = () => {
 
     return (
         <div className="flex flex-col mt-5 mr-3">
-
             <form
                 onSubmit={handleSubmit}
                 className="w-full h-full bg-red-100"
@@ -33,7 +32,6 @@ const FormAvaliacao = () => {
                     <label className="block text-lg sm:text-xl lg:text-lg font-bold text-jet mb-2">
                         <h2>o que você achou dessa receita?</h2>
                     </label>
-
                     <div className="flex space-x-1">
                         {[1, 2, 3, 4, 5].map((star) => (
                             <svg
@@ -65,7 +63,6 @@ const FormAvaliacao = () => {
                         </div>
                         <div className="flex flex-col items-center w-full sm:w-3/4">
                             <div className="mb-4">
-
                                 <input
                                     type="text"
                                     id="nome"
@@ -76,10 +73,8 @@ const FormAvaliacao = () => {
                                     placeholder="Seu nome"
                                     required
                                 />
-
                             </div>
                             <div className="mb-4">
-
                                 <input
                                     type="email"
                                     id="email"
@@ -91,40 +86,37 @@ const FormAvaliacao = () => {
                                     required
                                 />
                             </div>
-
                             <div className="mb-4 max-sm:w-[90%] w-full">
-
-                                <textarea
-                                    id="comentario"
-                                    name="comentario"
-                                    value={formData.comentario}
-                                    onChange={handleChange}
-                                    className="mt-1 bg-transparent block w-full h-44 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood"
-                                    placeholder="Sua opinião sobre a receita"
-                                    rows="4"
-                                    required
-                                ></textarea>
+                              <textarea
+                                  id="comentario"
+                                  name="comentario"
+                                  value={formData.comentario}
+                                  onChange={handleChange}
+                                  className="mt-1 bg-transparent block w-full h-44 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood"
+                                  placeholder="Sua opinião sobre a receita"
+                                  rows="4"
+                                  required
+                              ></textarea>
                             </div>
                             <div className="w-full text-center">
-                            <button
-                                type="submit"
-                                className="w-44 text-center bg-redwood text-white py-2 px-4 mb-10 rounded-full shadow hover:bg-butterscotch focus:outline-none focus:ring-2 focus:ring-redwood"
-                            >
-                                Enviar Avaliação
-                            </button>
+                              <button
+                                  type="submit"
+                                  className="w-44 text-center bg-redwood text-white py-2 px-4 mb-10 rounded-full shadow hover:bg-butterscotch focus:outline-none focus:ring-2 focus:ring-redwood"
+                              >
+                                  Enviar Avaliação
+                              </button>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </form>
             {/* Exibindo o comentário postado, caso exista */}
             {comentarios.map((comentario, index) => (
-                <CardComentario key={index} comentario={comentario} />
+                <CardComentario 
+                key={index} 
+                comentario={comentario} />
             ))}
         </div>
-
     );
 
       return (

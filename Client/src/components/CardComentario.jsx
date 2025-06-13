@@ -1,13 +1,16 @@
-import React from "react";
-
 const CardComentario = ({ comentario }) => {
+    
     const { nome, comentario: texto, avaliacao, data } = comentario;
 
     return (
         <div className="p-4 border-b border-gray-300">
             <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold">{nome}</h3>
-                <p className="text-sm text-gray-500">{data}</p>
+                <h3 className="text-lg font-bold">
+                    {nome}
+                </h3>
+                <p className="text-sm text-gray-500">
+                    {data}
+                </p>
             </div>
             <div className="flex space-x-1 my-2">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -23,7 +26,9 @@ const CardComentario = ({ comentario }) => {
                     </svg>
                 ))}
             </div>
-            <p className="mt-2">{texto}</p>
+            <p className="mt-2">
+                {texto}
+            </p>
         </div>
     );
 };

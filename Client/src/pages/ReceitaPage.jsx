@@ -85,7 +85,10 @@ const ReceitaPage = () => {
                     <div className="flex justify-between pr-3">
                         <div className="flex justify-start gap-3 relative left-2 top-2">
                             {receitaData.categoria.map((categoria) => (
-                                <div key={categoria.id_categoria} className="border-redwood bg-redwoodOP border-2 rounded-full p-[2px] px-2 text-center">
+                                <div 
+                                    key={categoria.id_categoria} 
+                                    className="border-redwood bg-redwoodOP border-2 rounded-full p-[2px] px-2 text-center"
+                                >
                                     <h1 className="text-jet">{categoria.nome_categoria}</h1>
                                 </div>
                             ))}
@@ -104,7 +107,11 @@ const ReceitaPage = () => {
                                 <img className="w-[30rem] h-[18rem] sm:w-[35rem] sm:h-[20rem] lg:w-[30rem] lg:h-[18rem] rounded-sm relative lg:left-3 object-cover object-center-center" src={receitaData.imagem_receita} alt="" />
                             </div>
                             <div className="flex justify-start gap-3 mt-2 pl-3">
-                                <button className="font-semibold text-lg" onClick={favoritar}><i class={`bi text-redwood text-3xl ${favorito ? "bi-heart-fill" : "bi-heart"}`}></i></button>
+                                <button 
+                                className="font-semibold text-lg" 
+                                onClick={favoritar}>
+                                    <i class={`bi text-redwood text-3xl ${favorito ? "bi-heart-fill" : "bi-heart"}`}></i>
+                                </button>
                             </div>
                         </div>
                         <div className="flex flex-col w-[35rem] relative bottom-3">
@@ -145,7 +152,6 @@ const ReceitaPage = () => {
                                     <p className="relative max-sm:bottom-1 bottom-4 uppercase text-center text-xs sm:text-xl lg:text-xs w-16 font-semibold">Serve</p>
                                     <p className="relative max-sm:text-sm max-lg:text-xl max-sm:text-center max-sm:bottom-6 bottom-4 uppercase font-bold mt-5">{receitaData.num_porcao} {receitaData.tipo_porcao}</p>
                                 </div>
-
                             </div>
                         </div>
                     </div>

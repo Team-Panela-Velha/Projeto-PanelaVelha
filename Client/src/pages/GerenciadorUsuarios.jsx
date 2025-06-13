@@ -42,7 +42,10 @@ function GerenciadorUsuarios() {
                     <h2 className="text-redwood text-sm uppercase font-bold p-5 ">Lista de Úsuario :</h2>
                     <div>
                         {usuarios.map((usuario) => (
-                            <div key={usuario.id} className="flex justify-between px-5 py-2">
+                            <div 
+                                key={usuario.id} 
+                                className="flex justify-between px-5 py-2"
+                            >
                                 <h3>{usuario.nome}</h3>
                                 <div className="flex gap-5">
                                     <label>ADM</label>
@@ -58,7 +61,7 @@ function GerenciadorUsuarios() {
                                 </div>
                             </div>
                         ))}
-{/*                         
+                        {/*                         
                         <h3>Matheus Lopes</h3>
                         <div className="flex gap-5">
                             <label>ADM</label>

@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import { useState, useEffect } from "react";
 import axios from "axios"; 
-
 
 const CriarReceita = () => {
     const [formReceita, setFormReceita] = useState({
@@ -22,7 +20,6 @@ const CriarReceita = () => {
     const [usuario, setUsuario] = useState(null);
     const [tiposCategoria, setTiposCategoria] = useState([]);
     const [categoria, setCategoria] = useState([]);
-
 
     async function fetchUsuario(){            // pegando nome e id do usuario
         axios.get('http://127.0.0.1:5000/api/verificar_usuario', {      
@@ -78,9 +75,6 @@ const CriarReceita = () => {
         // console.log("Receita Enviada:", { ...formReceita, modoDePreparo: steps });
         setEnviado(true); // Marca o formulário como enviado
     }
-    
-
-
     // Atualiza os campos do formulário principal
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -176,7 +170,6 @@ const CriarReceita = () => {
             ) : (
             <div className="flex flex-col h-full w-full max-sm:pr-[8%] lg:w-[95%]">
                 <div className="flex flex-col mt-10">
-
                     <h1 className="font-bold text-jet text-6xl text-center">Envie sua Receita</h1>
                     <form
                         onSubmit={criarReceita}
@@ -257,7 +250,6 @@ const CriarReceita = () => {
                                             </select>
                                         </fieldset>
                                     </div>
-
                                     <fieldset className="font-semibold text-chocolate-cosmos pb-1 pt-3 text-md sm:text-xl lg:text-md ">
                                         <legend>Tempo de Preparo*</legend>
                                         <div className="flex"> 
@@ -289,7 +281,6 @@ const CriarReceita = () => {
                                                 className="font-normal text-base pr-2 pl-1 text-md sm:text-xl lg:text-md"
                                             > Minuto(s)</label>
                                         </div>
-                                        
                                     </fieldset>
                                 </div>
                                 <div className="relative top-10 lg:top-20 lg:grid lg:grid-cols-3 lg:gap-x-36 lg:gap-y-0">
@@ -299,7 +290,9 @@ const CriarReceita = () => {
                                         </label>
                                     </div>
                                     {tiposCategoria.map((categoria) => (
-                                        <div key={categoria.id_categoria} className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3 max-lg:mb-2 text-md sm:text-xl lg:text-md">
+                                        <div 
+                                        key={categoria.id_categoria} 
+                                        className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3 max-lg:mb-2 text-md sm:text-xl lg:text-md">
                                             <input
                                                 type="checkbox"
                                                 id={`cat-${categoria.id_categoria}`}
@@ -323,7 +316,10 @@ const CriarReceita = () => {
                                 <h2 className="uppercase font-bold text-redwood pb-5  text-xl sm:text-2xl lg:text-xl">Modo de Preparo</h2>
                                 <div className="space-y-6">
                                     {steps.map((step, index) => (
-                                        <div key={index} className="space-y-3 border-b relative lg:left-8 pb-4">
+                                        <div 
+                                            key={index} 
+                                            className="space-y-3 border-b relative lg:left-8 pb-4"
+                                            >
                                             <div className="flex items-center space-x-4">
                                                 <label className="font-bold uppercase text-chocolate-cosmos">
                                                     Passo {index + 1}:
@@ -333,7 +329,7 @@ const CriarReceita = () => {
                                                 <textarea
                                                     value={step}
                                                     onChange={(e) =>
-                                                        handleStepChange(index, e.target.value)
+                                                    handleStepChange(index, e.target.value)
                                                     }
                                                     className="bg-transparent block w-full h-30 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm sm:placeholder:text-lg lg:placeholder:text-sm"
                                                     placeholder={`Instruções do passo ${index + 1}`}
@@ -397,34 +393,34 @@ const CriarReceita = () => {
                                         </div>
                                     </fieldset>
                                     <div className="space-y-6">
-                                    {items.map((item, index) => (
-                                        <div key={index} className="space-y-3 border-b relative mt-2 pb-4">
-                                            <div className="flex items-center space-x-4">
-                                                <label className="font-bold uppercase text-chocolate-cosmos">
-                                                    Ingrediente {index + 1}:
-                                                </label>
+                                        {items.map((item, index) => (
+                                            <div key={index} className="space-y-3 border-b relative mt-2 pb-4">
+                                                <div className="flex items-center space-x-4">
+                                                    <label className="font-bold uppercase text-chocolate-cosmos">
+                                                        Ingrediente {index + 1}:
+                                                    </label>
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <textarea
+                                                        value={item}
+                                                        onChange={(e) =>
+                                                            handleItemChange(index, e.target.value)
+                                                        }
+                                                        className="bg-transparent block w-full h-11 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm sm:placeholder:text-lg lg:placeholder:text-sm"
+                                                        placeholder={`Quantidade e nome do ingrediente ${index + 1}`}
+                                                        rows="3"
+                                                        required
+                                                    ></textarea>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeItem(index)}
+                                                    className="text-butterscotch hover:text-red-700"
+                                                >
+                                                    Remover Ingrediente
+                                                </button>
                                             </div>
-                                            <div className="flex flex-col">
-                                                <textarea
-                                                    value={item}
-                                                    onChange={(e) =>
-                                                        handleItemChange(index, e.target.value)
-                                                    }
-                                                    className="bg-transparent block w-full h-11 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood placeholder:text-gray-500 placeholder:text-sm sm:placeholder:text-lg lg:placeholder:text-sm"
-                                                    placeholder={`Quantidade e nome do ingrediente ${index + 1}`}
-                                                    rows="3"
-                                                    required
-                                                ></textarea>
-                                            </div>
-                                            <button
-                                                type="button"
-                                                onClick={() => removeItem(index)}
-                                                className="text-butterscotch hover:text-red-700"
-                                            >
-                                                Remover Ingrediente
-                                            </button>
-                                        </div>
-                                    ))}
+                                        ))}
                                     </div>
                                     <button
                                         type="button"
@@ -434,8 +430,7 @@ const CriarReceita = () => {
                                         Adicionar Ingrediente
                                     </button>
                                 </div>
-                            </div>
-                            
+                            </div> 
                         </div>
                         <div className="w-full text-center my-10">
                             <button
