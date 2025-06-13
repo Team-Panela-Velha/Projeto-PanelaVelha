@@ -14,7 +14,7 @@ class UserService:
         if not nome or not senha:
             return {"mensagem": "Username and password are required"}, 400
         
-        usuario = Usuario(nome, senha)
+        usuario = Usuario(nome_usuario=nome, senha_usuario=senha, adm_usuario=False)
         controlador = UserController(usuario)
 
         try:
@@ -40,7 +40,7 @@ class UserService:
         if not nome or not senha:
             return {"error": "Dados inválidos ou ausentes"}, 400
 
-        usuario = Usuario(nome, senha)
+        usuario = Usuario(nome_usuario=nome, senha_usuario=senha, adm_usuario=False)
         controlador = UserController(usuario)
     
         try:
