@@ -22,13 +22,13 @@ class UserService:
             
             if not user:
                 return {"mensagem": "Usuário não encontrado"}, 404
-            if usuario.senha != user[2]:
+            if usuario.senha_usuario != user.senha_usuario:
                 return {"mensagem": "Senha incorreta"}, 401
             
             token = jwt.encode({
-                'usuario_id': user[0],
-                'usuario_nome': user[1],
-                'admin': user[3],
+                'usuario_id': user.id_usuario,
+                'usuario_nome': user.nome_usuario,
+                'admin': user.adm_usuario,
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Expira em 1 hora
             }, current_app.config['SECRET_KEY'], algorithm='HS256')
 
@@ -82,9 +82,3 @@ class UserService:
     #     except Exception as e:
     #         return{"erro": str(e)}, 500
 
-def login(nome, senha):
-    usuario = Usuario.query.filter_by(nome_usuario=nome).first()
-    if not usuario or usuario.senha_usuario != senha:
-        return {"erro": "Usuário ou senha inválidos"}, 401
-    session['id_usuario'] = usuario.id_usuario
-    return {"sucesso": "Login realizado"}, 200

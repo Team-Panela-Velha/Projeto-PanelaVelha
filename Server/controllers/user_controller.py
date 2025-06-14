@@ -16,7 +16,7 @@ class UserController:
 
     def logar(self):
         try:
-            user = Usuario.query.filter_by(nome=self.usuario.nome).first()
+            user = Usuario.query.filter_by(nome_usuario=self.usuario.nome_usuario).first()
             return user
         except Exception as e:
             raise Exception(f"Erro no login: {e}")

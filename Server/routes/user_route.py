@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint, session
-from services.user_service import UserService, login
+from services.user_service import UserService
 from db_model import Usuario
 
 user_route = Blueprint("usuario", __name__)
@@ -9,7 +9,8 @@ def login_route():
     data = request.get_json()
     nome = data.get("nome")
     senha = data.get("senha")
-    return login(nome, senha)
+    response, status = UserService.login(nome, senha)
+    return jsonify(response), status
 
 @user_route.route("/api/cadastro", methods=["POST"])
 def cadastro():

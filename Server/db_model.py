@@ -2,10 +2,11 @@ from extensions import db
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
-    id_usuario = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome_usuario = db.Column(db.String(50), unique=True)
     senha_usuario = db.Column(db.String(255))
     adm_usuario = db.Column(db.Boolean)
+   
 
 class Receita(db.Model):
     __tablename__ = 'receitas'
