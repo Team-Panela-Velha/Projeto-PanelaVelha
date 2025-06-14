@@ -57,3 +57,16 @@ db.query("""
         FOREIGN KEY (id_receita) references receitas(id_receita)
     )
 """)
+
+db.query("""
+    CREATE TABLE IF NOT EXISTS comentarios (
+        id_comentario INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_receita INTEGER NOT NULL,
+        nome TEXT NOT NULL,
+        email TEXT NOT NULL,
+        comentario TEXT NOT NULL,
+        avaliacao INTEGER NOT NULL,
+        data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (id_receita) REFERENCES receitas(id_receita)
+    )
+""")
