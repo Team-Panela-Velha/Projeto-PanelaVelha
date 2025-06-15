@@ -39,3 +39,37 @@ class AvaliacaoService:
             return {"avaliacoes": avaliacoes}, 200
         except Exception as e:
             return {"erro": str(e)}, 500
+
+    @staticmethod
+    def editar_avaliacao(id_avaliacao, estrela_avaliacao, comentario_avaliacao):
+        try:
+            db.query(
+                "UPDATE avaliacoes SET estrela_avaliacao = ?, comentario_avaliacao = ? WHERE id_avaliacao = ?",
+                (estrela_avaliacao, comentario_avaliacao, id_avaliacao)
+            )
+            return {"mensagem": "Avaliação editada com sucesso"}, 200
+        except Exception as e:
+            return {"erro": str(e)}, 500
+
+    @staticmethod
+    def excluir_avaliacao(id_avaliacao):
+        try:
+            db.query(
+                "DELETE FROM avaliacoes WHERE id_avaliacao = ?",
+                (id_avaliacao,)
+            )
+            return {"mensagem": "Avaliação excluída com sucesso"}, 200
+        except Exception as e:
+            return {"erro": str(e)}, 500
+
+    @staticmethod
+    def media_avaliacoes(id_receita):
+        try:
+            row = db.consulta_one(
+                "SELECT AVG(estrela_avaliacao) FROM avaliacoes WHERE id_receita = ?",
+                (id_receita,)
+            )
+            media = float(row[0]) if row and row[0] is not None else 0.0
+            return {"media": media}, 200
+        except Exception as e:
+            return {"erro": str(e)}, 500
