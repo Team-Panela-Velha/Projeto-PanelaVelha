@@ -1,6 +1,6 @@
 from extensions import db
 
-db.query("PRAGMA foreign_keys = ON;")
+# db.query("PRAGMA foreign_keys = OFF;")
 
 db.query("""
     CREATE TABLE if not exists usuarios(
@@ -59,14 +59,14 @@ db.query("""
 """)
 
 db.query("""
-    CREATE TABLE IF NOT EXISTS comentarios (
-        id_comentario INTEGER PRIMARY KEY AUTOINCREMENT,
+    CREATE TABLE IF NOT EXISTS avaliacoes (
+        id_avaliacao INTEGER PRIMARY KEY AUTOINCREMENT,
+        estrela_avaliacao INTEGER NOT NULL,
+        comentario_avaliacao TEXT NOT NULL,
+        data_hora TEXT NOT NULL DEFAULT (datetime('now', '-3 hours')),
+        id_usuario INTEGER NOT NULL,
         id_receita INTEGER NOT NULL,
-        nome TEXT NOT NULL,
-        email TEXT NOT NULL,
-        comentario TEXT NOT NULL,
-        avaliacao INTEGER NOT NULL,
-        data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
         FOREIGN KEY (id_receita) REFERENCES receitas(id_receita)
     )
 """)

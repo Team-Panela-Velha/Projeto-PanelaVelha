@@ -14,10 +14,12 @@ def create_app():
         from routes.favorite_route import favorite_route
         from routes.recipe_route import recipe_route
         from routes.user_route import user_route
+        from routes.avaliacao_route import avaliacao_route
 
         app.register_blueprint(favorite_route)
         app.register_blueprint(recipe_route)
         app.register_blueprint(user_route)
+        app.register_blueprint(avaliacao_route)
 
     registrar_rotas(app)
 

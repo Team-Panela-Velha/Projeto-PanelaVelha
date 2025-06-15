@@ -18,9 +18,11 @@ class GerenciadorDB:                    # classe usada para estabelecer conexao 
 
     def query(self, consulta, parametros=None):
         conexao, cursor = self.conectar()
-
         try: 
-            cursor.execute(consulta, parametros)
+            if parametros is not None:
+                cursor.execute(consulta, parametros)
+            else:
+                cursor.execute(consulta)
             conexao.commit()
             return cursor.lastrowid
         finally:
