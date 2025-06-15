@@ -31,7 +31,8 @@ class AvaliacaoService:
                     "comentario_avaliacao": row[2],
                     "data_hora": row[3],
                     "id_usuario": row[4],
-                    "nome_usuario": row[5]
+                    "nome_usuario": row[5],
+                    "id_receita": id_receita
                 }
                 for row in rows
             ]
