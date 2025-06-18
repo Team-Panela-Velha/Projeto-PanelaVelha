@@ -10,16 +10,17 @@ class AvaliacaoController:
         return AvaliacaoService.listar_avaliacoes(id_receita)
 
     @staticmethod
-    def editar_avaliacao(id_avaliacao, data):
+    def editar_avaliacao(id_avaliacao, data, token):
         return AvaliacaoService.editar_avaliacao(
             id_avaliacao,
             data["estrela_avaliacao"],
-            data["comentario_avaliacao"]
+            data["comentario_avaliacao"],
+            token
         )
 
     @staticmethod
-    def excluir_avaliacao(id_avaliacao):
-        return AvaliacaoService.excluir_avaliacao(id_avaliacao)
+    def excluir_avaliacao(id_avaliacao, token):
+        return AvaliacaoService.excluir_avaliacao(id_avaliacao, token)
 
     @staticmethod
     def media_avaliacoes(id_receita):

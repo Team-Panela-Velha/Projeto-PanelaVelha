@@ -1,5 +1,6 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from controllers.avaliacao_controller import AvaliacaoController
+import jwt
 
 avaliacao_route = Blueprint("avaliacao", __name__)
 
@@ -16,13 +17,15 @@ def adicionar_avaliacao():
 
 @avaliacao_route.route("/api/avaliacoes/<int:id_avaliacao>", methods=["PATCH"])
 def editar_avaliacao(id_avaliacao):
+    token = request.headers.get('Authorization')
     data = request.get_json()
-    response, status = AvaliacaoController.editar_avaliacao(id_avaliacao, data)
+    response, status = AvaliacaoController.editar_avaliacao(id_avaliacao, data, token)
     return jsonify(response), status
 
 @avaliacao_route.route("/api/avaliacoes/<int:id_avaliacao>", methods=["DELETE"])
 def excluir_avaliacao(id_avaliacao):
-    response, status = AvaliacaoController.excluir_avaliacao(id_avaliacao)
+    token = request.headers.get('Authorization')
+    response, status = AvaliacaoController.excluir_avaliacao(id_avaliacao, token)
     return jsonify(response), status
 
 @avaliacao_route.route("/api/avaliacoes/media/<int:id_receita>", methods=["GET"])

@@ -1,4 +1,6 @@
 from extensions import db
+from flask import current_app
+import jwt
 
 class AvaliacaoService:
     @staticmethod
@@ -41,24 +43,58 @@ class AvaliacaoService:
             return {"erro": str(e)}, 500
 
     @staticmethod
-    def editar_avaliacao(id_avaliacao, estrela_avaliacao, comentario_avaliacao):
+    def editar_avaliacao(id_avaliacao, estrela_avaliacao, comentario_avaliacao, token):
         try:
+            if not token:
+                return {"erro": "Token ausente"}, 401
+            decoded = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
+            id_usuario = decoded["usuario_id"]
+
+            # Verifica se a avaliação pertence ao usuário
+            row = db.consulta_one(
+                "SELECT id_usuario FROM avaliacoes WHERE id_avaliacao = ?",
+                (id_avaliacao,)
+            )
+            if not row or row[0] != id_usuario:
+                return {"erro": "Você não tem permissão para editar esta avaliação"}, 403
+
             db.query(
                 "UPDATE avaliacoes SET estrela_avaliacao = ?, comentario_avaliacao = ? WHERE id_avaliacao = ?",
                 (estrela_avaliacao, comentario_avaliacao, id_avaliacao)
             )
             return {"mensagem": "Avaliação editada com sucesso"}, 200
+        except jwt.ExpiredSignatureError:
+            return {"erro": "Token expirado"}, 401
+        except jwt.InvalidTokenError:
+            return {"erro": "Token inválido"}, 401
         except Exception as e:
             return {"erro": str(e)}, 500
 
     @staticmethod
-    def excluir_avaliacao(id_avaliacao):
+    def excluir_avaliacao(id_avaliacao, token):
         try:
+            if not token:
+                return {"erro": "Token ausente"}, 401
+            decoded = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
+            id_usuario = decoded["usuario_id"]
+
+            # Verifica se a avaliação pertence ao usuário
+            row = db.consulta_one(
+                "SELECT id_usuario FROM avaliacoes WHERE id_avaliacao = ?",
+                (id_avaliacao,)
+            )
+            if not row or row[0] != id_usuario:
+                return {"erro": "Você não tem permissão para excluir esta avaliação"}, 403
+
             db.query(
                 "DELETE FROM avaliacoes WHERE id_avaliacao = ?",
                 (id_avaliacao,)
             )
             return {"mensagem": "Avaliação excluída com sucesso"}, 200
+        except jwt.ExpiredSignatureError:
+            return {"erro": "Token expirado"}, 401
+        except jwt.InvalidTokenError:
+            return {"erro": "Token inválido"}, 401
         except Exception as e:
             return {"erro": str(e)}, 500
 
