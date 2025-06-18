@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, current_app
-from Server.controllers.review_controller import AvaliacaoController
+from controllers.review_controller import AvaliacaoController
 import jwt
 
 review_route = Blueprint("avaliacao", __name__)

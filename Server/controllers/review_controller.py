@@ -1,4 +1,4 @@
-from Server.services.review_service import AvaliacaoService
+from services.review_service import AvaliacaoService
 
 class AvaliacaoController:
     @staticmethod
