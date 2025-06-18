@@ -62,7 +62,7 @@ const FormAvaliacao = () => {
                             <p className="text-lg">Matheus Lopes</p>
                         </div>
                         <div className="flex flex-col items-center w-full sm:w-3/4">
-                            <div className="mb-4">
+                            {/* <div className="mb-4">
                                 <input
                                     type="text"
                                     id="nome"
@@ -85,7 +85,7 @@ const FormAvaliacao = () => {
                                     placeholder="Seu e-mail"
                                     required
                                 />
-                            </div>
+                            </div> */}
                             <div className="mb-4 max-sm:w-[90%] w-full">
                               <textarea
                                   id="comentario"

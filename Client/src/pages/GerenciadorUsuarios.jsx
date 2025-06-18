@@ -44,7 +44,7 @@ function GerenciadorUsuarios() {
                         {usuarios.map((usuario) => (
                             <div 
                                 key={usuario.id} 
-                                className="flex justify-between px-5 py-2"
+                                className="flex justify-between px-5 py-2 border-b border-gray-300"
                             >
                                 <h3>{usuario.nome}</h3>
                                 <div className="flex gap-5">

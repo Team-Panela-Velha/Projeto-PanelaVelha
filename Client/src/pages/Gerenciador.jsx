@@ -31,7 +31,7 @@ function Gerenciador() {
             )}   */}
             <div className="flex flex-col items-center gap-10 mt-12">
                 <h1 className="text-5xl font-semibold text-chocolate-cosmos">Gerenciador</h1>
-                <div className="flex gap-5">
+                <div className="flex flex-wrap  justify-center items-center gap-5 pb-5 ">
                     <Link 
                         to="/gerenciadorUsuarios"
                     >
