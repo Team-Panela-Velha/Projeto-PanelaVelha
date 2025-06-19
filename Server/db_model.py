@@ -21,7 +21,9 @@ class Receita(db.Model):
     tempo_hora = db.Column(db.Integer)
     tempo_min = db.Column(db.Integer)
     desc = db.Column(db.String(100))
+    id_categoria = db.Column(db.String(255))
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'))
+    
 
 class Categoria(db.Model):
     __tablename__ = 'categoria'

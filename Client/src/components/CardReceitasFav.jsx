@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 const CardReceitasFav = ({ receita }) => {
   const { id, imagem_receita, nome_receita } = receita;
 
+  
   return (
     <div className="flex flex-col items-center bg-red-100 p-1 rounded-md shadow-xl">
       <Link to={`/receitas/${id}`}>

@@ -1,6 +1,9 @@
-from db_model import Receita, Favorito, Avaliacao
+from db_model import Receita, Favorito, Avaliacao, Categoria
+from controllers.recipe_controller import RecipeController
 from extensions import db
 from sqlalchemy import func
+from flask import jsonify
+import json
 
 class RecipeService:
     @staticmethod
@@ -74,3 +77,45 @@ class RecipeService:
                 for r in receitas
             ]
         }, 200
+
+   
+
+    @staticmethod
+    def categorias():
+        categorias = db.session.query(Categoria.id_categoria, Categoria.nome_categoria, Categoria.imagem_categoria).all()
+        return {
+            "categorias": [
+                {
+                    "id_categoria": c.id_categoria,
+                    "nome_categoria": c.nome_categoria,
+                    "imagem_categoria": c.imagem_categoria
+                }
+                for c in categorias
+            ]
+        }, 200
+    
+
+
+    @staticmethod
+    def postar_receita(dados):
+        try:
+            receita = Receita(
+                nome_receita=dados.get("nome_receita"),
+                imagem_receita=dados.get("imagem_receita"),
+                ingredientes=json.dumps(dados.get("ingredientes", [])),
+                passos_receita= json.dumps(dados.get("passos_receita", [])),
+                num_porcao=int(dados.get("num_porcao")),
+                tipo_porcao=dados.get("tipo_porcao"),
+                id_dificuldade=dados.get("id_dificuldade"),
+                tempo_hora=int(dados.get("tempo_hora")),
+                tempo_min=int(dados.get("tempo_min")),
+                desc=dados.get("desc"),
+                id_usuario=dados.get("id_usuario"),
+                id_categoria=json.dumps(dados.get("categoria", []))
+            )
+            controlador = RecipeController(receita)
+            id_receita = controlador.postar_receita()
+            controlador.inserir_categoria(id_receita)
+            return {"mensagem": "Receita cadastrada com sucesso!"}, 201
+        except Exception as e:
+            return {"erro": str(e)}, 500

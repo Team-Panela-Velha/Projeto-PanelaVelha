@@ -1,5 +1,7 @@
 from extensions import db
 from db_model import Receita, ReceitaCategoria
+import json
+from flask import jsonify
 
 class RecipeController:
     def __init__(self, receita: Receita):
@@ -16,8 +18,10 @@ class RecipeController:
 
     def inserir_categoria(self, id):
         try:
-            for id_categoria in self.receita.categoria:
-                rc = ReceitaCategoria(id_categoria=id_categoria, id=id)
+            lista_string = json.loads(self.receita.id_categoria)
+            lista_int = [int(i) for i in lista_string]
+            for id_categoria in lista_int:
+                rc = ReceitaCategoria(id_categoria=id_categoria, id_receita=id)
                 db.session.add(rc)
             db.session.commit()
         except Exception as e:
