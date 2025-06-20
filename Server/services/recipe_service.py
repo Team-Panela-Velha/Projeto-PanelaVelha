@@ -113,7 +113,9 @@ class RecipeService:
                 id_usuario=dados.get("id_usuario"),
                 id_categoria=json.dumps(dados.get("categoria", []))
             )
+
             controlador = RecipeController(receita)
+
             id_receita = controlador.postar_receita()
             controlador.inserir_categoria(id_receita)
             return {"mensagem": "Receita cadastrada com sucesso!"}, 201
