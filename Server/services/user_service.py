@@ -2,7 +2,6 @@ from flask import current_app, session
 
 from extensions import db
 
-
 from controllers.user_controller import UserController
 from db_model import Usuario
 
@@ -49,7 +48,7 @@ class UserService:
         except Exception as e:
             return {"erro": str(e)}, 500
         
-    def verificar_usuario(token):
+    def verificar_usuario(token):                        # OK
         if not token:
             return {"message": "Token is missing"}, 401
 
@@ -62,23 +61,23 @@ class UserService:
             return {"message": "Invalid token"}, 403
         
     @staticmethod
-    def listar_usuarios():
+    def listar_usuarios():                       # OK
         try:
-            lista_usuarios = db.consulta_all("SELECT id, nome, admin FROM usuarios")
+            lista_usuarios = db.session.query(Usuario).all()
 
             usuarios = [
-                {"id": row[0], "nome": row[1], "admin": row[2]}
-                for row in lista_usuarios
+                {"id": usuario.id_usuario, "nome": usuario.nome_usuario, "admin": usuario.adm_usuario}
+                for usuario in lista_usuarios
             ]
 
             return {"usuarios": usuarios}, 200
         except Exception as e:
             return {"erro": str(e)}, 500
 
-    # def is_admin(id_usuario, is_admin):
-    #     try:
-    #         User_Controller.admin(id_usuario, is_admin)
-    #         return{"sucesso": "admin alterado"}, 200
-    #     except Exception as e:
-    #         return{"erro": str(e)}, 500
+    def is_admin(id_usuario, is_admin):                  # OK
+        try:
+            UserController.admin(id_usuario, is_admin)
+            return{"sucesso": "admin alterado"}, 200
+        except Exception as e:
+            return{"erro": str(e)}, 500
 

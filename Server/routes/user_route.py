@@ -21,19 +21,19 @@ def cadastro():
     response, status = UserService.cadastro(nome, senha)
     return jsonify(response), status
 
-@user_route.route("/api/verificar_usuario", methods=["GET"])
+@user_route.route("/api/verificar_usuario", methods=["GET"])              # OK
 def get_usuario():
     token = request.headers.get('Authorization')
 
     response, status = UserService.verificar_usuario(token)
     return jsonify(response), status
 
-@user_route.route("/api/listar_usuarios", methods=["GET"])
+@user_route.route("/api/listar_usuarios", methods=["GET"])               # OK
 def listar_usuarios():
     response, status = UserService.listar_usuarios()
     return jsonify(response), status
 
-@user_route.route("/api/is_admin", methods=["POST"])
+@user_route.route("/api/is_admin", methods=["POST"])                  # OK
 def is_admin():
     data = request.get_json()
     id_usuario = data.get("id_usuario")

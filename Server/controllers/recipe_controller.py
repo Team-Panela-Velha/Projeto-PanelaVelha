@@ -1,13 +1,12 @@
 from extensions import db
 from db_model import Receita, ReceitaCategoria
 import json
-from flask import jsonify
 
 class RecipeController:
     def __init__(self, receita: Receita):
         self.receita = receita
 
-    def postar_receita(self):
+    def postar_receita(self):                       # OK
         try:
             db.session.add(self.receita)
             db.session.commit()
@@ -16,7 +15,7 @@ class RecipeController:
             db.session.rollback()
             raise Exception(f"Erro ao tentar postar receita: {e}")
 
-    def inserir_categoria(self, id):
+    def inserir_categoria(self, id):                  # OK
         try:
             lista_string = json.loads(self.receita.id_categoria)
             lista_int = [int(i) for i in lista_string]

@@ -84,7 +84,7 @@ function Aside() {
                             )}
                         </li>
                         <li>
-                            {user && user.admin === 1 && (
+                            {user && user.admin == 1 && (
                                 <Link to="/gerenciador" className={`flex items-center ${!isAsideOpen && 'justify-center w-full pb-3'}`}>
                                     {isAsideOpen ? 'Gerenciador' : <i className='bi bi-person-fill'></i>}
                                 </Link>

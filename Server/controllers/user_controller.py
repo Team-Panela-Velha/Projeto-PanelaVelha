@@ -20,3 +20,17 @@ class UserController:
             return user
         except Exception as e:
             raise Exception(f"Erro no login: {e}")
+
+    @staticmethod
+    def admin(id_usuario, is_admin):                       # OK
+        try:
+            if is_admin == 0:
+                usuario = db.session.query(Usuario).filter_by(id_usuario=id_usuario).first()
+                usuario.adm_usuario = 1
+                db.session.commit()
+            if is_admin == 1:
+                usuario = db.session.query(Usuario).filter_by(id_usuario=id_usuario).first()
+                usuario.adm_usuario = 0
+                db.session.commit()
+        except Exception as e:
+            raise Exception(f"Erro ao alterar admin: {e}")
