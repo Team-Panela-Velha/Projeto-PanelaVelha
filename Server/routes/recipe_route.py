@@ -58,7 +58,7 @@ def mostrar_receitas_favoritas(id_usuario):
     return jsonify(response), status
 
 
-@recipe_route.route("/api/receita/<id_receita>", methods=["GET"])
+@recipe_route.route("/api/receita/<id_receita>", methods=["GET"])                   # OK
 def receita(id_receita):
     response, status = RecipeService.receita(id_receita)
     return jsonify(response), status
@@ -67,7 +67,7 @@ def receita(id_receita):
 # ROTA PARA MAPEAR AS CATEGORIAS NA CRIACAO DE RECEITAS
 
 
-@recipe_route.route("/api/categorias", methods=["GET"])
+@recipe_route.route("/api/categorias", methods=["GET"])                     # OK
 def categorias():
     response, status = RecipeService.categorias()
     return jsonify(response), status
@@ -76,7 +76,7 @@ def categorias():
 # ROTAS DE CRIACAO DE RECEITA
 
 
-@recipe_route.route("/api/postar_receita", methods=["POST"])
+@recipe_route.route("/api/postar_receita", methods=["POST"])             # OK
 def postar_receita():
     data = request.get_json()
     
@@ -87,12 +87,14 @@ def postar_receita():
 @recipe_route.route("/api/editar_receita/<id_receita>", methods=["PATCH"])
 def editar_receita(id_receita):
     data = request.get_json()
+    print(data)
     colunas = ", ".join([f"{coluna} = ?" for coluna in data.keys()])
     data = {key: (json.dumps(value) if isinstance(value, list) else value) for key, value in data.items()}
 
     # for item in data.values():              # n altera o valor corretamente
     #     if isinstance(item, list):
     #         item = json.dumps(item)
+    print(data)
 
     valores = tuple(data.values())    
 

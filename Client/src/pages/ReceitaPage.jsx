@@ -37,7 +37,8 @@ const ReceitaPage = () => {
     async function fetchReceita() {
         axios.get(`http://127.0.0.1:5000/api/receita/${id}`)
             .then(response => {
-                setReceitaData(response.data.receita);
+                console.log(response)
+                setReceitaData(response.data);
             })
             .catch(err => console.log(err));
     };
@@ -84,7 +85,7 @@ const ReceitaPage = () => {
                     </div>
                     <div className="flex justify-between pr-3">
                         <div className="flex justify-start gap-3 relative left-2 top-2">
-                            {receitaData.categoria.map((categoria) => (
+                            {receitaData.id_categoria.map((categoria) => (
                                 <div key={categoria.id_categoria} className="border-redwood bg-redwoodOP border-2 rounded-full p-[2px] px-2 text-center">
                                     <h1 className="text-jet">{categoria.nome_categoria}</h1>
                                 </div>

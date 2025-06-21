@@ -11,7 +11,7 @@ class RecipeController:
         try:
             db.session.add(self.receita)
             db.session.commit()
-            return self.receita.id_receitas  # ou id, conforme seu modelo
+            return self.receita.id_receita  # ou id, conforme seu modelo
         except Exception as e:
             db.session.rollback()
             raise Exception(f"Erro ao tentar postar receita: {e}")

@@ -10,7 +10,7 @@ class Usuario(db.Model):
 
 class Receita(db.Model):
     __tablename__ = 'receitas'
-    id_receitas = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_receita = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome_receita = db.Column(db.String(55))
     imagem_receita = db.Column(db.String(255))
     ingredientes = db.Column(db.Text)
@@ -38,13 +38,13 @@ class Dificuldade(db.Model):
 
 class Favorito(db.Model):
     __tablename__ = 'favoritos'
-    id_receita = db.Column(db.Integer, db.ForeignKey('receitas.id_receitas'), primary_key=True)
+    id_receita = db.Column(db.Integer, db.ForeignKey('receitas.id_receita'), primary_key=True)
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'), primary_key=True)
 
 class ReceitaCategoria(db.Model):
     __tablename__ = 'receita_categoria'
     id_categoria = db.Column(db.Integer, db.ForeignKey('categoria.id_categoria'), primary_key=True)
-    id_receita = db.Column(db.Integer, db.ForeignKey('receitas.id_receitas'), primary_key=True)
+    id_receita = db.Column(db.Integer, db.ForeignKey('receitas.id_receita'), primary_key=True)
 
 class Avaliacao(db.Model):
     __tablename__ = 'avaliacao'
@@ -52,4 +52,4 @@ class Avaliacao(db.Model):
     estrela_avaliacao = db.Column(db.Integer)
     comentario_avaliacao = db.Column(db.Text)
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'))
-    id_receita = db.Column(db.Integer, db.ForeignKey('receitas.id_receitas'))
+    id_receita = db.Column(db.Integer, db.ForeignKey('receitas.id_receita'))
