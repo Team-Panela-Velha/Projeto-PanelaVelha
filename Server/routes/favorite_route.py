@@ -7,6 +7,7 @@ favorite_route = Blueprint("favorito", __name__)
 def favorito(id):
     data = request.get_json()
     id_usuario = data.get("id_usuario")
+    print(id_usuario)
     response, status = FavoriteService.favoritar(id_usuario, id)
     return jsonify(response), status
 

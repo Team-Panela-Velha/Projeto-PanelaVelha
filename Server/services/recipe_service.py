@@ -108,10 +108,10 @@ class RecipeService:
                 "id_usuario": receita_data.id_usuario
             }
 
-            return receita, 200
+            return {"receita": receita}, 200
         except Exception as e:
             print(f"Erro ao buscar receita: {e}")
-            return None
+            return {"erro": e}, 500
         
 # --------------------------------------------------------
 
