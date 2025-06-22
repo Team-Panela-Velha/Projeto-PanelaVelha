@@ -84,7 +84,7 @@ def postar_receita():
     return jsonify(response), status
 
 
-@recipe_route.route("/api/editar_receita/<id_receita>", methods=["PATCH"])
+@recipe_route.route("/api/editar_receita/<id_receita>", methods=["PATCH"])              # OK
 def editar_receita(id_receita):
     data = request.get_json()
 
@@ -92,7 +92,7 @@ def editar_receita(id_receita):
     return jsonify(response), status
     
 
-@recipe_route.route("/api/editar_categoria/<id_receita>", methods=["PATCH"])
+@recipe_route.route("/api/editar_categoria/<id_receita>", methods=["PATCH"])            # OK
 def editar_categoria(id_receita):
     data = request.get_json()
     categoria = data.get("categoria")

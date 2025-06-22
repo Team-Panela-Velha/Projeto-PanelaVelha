@@ -17,7 +17,7 @@ class Receita(db.Model):
     passos_receita = db.Column(db.Text)
     num_porcao = db.Column(db.Integer)
     tipo_porcao = db.Column(db.String(45))
-    id_dificuldade = db.Column(db.Integer, db.ForeignKey('dificuldade.id_dificuldade'))
+    dificuldade = db.Column(db.String(45))
     tempo_hora = db.Column(db.Integer)
     tempo_min = db.Column(db.Integer)
     desc = db.Column(db.String(100))
@@ -30,11 +30,6 @@ class Categoria(db.Model):
     id_categoria = db.Column(db.Integer, primary_key=True)
     nome_categoria = db.Column(db.String(55))
     imagem_categoria = db.Column(db.String(255))
-
-class Dificuldade(db.Model):
-    __tablename__ = 'dificuldade'
-    id_dificuldade = db.Column(db.Integer, primary_key=True)
-    descricao_dificuldade = db.Column(db.String(55))
 
 class Favorito(db.Model):
     __tablename__ = 'favoritos'

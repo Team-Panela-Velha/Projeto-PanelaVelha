@@ -100,7 +100,7 @@ class RecipeService:
                 "passos_receita": receita_data.passos_receita,
                 "num_porcao": receita_data.num_porcao,
                 "tipo_porcao": receita_data.tipo_porcao,
-                "id_dificuldade": receita_data.id_dificuldade,
+                "dificuldade": receita_data.dificuldade,
                 "tempo_hora": receita_data.tempo_hora,
                 "tempo_min": receita_data.tempo_min,
                 "desc": receita_data.desc,
@@ -141,7 +141,7 @@ class RecipeService:
                 passos_receita= json.dumps(dados.get("passos_receita", [])),
                 num_porcao=int(dados.get("num_porcao")),
                 tipo_porcao=dados.get("tipo_porcao"),
-                id_dificuldade=dados.get("id_dificuldade"),
+                dificuldade=dados.get("dificuldade"),
                 tempo_hora=int(dados.get("tempo_hora")),
                 tempo_min=int(dados.get("tempo_min")),
                 desc=dados.get("desc"),
@@ -158,7 +158,7 @@ class RecipeService:
             return {"erro": str(e)}, 500
         
     @staticmethod 
-    def editar_receita(id_receita, valores):                         # JOAO ESTA MEXENDO
+    def editar_receita(id_receita, valores):                         # OK
         try:
             RecipeController.editar_receita(valores, id_receita)
             return {"mensagem": "Receita atualizada com sucesso"}, 201
@@ -166,7 +166,7 @@ class RecipeService:
             return {"erro": str(e)}, 500
         
     @staticmethod
-    def editar_categoria(id_receita, categoria):
+    def editar_categoria(id_receita, categoria):                  # OK
         try:
             RecipeController.editar_categoria(id_receita, categoria)
             return {"mensagem": "Categoria atualizada"}, 200
