@@ -87,18 +87,8 @@ def postar_receita():
 @recipe_route.route("/api/editar_receita/<id_receita>", methods=["PATCH"])
 def editar_receita(id_receita):
     data = request.get_json()
-    print(data)
-    colunas = ", ".join([f"{coluna} = ?" for coluna in data.keys()])
-    data = {key: (json.dumps(value) if isinstance(value, list) else value) for key, value in data.items()}
 
-    # for item in data.values():              # n altera o valor corretamente
-    #     if isinstance(item, list):
-    #         item = json.dumps(item)
-    print(data)
-
-    valores = tuple(data.values())    
-
-    response, status = RecipeService.editar_receita(colunas, valores, id_receita)
+    response, status = RecipeService.editar_receita(data, id_receita)
     return jsonify(response), status
     
 
@@ -107,7 +97,7 @@ def editar_categoria(id_receita):
     data = request.get_json()
     categoria = data.get("categoria")
 
-    response, status = RecipeService.editar_categoria(id_receita, categoria)
+    response, status = RecipeService.editar_categoria(int(id_receita), categoria)
     return jsonify(response), status
 
 

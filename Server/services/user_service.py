@@ -56,9 +56,9 @@ class UserService:
             decoded = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
             return {"usuario": decoded["usuario_nome"], "id_usuario": decoded["usuario_id"], "admin": decoded["admin"]}, 200
         except jwt.ExpiredSignatureError:
-            return {"message": "Token expired"}, 402
+            return {"message": "Token expired"}, 401
         except jwt.InvalidTokenError:
-            return {"message": "Invalid token"}, 403
+            return {"message": "Invalid token"}, 401
         
     @staticmethod
     def listar_usuarios():                       # OK

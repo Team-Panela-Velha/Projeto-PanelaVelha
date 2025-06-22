@@ -12,6 +12,7 @@ const EditarReceita = () => {
     async function fetchReceita() {
         axios.get(`http://127.0.0.1:5000/api/receita/${id}`)         // puxando as informaçoes ja existentes da receita
         .then(response => {
+            console.log(response)
             setReceita(response.data.receita);
         })
         .catch(err => console.log(err));
@@ -61,7 +62,7 @@ const EditarReceita = () => {
 
             setSteps(JSON.parse(receita.passos_receita))
             setItems(JSON.parse(receita.ingredientes))
-            setCategoria(receita.categoria.map(categoria => categoria.id_categoria))
+            setCategoria(receita.id_categoria.map(categoria => categoria.id_categoria))
         }
     }, [receita])
 

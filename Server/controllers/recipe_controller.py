@@ -28,9 +28,14 @@ class RecipeController:
             raise Exception(f"Erro ao inserir categoria: {e}")
 
     @staticmethod
-    def editar_receita(receita, novos_dados):
+    def editar_receita(id_receita, novos_dados):
         try:
+            receita = db.session.query(Receita).filter_by(id_receita = id_receita).first()
+
             for key, value in novos_dados.items():
+                if isinstance(value, list):
+                    value = json.dumps(value)
+
                 setattr(receita, key, value)
             db.session.commit()
         except Exception as e:
@@ -38,11 +43,12 @@ class RecipeController:
             raise Exception(f"Erro ao editar receita: {e}")
 
     @staticmethod
-    def editar_categoria(id, categorias):
+    def editar_categoria(id_receita, categorias):
         try:
-            ReceitaCategoria.query.filter_by(id=id).delete()
+            print(categorias)
+            ReceitaCategoria.query.filter_by(id_receita=id_receita).delete()
             for id_categoria in categorias:
-                rc = ReceitaCategoria(id_categoria=id_categoria, id=id)
+                rc = ReceitaCategoria(id_categoria=id_categoria, id_receita=id_receita)
                 db.session.add(rc)
             db.session.commit()
         except Exception as e:

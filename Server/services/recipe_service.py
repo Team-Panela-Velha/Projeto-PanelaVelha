@@ -159,5 +159,16 @@ class RecipeService:
         
     @staticmethod 
     def editar_receita(id_receita, valores):                         # JOAO ESTA MEXENDO
-        RecipeController.editar_receita(valores, id_receita)
-        return {"mensagem": "Receita atualizada com sucesso"}, 201
+        try:
+            RecipeController.editar_receita(valores, id_receita)
+            return {"mensagem": "Receita atualizada com sucesso"}, 201
+        except Exception as e:
+            return {"erro": str(e)}, 500
+        
+    @staticmethod
+    def editar_categoria(id_receita, categoria):
+        try:
+            RecipeController.editar_categoria(id_receita, categoria)
+            return {"mensagem": "Categoria atualizada"}, 200
+        except Exception as e:
+            return{"erro": str(e)}, 500

@@ -4,7 +4,7 @@ from db_model import Usuario
 
 user_route = Blueprint("usuario", __name__)
 
-@user_route.route("/api/login", methods=["POST"])
+@user_route.route("/api/login", methods=["POST"])                   # OK
 def login_route():
     data = request.get_json()
     nome = data.get("nome")
