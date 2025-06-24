@@ -1,7 +1,7 @@
-from db_model import Receita, Favorito, Avaliacao, Categoria, ReceitaCategoria
+from db_model import Receita, Usuario, Favorito, Avaliacao, Categoria, ReceitaCategoria
 from controllers.recipe_controller import RecipeController
 from extensions import db
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from flask import jsonify
 import json
 
@@ -14,14 +14,14 @@ class RecipeService:
         return {
             "receitas": [
                 {
-                    "id_receitas": r.id_receita,
+                    "id_receita": r.id_receita,
                     "nome_receita": r.nome_receita,
                     "imagem_receita": r.imagem_receita
                 }
                 for r in receitas
             ]
-        }, 200
-
+        }, 200 
+    
     @staticmethod
     def mostrar_receitas_populares():
         # Exemplo: receitas com mais favoritos
@@ -33,7 +33,7 @@ class RecipeService:
                 func.count(Favorito.id_usuario).label("total_favoritos")
             )
             .outerjoin(Favorito, Receita.id_receita == Favorito.id_receita)
-            .group_by(Receita.id_receita)
+            .group_by(Receita.id_receita, Receita.nome_receita, Receita.imagem_receita)
             .order_by(func.count(Favorito.id_usuario).desc())
             .limit(10)
             .all()
@@ -41,16 +41,14 @@ class RecipeService:
         return {
             "receitas": [
                 {
-                    "id_receitas": r.id_receita,
+                    "id_receita": r.id_receita,
                     "nome_receita": r.nome_receita,
                     "imagem_receita": r.imagem_receita,
                     "total_favoritos": r.total_favoritos
                 }
                 for r in receitas
             ]
-        }, 200
-
-    @staticmethod
+        }, 200    @staticmethod
     def mostrar_receitas_mais():
         # Exemplo: receitas com mais avaliações positivas (estrela > 3)
         receitas = (
@@ -61,7 +59,7 @@ class RecipeService:
                 func.count(Avaliacao.id_avaliacao).label("avaliacoes_positivas")
             )
             .outerjoin(Avaliacao, (Receita.id_receita == Avaliacao.id_receita) & (Avaliacao.estrela_avaliacao > 3))
-            .group_by(Receita.id_receita)
+            .group_by(Receita.id_receita, Receita.nome_receita, Receita.imagem_receita)
             .order_by(func.count(Avaliacao.id_avaliacao).desc())
             .limit(10)
             .all()
@@ -69,10 +67,129 @@ class RecipeService:
         return {
             "receitas": [
                 {
-                    "id_receitas": r.id_receita,
+                    "id_receita": r.id_receita,
                     "nome_receita": r.nome_receita,
                     "imagem_receita": r.imagem_receita,
                     "avaliacoes_positivas": r.avaliacoes_positivas
+                }
+                for r in receitas
+            ]
+        }, 200    
+        
+    @staticmethod
+    def mostrar_receitas_categoria(categoria): #ok
+        receitas = (
+            db.session.query(
+                Receita.id_receita,
+                Receita.nome_receita,
+                Receita.imagem_receita
+            )
+            .join(ReceitaCategoria, Receita.id_receita == ReceitaCategoria.id_receita)
+            .join(Categoria, ReceitaCategoria.id_categoria == Categoria.id_categoria)
+            .filter(Categoria.nome_categoria == categoria)
+            .group_by(Receita.id_receita, Receita.nome_receita, Receita.imagem_receita)
+            .limit(10)
+            .all()
+        )
+
+        return {
+            "receitas": [
+                {
+                    "id_receita": r.id_receita,
+                    "nome_receita": r.nome_receita,
+                    "imagem_receita": r.imagem_receita
+                }
+                for r in receitas
+            ]
+        }, 200
+    
+    @staticmethod
+    def slider_categoria(categoria):                # Testar
+            subq = (
+                db.session.query(
+                    Favorito.id_receita,
+                    func.count(Favorito.id_receita).label('num_favoritos')
+                )
+                .join(Receita, Favorito.id_receita == Receita.id_receita)
+                .join(ReceitaCategoria, Receita.id_receita == ReceitaCategoria.id_receita)
+                .join(Categoria, ReceitaCategoria.id_categoria == Categoria.id_categoria)
+                .filter(Categoria.nome_categoria == categoria)
+                .group_by(Favorito.id_receita)
+                .order_by(desc('num_favoritos'))
+                .limit(10)
+                .subquery()
+            )
+
+            receitas = (
+                db.session.query(
+                    Receita.id_receita,
+                    Receita.nome_receita,
+                    Receita.imagem_receita
+                )
+                .join(subq, Receita.id_receita == subq.c.id_receita)
+                .join(ReceitaCategoria, Receita.id_receita == ReceitaCategoria.id_receita)
+                .join(Categoria, ReceitaCategoria.id_categoria == Categoria.id_categoria)
+                .filter(Categoria.nome_categoria == categoria)
+                .order_by(desc(subq.c.num_favoritos))
+                .all()
+            )
+
+            resultado = [
+                {
+                    "id_receita": rec.id_receita,
+                    "nome_receita": rec.nome_receita,
+                    "imagem_receita": rec.imagem_receita
+                }
+                for rec in receitas
+            ]
+
+            return {"receitas": resultado}, 200
+
+    @staticmethod
+    def mostrar_receitas_usuario(usuario):          # Testar
+        receitas = (
+            db.session.query(
+                Receita.id_receita,
+                Receita.nome_receita,
+                Receita.imagem_receita
+            )
+            .innerjoin(Usuario, (Receita.id_usuario == Usuario.id_usuario))
+            .where(Usuario.id_usuario == usuario)
+            .limit(10)
+            .all()
+        )
+
+        return {
+            "receitas": [
+                {
+                    "id_receita": r.id_receita,
+                    "nome_receita": r.nome_receita,
+                    "imagem_receita": r.imagem_receita
+                }
+                for r in receitas
+            ]
+        }, 200
+    
+    @staticmethod
+    def mostrar_receitas_favoritas(usuario):        # Testar
+        receitas = (
+            db.session.query(
+                Receita.id_receita,
+                Receita.nome_receita,
+                Receita.imagem_receita
+            )
+            .innerjoin(Favorito, (Receita.id_usuario == Favorito.id_usuario))
+            .where(Usuario.id_usuario == usuario)
+            .limit(10)
+            .all()
+        )
+
+        return {
+            "receitas": [
+                {
+                    "id_receita": r.id_receita,
+                    "nome_receita": r.nome_receita,
+                    "imagem_receita": r.imagem_receita
                 }
                 for r in receitas
             ]

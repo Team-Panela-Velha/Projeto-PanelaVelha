@@ -10,7 +10,7 @@ recipe_route = Blueprint("receita", __name__)
 # ROTAS DE RECEITA (GET)
 
 
-@recipe_route.route("/api/mostrar_receitas", methods=["GET"])
+@recipe_route.route("/api/mostrar_receitas", methods=["GET"]) #fazendo
 def mostrar_receitas():
     response, status = RecipeService.mostrar_receitas()
     return jsonify(response), status
@@ -34,25 +34,25 @@ def mostrar_receita_pesquisa(pesquisa):
     return jsonify(response), status
 
 
-@recipe_route.route("/api/mostrar_receitas_categoria/<categoria>", methods=["GET"])
+@recipe_route.route("/api/mostrar_receitas_categoria/<categoria>", methods=["GET"])     # ok
 def mostrar_receitas_categoria(categoria):
     response, status = RecipeService.mostrar_receitas_categoria(categoria)
     return jsonify(response), status
 
 
-@recipe_route.route("/api/slider_categoria/<categoria>", methods=["GET"])
+@recipe_route.route("/api/slider_categoria/<categoria>", methods=["GET"])               # ok
 def slider_categoria(categoria):
     response, status = RecipeService.slider_categoria(categoria)
     return jsonify(response), status
 
 
-@recipe_route.route("/api/mostrar_receitas_usuario/<id_usuario>", methods=["GET"])
+@recipe_route.route("/api/mostrar_receitas_usuario/<id_usuario>", methods=["GET"])      # Testar
 def mostrar_receitas_usuario(id_usuario):
     response, status = RecipeService.mostrar_receitas_usuario(id_usuario)
     return jsonify(response), status
 
 
-@recipe_route.route("/api/mostrar_receitas_favoritas/<id_usuario>", methods=["GET"])
+@recipe_route.route("/api/mostrar_receitas_favoritas/<id_usuario>", methods=["GET"])    # Testar
 def mostrar_receitas_favoritas(id_usuario):
     response, status = RecipeService.mostrar_receitas_favoritas(id_usuario)
     return jsonify(response), status
