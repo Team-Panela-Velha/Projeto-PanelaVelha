@@ -49,12 +49,16 @@ function GerenciadorCategorias() {
         e.preventDefault();
         await axios.post("http://127.0.0.1:5000/api/criar_categoria", { nome_categoria: nome });
         setSearchTerm("");
+
+        fetchCategorias();
     }
 
     async function editarCategoria(e, id, nome) {
         e.preventDefault();
         await axios.patch("http://127.0.0.1:5000/api/editar_categoria", { id_categoria: id, nome_categoria: nome });
         setSearchTerm("");
+
+        fetchCategorias();
     }
 
     async function excluirCategoria(e, id) {

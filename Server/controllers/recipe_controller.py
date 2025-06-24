@@ -45,7 +45,6 @@ class RecipeController:
     @staticmethod
     def editar_categoria(id_receita, categorias):
         try:
-            print(categorias)
             ReceitaCategoria.query.filter_by(id_receita=id_receita).delete()
             for id_categoria in categorias:
                 rc = ReceitaCategoria(id_categoria=id_categoria, id_receita=id_receita)

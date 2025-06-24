@@ -27,9 +27,8 @@ class Receita(db.Model):
 
 class Categoria(db.Model):
     __tablename__ = 'categoria'
-    id_categoria = db.Column(db.Integer, primary_key=True)
+    id_categoria = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome_categoria = db.Column(db.String(55))
-    imagem_categoria = db.Column(db.String(255))
 
 class Favorito(db.Model):
     __tablename__ = 'favoritos'

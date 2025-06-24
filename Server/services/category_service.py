@@ -1,17 +1,17 @@
 from extensions import db
 import json
-from models.category_model import Categoria
+from db_model import Categoria
 from controllers.category_controller import Category_Controller
 
 class CategoryService:
     @staticmethod
     def mostrar_categorias():
         try:
-            categorias_array =  db.consulta_all("SELECT id_categoria, nome_categoria from categorias")
+            categorias_data = db.session.query(Categoria).all()
 
             categorias = [
-                {"id": row[0], "nome_categoria": row[1]}
-                for row in categorias_array
+                {"id": cat.id_categoria, "nome_categoria": cat.nome_categoria}
+                for cat in categorias_data
             ]
 
             return {"categorias": categorias}, 200
@@ -19,16 +19,14 @@ class CategoryService:
             return {"erro": str(e)}, 500
     
     @staticmethod
-    def pesquisar_categoria(pesquisa):
+    def pesquisar_categoria(pesquisa):                            # OK
         try:
-            categorias_array = db.consulta_all(
-                """SELECT id_categoria, nome_categoria from categorias
-                WHERE nome_categoria LIKE ? || '%' """, (pesquisa, )  # , no final para mostrar q é uma tupla. sem a virgula, ele recebe as letras separadamente
-            )
+            categorias_data = db.session.query(Categoria).\
+            filter(Categoria.nome_categoria.like(f"{pesquisa}%")).all()
 
             categorias = [
-                {"id": row[0], "nome_categoria": row[1]}
-                for row in categorias_array
+                {"id": cat.id_categoria, "nome_categoria": cat.nome_categoria}
+                for cat in categorias_data
             ]
 
             return {"categorias": categorias}, 200
@@ -38,8 +36,8 @@ class CategoryService:
     
     # ================ serviços que precisam do controlador ======================
     
-    def criar_categoria(nome_categoria):
-        categoria = Categoria(nome_categoria)
+    def criar_categoria(nome_categoria):                                  # OK
+        categoria = Categoria(nome_categoria=nome_categoria)
         controlador = Category_Controller(categoria)
 
         try:
@@ -49,7 +47,7 @@ class CategoryService:
             return {"erro": str(e)}, 500
         
     @staticmethod
-    def editar_categoria(nome, id_categoria):
+    def editar_categoria(nome, id_categoria):                            # OK
         try:
             Category_Controller.editar_categoria(nome, id_categoria)
             return {"mensagem": "Categoria atualizada com sucesso"}, 200
@@ -57,7 +55,7 @@ class CategoryService:
             return{"erro": str(e)}, 400
     
     @staticmethod
-    def excluir_categoria(id_categoria):
+    def excluir_categoria(id_categoria):                        # OK
         try:
             Category_Controller.excluir_categoria(id_categoria)
             return {"sucesso": "Categoria excluída com sucesso"}, 200
