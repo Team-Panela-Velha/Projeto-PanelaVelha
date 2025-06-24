@@ -24,7 +24,7 @@ function Gerenciador() {
     
     return (
         <>
-            {/* {user && user.admin === 1 ? (
+            {/* {user && user.admin == 1 ? (
                 <p>usuario é adm</p>
             ) : (
                 <p>n tem permissao</p>

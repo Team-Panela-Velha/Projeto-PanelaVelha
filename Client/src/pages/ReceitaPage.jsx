@@ -17,26 +17,22 @@ const ReceitaPage = () => {
     const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
 
     async function fetchUsuario() {           // para favoritar e avaliar receitas
-        if (token) {
-            try {
-                const response = await axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
-                    headers: {
-                        "Authorization": token,
-                    },
-                })
+        try {
+            const response = await axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
+                headers: {
+                    "Authorization": token,
+                },
+            });
 
-                setUsuario(response.data);
+            setUsuario(response.data);
 
-            } catch (err) {
-                if (err.response && err.response.status != 401) {
-                    console.warn("Token inválido ou expirado");
-                    localStorage.removeItem("jwtToken");
-                } else {
-                    console.error("Erro ao buscar dados do usuário: ", err);
-                }
+        } catch (err) {
+            if (err.response && err.response.status != 401) {
+                console.log("Token inválido ou expirado");
+                localStorage.removeItem("jwtToken");
+            } else {
+                console.error("Erro ao buscar dados do usuário: ", err);
             }
-        } else {
-            console.log("Usuário não identificado");
         }
     };
     
@@ -194,7 +190,7 @@ const ReceitaPage = () => {
                         </div>
                     </div>
                     <div className="mt-16">
-                        <FormAvaliacao />
+                        <FormAvaliacao id_receita={id} id_usuario={usuario?.id_usuario} nome_usuario={usuario?.usuario || "Anônimo"}/>
                     </div>
                 </div>
             ) : (

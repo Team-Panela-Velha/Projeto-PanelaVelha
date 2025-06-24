@@ -1,23 +1,17 @@
-const CardComentario = ({ comentario }) => {
-    
-    const { nome, comentario: texto, avaliacao, data } = comentario;
-
+const CardComentario = ({ nome, comentario, aval }) => {
     return (
         <div className="p-4 border-b border-gray-300">
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold">
                     {nome}
                 </h3>
-                <p className="text-sm text-gray-500">
-                    {data}
-                </p>
             </div>
             <div className="flex space-x-1 my-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                     <svg
                         key={star}
                         xmlns="http://www.w3.org/2000/svg"
-                        fill={avaliacao >= star ? "gold" : "gray"}
+                        fill={aval >= star ? "gold" : "gray"}
                         viewBox="0 0 576 512"
                         height="1em"
                         className="star-solid"
@@ -27,7 +21,7 @@ const CardComentario = ({ comentario }) => {
                 ))}
             </div>
             <p className="mt-2">
-                {texto}
+                {comentario}
             </p>
         </div>
     );
