@@ -42,8 +42,9 @@ class ReceitaCategoria(db.Model):
 
 class Avaliacao(db.Model):
     __tablename__ = 'avaliacao'
-    id_avaliacao = db.Column(db.Integer, primary_key=True)
+    id_avaliacao = db.Column(db.Integer, primary_key=True, autoincrement=True)
     estrela_avaliacao = db.Column(db.Integer)
     comentario_avaliacao = db.Column(db.Text)
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'))
     id_receita = db.Column(db.Integer, db.ForeignKey('receitas.id_receita'))
+    usuario = db.relationship("Usuario", backref="avaliacoes")

@@ -117,13 +117,12 @@ class RecipeService:
 
     @staticmethod
     def categorias():                          # OK
-        categorias = db.session.query(Categoria.id_categoria, Categoria.nome_categoria, Categoria.imagem_categoria).all()
+        categorias = db.session.query(Categoria.id_categoria, Categoria.nome_categoria).all()
         return {
             "categorias": [
                 {
                     "id_categoria": c.id_categoria,
                     "nome_categoria": c.nome_categoria,
-                    "imagem_categoria": c.imagem_categoria
                 }
                 for c in categorias
             ]

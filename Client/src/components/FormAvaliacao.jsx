@@ -1,10 +1,37 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import CardComentario from "./CardComentario";
 import Logo from "../assets/img/logo.png";
 
-const FormAvaliacao = () => {
-    const [formData, setFormData] = useState({ nome: "", email: "", comentario: "", avaliacao: 0 });
+import axios from "axios";
+
+const FormAvaliacao = ({ id_receita, id_usuario, nome_usuario }) => {
+    const [formData, setFormData] = useState({ usuario: id_usuario, comentario: "", avaliacao: 0 });
     const [comentarios, setComentarios] = useState([]);
+
+    async function fetchComentarios() {
+      try {
+        const response = await axios.get(`http://127.0.0.1:5000/api/avaliacoes/${id_receita}`);
+
+        setComentarios(response.data.avaliacoes);
+      } catch (err) {
+        console.log(err);
+      }
+    } 
+    
+    useEffect(() => {
+      fetchComentarios();
+    }, []);
+
+    async function enviarComentario() {
+      axios.post("http://127.0.0.1:5000/api/criar_avaliacao", 
+        {
+          "id_usuario": formData.usuario,
+          "comentario": formData.comentario,
+          "avaliacao": formData.avaliacao,
+          "id_receita": id_receita
+        }
+      );
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,8 +44,9 @@ const FormAvaliacao = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setComentarios([...comentarios, { ...formData, data: new Date().toLocaleDateString("pt-BR") }]);
-        setFormData({ nome: "", email: "", comentario: "", avaliacao: 0 });
+        setFormData({ usuario: id_usuario, comentario: "", avaliacao: 0 });
+
+        enviarComentario();
     };
 
     return (
@@ -59,7 +87,7 @@ const FormAvaliacao = () => {
                     <div className="flex max-sm:flex-col w-full sm:w-10/12 h-full">
                         <div className="w-full sm:w-1/4 flex flex-col justify-start items-center text-center max-sm:mb-3 sm:m-6">
                             <img className="rounded-full w-14 h-14 mb-2" src={ Logo } alt="Logo Panela Velha" />
-                            <p className="text-lg">Matheus Lopes</p>
+                            <p className="text-lg">{nome_usuario}</p>
                         </div>
                         <div className="flex flex-col items-center w-full sm:w-3/4">
                             {/* <div className="mb-4">
@@ -111,114 +139,15 @@ const FormAvaliacao = () => {
                 </div>
             </form>
             {/* Exibindo o comentário postado, caso exista */}
-            {comentarios.map((comentario, index) => (
+            {comentarios.map((avaliacao) => (
                 <CardComentario 
-                key={index} 
-                comentario={comentario} />
+                key={avaliacao.id_avaliacao} 
+                nome={avaliacao.nome_usuario} 
+                comentario={avaliacao.comentario_avaliacao}
+                aval={avaliacao.estrela_avaliacao}/>
             ))}
         </div>
     );
-
-      return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md p-6 bg-white rounded-lg shadow-md"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Avalie a Receita</h2>
-
-    <div className="mb-4">
-      <label
-        htmlFor="nome"
-        className="block text-sm font-medium text-gray-700"
-      >
-        Nome
-      </label>
-      <input
-        type="text"
-        id="nome"
-        name="nome"
-        value={formData.nome}
-        onChange={handleChange}
-        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Seu nome"
-        required
-      />
-    </div>
-
-    <div className="mb-4">
-      <label
-        htmlFor="email"
-        className="block text-sm font-medium text-gray-700"
-      >
-        E-mail
-      </label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Seu e-mail"
-        required
-      />
-    </div>
-
-    <div className="mb-4">
-      <label
-        htmlFor="comentario"
-        className="block text-sm font-medium text-gray-700"
-      >
-        Comentário
-      </label>
-      <textarea
-        id="comentario"
-        name="comentario"
-        value={formData.comentario}
-        onChange={handleChange}
-        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Sua opinião sobre a receita"
-        rows="4"
-        required
-      ></textarea>
-    </div>
-
-    <div className="mb-6">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        Avaliação
-      </label>
-      <div className="flex space-x-1">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <svg
-            key={star}
-            onClick={() => handleStarClick(star)}
-            xmlns="http://www.w3.org/2000/svg"
-            fill={formData.avaliacao >= star ? "gold" : "gray"}
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="w-6 h-6 cursor-pointer"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.324 7.125a1 1 0 00.95.69h7.496c.969 0 1.372 1.24.588 1.81l-6.064 4.46a1 1 0 00-.364 1.118l2.324 7.125c.3.921-.755 1.688-1.54 1.118l-6.064-4.46a1 1 0 00-1.176 0l-6.064 4.46c-.785.57-1.84-.197-1.54-1.118l2.324-7.125a1 1 0 00-.364-1.118L2.061 12.55c-.785-.57-.38-1.81.588-1.81h7.496a1 1 0 00.95-.69l2.324-7.125z"
-            />
-          </svg>
-        ))}
-      </div>
-    </div>
-
-    <button
-      type="submit"
-      className="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    >
-      Enviar Avaliação
-    </button>
-          </form>
-        </div>
-      );
 };
 
 export default FormAvaliacao;
