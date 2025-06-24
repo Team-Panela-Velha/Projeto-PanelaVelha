@@ -190,7 +190,7 @@ const ReceitaPage = () => {
                         </div>
                     </div>
                     <div className="mt-16">
-                        <FormAvaliacao id_receita={id} id_usuario={usuario.id_usuario} nome_usuario={usuario.usuario}/>
+                        <FormAvaliacao id_receita={id} id_usuario={usuario?.id_usuario} nome_usuario={usuario?.usuario || "Anônimo"}/>
                     </div>
                 </div>
             ) : (
