@@ -16,24 +16,34 @@ const ReceitaPage = () => {
 
     const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
 
-
     async function fetchUsuario() {           // para favoritar e avaliar receitas
-        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
-            headers: {
-                "Authorization": token, // Passa o token no cabeçalho Authorization
-            },
-        })
-            .then(response => {
-                setUsuario(response.data);
-            })
-            .catch(err => console.error("Erro ao buscar dados do usuário: ", err))
-    };
+        if (token) {
+            try {
+                const response = await axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
+                    headers: {
+                        "Authorization": token,
+                    },
+                })
 
+                setUsuario(response.data);
+
+            } catch (err) {
+                if (err.response && err.response.status != 401) {
+                    console.warn("Token inválido ou expirado");
+                    localStorage.removeItem("jwtToken");
+                } else {
+                    console.error("Erro ao buscar dados do usuário: ", err);
+                }
+            }
+        } else {
+            console.log("Usuário não identificado");
+        }
+    };
+    
     useEffect(() => {
         fetchUsuario();
     }, []);
-
-
+    
     async function fetchReceita() {
         axios.get(`http://127.0.0.1:5000/api/receita/${id}`)
             .then(response => {
@@ -49,14 +59,19 @@ const ReceitaPage = () => {
     async function favoritar(e) {
         e.preventDefault()
         setFavorito(!favorito);
-        axios.post(`http://127.0.0.1:5000/api/favorito/${id}`, {
-            "id_usuario": usuario.id
-        })
-            .then(response => {
-                console.log(response.data)
+        if (usuario) {
+            axios.post(`http://127.0.0.1:5000/api/favorito/${id}`, {
+                "id_usuario": usuario.id_usuario
             })
-            .catch(err => console.log(err))
+                .then(response => {
+                    console.log(response.data)
+                })
+                .catch(err => console.log(err))
+        } else {
+            console.log("Usuário não identificado");
+        }
     }
+    
     async function checarFavorito() {         // para verificar quando o usuario acessar a pag
         axios.get(`http://127.0.0.1:5000/api/checar_favorito/${id}`, {
             headers: {
@@ -65,7 +80,6 @@ const ReceitaPage = () => {
         })
             .then(response => {
                 setFavorito(response.data.favorito);
-                console.log(response.data);
             })
             .catch(err => console.log(err))
     }
@@ -84,11 +98,8 @@ const ReceitaPage = () => {
                     </div>
                     <div className="flex justify-between pr-3">
                         <div className="flex justify-start gap-3 relative left-2 top-2">
-                            {receitaData.categoria.map((categoria) => (
-                                <div 
-                                    key={categoria.id_categoria} 
-                                    className="border-redwood bg-redwoodOP border-2 rounded-full p-[2px] px-2 text-center"
-                                >
+                            {receitaData.id_categoria.map((categoria) => (
+                                <div key={categoria.id_categoria} className="border-redwood bg-redwoodOP border-2 rounded-full p-[2px] px-2 text-center">
                                     <h1 className="text-jet">{categoria.nome_categoria}</h1>
                                 </div>
                             ))}

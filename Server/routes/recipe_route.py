@@ -1,8 +1,7 @@
 from flask import request, jsonify, Blueprint
-import sqlite3
 import json
 from extensions import db
-from models.recipe_model import Receita
+
 from services.recipe_service import RecipeService
 
 recipe_route = Blueprint("receita", __name__)
@@ -59,7 +58,7 @@ def mostrar_receitas_favoritas(id_usuario):
     return jsonify(response), status
 
 
-@recipe_route.route("/api/receita/<id_receita>", methods=["GET"])
+@recipe_route.route("/api/receita/<id_receita>", methods=["GET"])                   # OK
 def receita(id_receita):
     response, status = RecipeService.receita(id_receita)
     return jsonify(response), status
@@ -68,7 +67,7 @@ def receita(id_receita):
 # ROTA PARA MAPEAR AS CATEGORIAS NA CRIACAO DE RECEITAS
 
 
-@recipe_route.route("/api/categorias", methods=["GET"])
+@recipe_route.route("/api/categorias", methods=["GET"])                     # OK
 def categorias():
     response, status = RecipeService.categorias()
     return jsonify(response), status
@@ -77,7 +76,7 @@ def categorias():
 # ROTAS DE CRIACAO DE RECEITA
 
 
-@recipe_route.route("/api/postar_receita", methods=["POST"])
+@recipe_route.route("/api/postar_receita", methods=["POST"])             # OK
 def postar_receita():
     data = request.get_json()
     
@@ -85,28 +84,20 @@ def postar_receita():
     return jsonify(response), status
 
 
-@recipe_route.route("/api/editar_receita/<id_receita>", methods=["PATCH"])
+@recipe_route.route("/api/editar_receita/<id_receita>", methods=["PATCH"])              # OK
 def editar_receita(id_receita):
     data = request.get_json()
-    colunas = ", ".join([f"{coluna} = ?" for coluna in data.keys()])
-    data = {key: (json.dumps(value) if isinstance(value, list) else value) for key, value in data.items()}
 
-    # for item in data.values():              # n altera o valor corretamente
-    #     if isinstance(item, list):
-    #         item = json.dumps(item)
-
-    valores = tuple(data.values())    
-
-    response, status = RecipeService.editar_receita(colunas, valores, id_receita)
+    response, status = RecipeService.editar_receita(data, id_receita)
     return jsonify(response), status
     
 
-@recipe_route.route("/api/editar_categoria/<id_receita>", methods=["PATCH"])
+@recipe_route.route("/api/editar_categoria/<id_receita>", methods=["PATCH"])            # OK
 def editar_categoria(id_receita):
     data = request.get_json()
     categoria = data.get("categoria")
 
-    response, status = RecipeService.editar_categoria(id_receita, categoria)
+    response, status = RecipeService.editar_categoria(int(id_receita), categoria)
     return jsonify(response), status
 
 

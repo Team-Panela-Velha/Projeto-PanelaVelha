@@ -1,49 +1,66 @@
-import sqlite3
+from extensions import db
+from db_model import Receita, ReceitaCategoria
 import json
 
-from extensions import db
-from models.recipe_model import Receita
-
-class Recipe_Controller:
+class RecipeController:
     def __init__(self, receita: Receita):
         self.receita = receita
 
-    def postar_receita(self):
+    def postar_receita(self):                       # OK
         try:
-            categoria = json.dumps(self.receita.categoria)
-            lastrowid = db.query("INSERT INTO receitas (nome_receita, imagem_receita, ingredientes, passos_receita, num_porcao, tipo_porcao, id_categoria, dificuldade, tempo_hora, tempo_min, desc, id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (self.receita.nome, self.receita.imagem, self.receita.ingredientes, self.receita.passos, self.receita.num_porcao, self.receita.tipo_porcao, categoria, self.receita.dificuldade, self.receita.tempo_hora, self.receita.tempo_min, self.receita.desc, self.receita.id_usuario))
-            return lastrowid
-        except sqlite3.Error as e:
+            db.session.add(self.receita)
+            db.session.commit()
+            return self.receita.id_receita  # ou id, conforme seu modelo
+        except Exception as e:
+            db.session.rollback()
             raise Exception(f"Erro ao tentar postar receita: {e}")
- 
-    def inserir_categoria(self, id_receita):
+
+    def inserir_categoria(self, id):                  # OK
         try:
-            for id_categoria in self.receita.categoria:
-                db.query("INSERT INTO receita_categoria (id_categoria, id_receita) values (?, ?)", (id_categoria, id_receita))
-                
-        except sqlite3.Error as e:
+            lista_string = json.loads(self.receita.id_categoria)
+            lista_int = [int(i) for i in lista_string]
+            for id_categoria in lista_int:
+                rc = ReceitaCategoria(id_categoria=id_categoria, id_receita=id)
+                db.session.add(rc)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
             raise Exception(f"Erro ao inserir categoria: {e}")
-        
+
     @staticmethod
-    def editar_receita(colunas, valores, id_receita):
+    def editar_receita(id_receita, novos_dados):
         try:
-            db.query(f"UPDATE receitas SET {colunas} WHERE id_receita = ?", (*valores, id_receita))
-        except sqlite3.Error as e:
+            receita = db.session.query(Receita).filter_by(id_receita = id_receita).first()
+
+            for key, value in novos_dados.items():
+                if isinstance(value, list):
+                    value = json.dumps(value)
+
+                setattr(receita, key, value)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
             raise Exception(f"Erro ao editar receita: {e}")
-        
+
     @staticmethod
-    def editar_categoria(id_receita, categoria):
+    def editar_categoria(id_receita, categorias):
         try:
-            db.query("DELETE from receita_categoria WHERE id_receita = ?", id_receita)
-            
-            for id_categoria in categoria:
-                db.query("INSERT INTO receita_categoria (id_categoria, id_receita) values (?, ?)", (id_categoria, id_receita))
-        except sqlite3.Error as e:
+            print(categorias)
+            ReceitaCategoria.query.filter_by(id_receita=id_receita).delete()
+            for id_categoria in categorias:
+                rc = ReceitaCategoria(id_categoria=id_categoria, id_receita=id_receita)
+                db.session.add(rc)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
             raise Exception(f"Erro ao editar categoria: {e}")
-        
+
     @staticmethod
-    def excluir_receita(id_receita):
+    def excluir_receita(id):
         try:
-            db.query("DELETE from receitas WHERE id_receita = ?", (id_receita, ))
-        except sqlite3.Error as e:
+            ReceitaCategoria.query.filter_by(id=id).delete()
+            Receita.query.filter_by(id=id).delete()
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
             raise Exception(f"Erro ao excluir receita: {e}")

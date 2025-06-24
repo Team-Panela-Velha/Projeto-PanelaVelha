@@ -12,11 +12,13 @@ const EditarReceita = () => {
     async function fetchReceita() {
         axios.get(`http://127.0.0.1:5000/api/receita/${id}`)         // puxando as informaçoes ja existentes da receita
         .then(response => {
+            console.log(response)
             setReceita(response.data.receita);
+            setCategoria(response.data.receita.id_categoria.map(cat => cat.id_categoria))
         })
         .catch(err => console.log(err));
     };
-
+    
     async function fetchCategorias() {        // pegar todas as categorias do banco de dados
         axios.get("http://127.0.0.1:5000/api/categorias")
         .then(response => {
@@ -61,7 +63,7 @@ const EditarReceita = () => {
 
             setSteps(JSON.parse(receita.passos_receita))
             setItems(JSON.parse(receita.ingredientes))
-            setCategoria(receita.categoria.map(categoria => categoria.id_categoria))
+            setCategoria(receita.id_categoria.map(categoria => categoria.id_categoria))
         }
     }, [receita])
 
@@ -309,23 +311,21 @@ const EditarReceita = () => {
                                             Categorias*
                                         </label>
                                     </div>
-                                    {tiposCategoria.map((categoria) => (
-                                        <div 
-                                            key={categoria.id_categoria} 
-                                            className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3 max-lg:mb-2 text-md sm:text-xl lg:text-md"
-                                        >
+                                    {tiposCategoria.map((categorias) => (
+                                        <div key={categorias.id_categoria} className="flex items-center gap-2 w-72 leading-none h-3 relative bottom-3 max-lg:mb-2 text-md sm:text-xl lg:text-md">
                                             <input
                                                 type="checkbox"
-                                                id={`cat-${categoria.id_categoria}`}
-                                                value={categoria.id_categoria}
+                                                id={`cat-${categorias.id_categoria}`}
+                                                value={categorias.id_categoria}
+                                                checked={categoria.includes(categorias.id_categoria)}
                                                 className="w-4 h-4 text-red-500 border-gray-300 rounded focus:ring-red-500"
-                                                onChange={(e) => handleCategoriaChange(e, categoria.id_categoria)}
+                                                onChange={(e) => handleCategoriaChange(e, categorias.id_categoria)}
                                             />
                                             <label
-                                                htmlFor={`cat-${categoria.id_categoria}`}
+                                                htmlFor={`cat-${categorias.id_categoria}`}
                                                 className="text-gray-700"
                                             >
-                                                {categoria.nome_categoria}
+                                                {categorias.nome_categoria}
                                             </label>
                                         </div>
                                     ))}

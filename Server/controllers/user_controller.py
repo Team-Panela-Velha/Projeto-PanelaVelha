@@ -1,31 +1,36 @@
-import sqlite3
-
 from extensions import db
-from models.user_model import Usuario
+from db_model import Usuario
 
 
-class User_Controller:
+class UserController:
     def __init__(self, usuario: Usuario):
         self.usuario = usuario
 
     def cadastrar(self):
         try:
-            db.query("INSERT INTO usuarios (nome, senha) values (?, ?)", (self.usuario.nome, self.usuario.senha))
-            # db.query("INSERT INTO usuarios (nome, senha, admin) values (?, ?, ?)", ("teste_admin", "teste123", 1))
-        except sqlite3.Error as e:
+            db.session.add(self.usuario)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
             raise Exception(f"Erro ao cadastrar usuário no banco: {e}")
-        
+
     def logar(self):
         try:
-            user = db.consulta_one("SELECT * from usuarios where nome = ?", (self.usuario.nome,))
+            user = Usuario.query.filter_by(nome_usuario=self.usuario.nome_usuario).first()
             return user
-        except sqlite3.Error as e:
+        except Exception as e:
             raise Exception(f"Erro no login: {e}")
-        
+
     @staticmethod
-    def admin(id_usuario, is_admin):
+    def admin(id_usuario, is_admin):                       # OK
         try:
-            if is_admin == 0: db.query("UPDATE usuarios SET admin = 1 WHERE id = ?", (id_usuario,))
-            if is_admin == 1: db.query("UPDATE usuarios SET admin = 0 WHERE id = ?", (id_usuario,))
-        except sqlite3.Error as e:
+            if is_admin == 0:
+                usuario = db.session.query(Usuario).filter_by(id_usuario=id_usuario).first()
+                usuario.adm_usuario = 1
+                db.session.commit()
+            if is_admin == 1:
+                usuario = db.session.query(Usuario).filter_by(id_usuario=id_usuario).first()
+                usuario.adm_usuario = 0
+                db.session.commit()
+        except Exception as e:
             raise Exception(f"Erro ao alterar admin: {e}")

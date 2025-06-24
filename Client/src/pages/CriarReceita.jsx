@@ -28,6 +28,7 @@ const CriarReceita = () => {
             },
         })
         .then(response => {
+            console.log(response.data);
             setUsuario(response.data);
         })
         .catch(err => console.error("Erro ao buscar dados do usuário: ", err))

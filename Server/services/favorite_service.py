@@ -1,20 +1,32 @@
 from flask import current_app
 from extensions import db
+from db_model import Favorito
+
 import jwt
 
 class FavoriteService:
     @staticmethod
     def favoritar(id_usuario, id_receita):
+        if not id_usuario:
+            return {"erro": "usuário não identificado"}
+        
         try:
-            checarFavorito = db.consulta_one("SELECT * from favoritos WHERE id_usuario = ? AND id_receita = ?", (id_usuario, id_receita))
+            checarFavorito = db.session.query(Favorito).\
+            filter(Favorito.id_usuario == id_usuario and Favorito.id_receita == id_receita).first()
 
             if not checarFavorito:
-                db.query("INSERT into favoritos (id_usuario, id_receita) values (?, ?)", (id_usuario, id_receita))
+                temporario = Favorito(id_receita=id_receita, id_usuario=id_usuario)
+                db.session.add(temporario)
+                db.session.commit()
+                
                 return {"mensagem": "receita favoritada"}, 200
             else:
-                db.query("DELETE from favoritos WHERE id_receita = ?", (id_receita,))
+                Favorito.query.filter_by(id_receita=id_receita).delete()
+                db.session.commit()
+
                 return {"mensagem": "receita desfavoritada"}, 200
         except Exception as e:
+            db.session.rollback()
             return {"erro": str(e)}, 500
         
     
@@ -26,8 +38,9 @@ class FavoriteService:
         decoded = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
         id_usuario = decoded["usuario_id"]
 
-        checarFavorito = db.consulta_one("SELECT * from favoritos WHERE id_usuario = ? AND id_receita = ?", (id_usuario, id_receita))
-
+        checarFavorito = db.session.query(Favorito).\
+        filter(Favorito.id_usuario == id_usuario and Favorito.id_receita == id_receita).first()
+        
         if not checarFavorito:
             return {"favorito": False}, 200
         else:
