@@ -28,7 +28,7 @@ def mostrar_receitas_mais():
     return jsonify(response), status
 
 
-@recipe_route.route("/api/mostrar_receitas/<pesquisa>", methods=["GET"]) #verificar o por que não funciona
+@recipe_route.route("/api/mostrar_receitas/<pesquisa>", methods=["GET"]) #ok
 def mostrar_receita_pesquisa(pesquisa):
     response, status = RecipeService.mostrar_receita_pesquisa(pesquisa)
     return jsonify(response), status

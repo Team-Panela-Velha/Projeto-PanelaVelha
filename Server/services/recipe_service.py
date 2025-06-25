@@ -79,7 +79,28 @@ class RecipeService:
             ]
         }, 200    
         
-        # lucas:
+    @staticmethod
+    def mostrar_receita_pesquisa(pesquisa):
+        # Pesquisa receitas pelo nome (case-insensitive, parcial)
+        receitas = (
+            db.session.query(
+                Receita.id_receita,
+                Receita.nome_receita,
+                Receita.imagem_receita
+            )
+            .filter(Receita.nome_receita.ilike(f"%{pesquisa}%"))
+            .all()
+        )
+        return {
+            "receitas": [
+                {
+                    "id_receita": r.id_receita,
+                    "nome_receita": r.nome_receita,
+                    "imagem_receita": r.imagem_receita
+                }
+                for r in receitas
+            ]
+        }, 200
         
     @staticmethod
     def mostrar_receitas_categoria(categoria): #ok
