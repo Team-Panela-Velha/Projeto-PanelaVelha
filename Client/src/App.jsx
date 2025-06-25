@@ -13,15 +13,18 @@ function App() {
 
     return (
 
-        <SidebarProvider>
-            <div className="flex min-h-screen bg-peaches overflow-x-hidden">
 
-                <BrowserRouter>
+        <div className="flex min-h-screen bg-peaches overflow-x-hidden">
+
+            <BrowserRouter>
+                <SidebarProvider>
                     <Aside />
                     <Content />
-                </BrowserRouter>
-            </div>
-        </SidebarProvider>
+                </SidebarProvider>
+
+            </BrowserRouter>
+        </div>
+
 
     );
 }
