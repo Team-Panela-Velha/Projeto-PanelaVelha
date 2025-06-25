@@ -57,8 +57,8 @@ class RecipeController:
     @staticmethod
     def excluir_receita(id):
         try:
-            ReceitaCategoria.query.filter_by(id=id).delete()
-            Receita.query.filter_by(id=id).delete()
+            ReceitaCategoria.query.filter_by(id_receita=id).delete()
+            Receita.query.filter_by(id_receita=id).delete()
             db.session.commit()
         except Exception as e:
             db.session.rollback()

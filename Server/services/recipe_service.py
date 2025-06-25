@@ -316,3 +316,10 @@ class RecipeService:
             return {"mensagem": "Categoria atualizada"}, 200
         except Exception as e:
             return{"erro": str(e)}, 500
+        
+    def excluir_receita(id_receita):
+        try:
+            RecipeController.excluir_receita(id_receita)
+            return {"mensagem": "Receita excluída"}, 200
+        except Exception as e:
+            return{"erro": str(e)}, 500
