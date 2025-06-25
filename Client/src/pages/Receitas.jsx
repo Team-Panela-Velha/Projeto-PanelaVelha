@@ -16,7 +16,7 @@ const Receitas = () => {
     useEffect(() => {
         fetchReceitas();
     }, []);
-
+    
     return (
         <div className="w-full h-screen">
             <div className="flex flex-col gap-10 mt-8">
@@ -27,7 +27,7 @@ const Receitas = () => {
                     <div className="flex flex-wrap justify-center gap-4 sm:gap-10 w-[98%] sm:w-[86.7%] bg-slate-100 pt-5 pb-4 rounded-md">
                         {receitas.map((receita) => (
                             <Card  
-                                key={receita.id} 
+                                key={receita.id_receita} 
                                 receita={receita} />
                         ))}
                     </div>

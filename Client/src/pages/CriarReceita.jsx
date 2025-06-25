@@ -68,7 +68,7 @@ const CriarReceita = () => {
                 "tempo_min": formReceita.tempoPreparoM,
                 "tempo_hora": formReceita.tempoPreparoH,
                 "desc": formReceita.desc,
-                "id_usuario": usuario.id
+                "id_usuario": usuario.id_usuario
             })
         .then(response => console.log(response))
         .catch(err => console.log(err))

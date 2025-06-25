@@ -9,7 +9,7 @@ def create_app():
     app.config["SECRET_KEY"] = "a31f6cf0dec107d67ab60dd2bd08c78998cdcf3f58cf79d3713e7812b01c1e1f"
     
     # Configuração do banco de dados MySQL
-    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:admin@localhost:3306/db_panela_velha"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:joao123@localhost:3306/db_panela_velha"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)  # Inicializa o banco com o app

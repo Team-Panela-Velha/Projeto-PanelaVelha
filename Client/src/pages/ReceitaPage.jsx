@@ -43,6 +43,7 @@ const ReceitaPage = () => {
     async function fetchReceita() {
         axios.get(`http://127.0.0.1:5000/api/receita/${id}`)
             .then(response => {
+                console.log(response.data)
                 setReceitaData(response.data.receita);
             })
             .catch(err => console.log(err));

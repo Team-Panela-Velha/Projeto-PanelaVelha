@@ -102,7 +102,7 @@ const Usuario = () => {
                                     <div className="flex sm:flex-wrap justify-start relative lg:left-3 gap-2 w-full p-3 rounded-md overflow-x-auto snap-x snap-mandatory">
                                         {receitasFavoritas.map((receita) => (
                                             <CardReceitasFav 
-                                                key={receita.id} 
+                                                key={receita.id_receita} 
                                                 receita={receita}
                                             />
                                         ))}

@@ -224,7 +224,9 @@ class RecipeService:
     @staticmethod
     def receita(id_receita):                          # OK
         try:
-            receita_data = db.session.query(Receita).filter_by(id_receita=id_receita).first()
+            receita_data = db.session.query(Receita).\
+            join(Usuario, Receita.id_usuario == Usuario.id_usuario).\
+            filter(Receita.id_receita == id_receita).first()
 
             categoria_data = db.session.query(Categoria).\
             join(ReceitaCategoria, Categoria.id_categoria == ReceitaCategoria.id_categoria).\
@@ -248,7 +250,7 @@ class RecipeService:
                 "tempo_min": receita_data.tempo_min,
                 "desc": receita_data.desc,
                 "id_categoria": categorias,
-                "id_usuario": receita_data.id_usuario
+                "nome_usuario": receita_data.usuario.nome_usuario
             }
 
             return {"receita": receita}, 200

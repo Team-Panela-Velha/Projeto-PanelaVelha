@@ -23,6 +23,7 @@ class Receita(db.Model):
     desc = db.Column(db.String(100))
     id_categoria = db.Column(db.String(255))
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'))
+    usuario = db.relationship("Usuario", backref="receitas")
     
 
 class Categoria(db.Model):
