@@ -1,5 +1,5 @@
 from extensions import db
-from db_model import Receita, ReceitaCategoria
+from db_model import Receita, ReceitaCategoria, Favorito, Avaliacao
 import json
 
 class RecipeController:
@@ -57,7 +57,13 @@ class RecipeController:
     @staticmethod
     def excluir_receita(id):
         try:
+            # Exclui avaliações relacionadas à receita
+            Avaliacao.query.filter_by(id_receita=id).delete()
+            # Exclui favoritos relacionados à receita
+            Favorito.query.filter_by(id_receita=id).delete()
+            # Exclui categorias relacionadas à receita
             ReceitaCategoria.query.filter_by(id_receita=id).delete()
+            # Exclui a receita
             Receita.query.filter_by(id_receita=id).delete()
             db.session.commit()
         except Exception as e:
