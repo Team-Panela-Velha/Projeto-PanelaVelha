@@ -48,7 +48,9 @@ class RecipeService:
                 }
                 for r in receitas
             ]
-        }, 200    @staticmethod
+        }, 200   
+        
+    @staticmethod
     def mostrar_receitas_mais():
         # Exemplo: receitas com mais avaliações positivas (estrela > 3)
         receitas = (
@@ -75,6 +77,8 @@ class RecipeService:
                 for r in receitas
             ]
         }, 200    
+        
+        # lucas:
         
     @staticmethod
     def mostrar_receitas_categoria(categoria): #ok
@@ -104,7 +108,7 @@ class RecipeService:
         }, 200
     
     @staticmethod
-    def slider_categoria(categoria):                # Testar
+    def slider_categoria(categoria):                # ok
             subq = (
                 db.session.query(
                     Favorito.id_receita,
@@ -146,14 +150,14 @@ class RecipeService:
             return {"receitas": resultado}, 200
 
     @staticmethod
-    def mostrar_receitas_usuario(usuario):          # Testar
+    def mostrar_receitas_usuario(usuario):          # ok
         receitas = (
             db.session.query(
                 Receita.id_receita,
                 Receita.nome_receita,
                 Receita.imagem_receita
             )
-            .innerjoin(Usuario, (Receita.id_usuario == Usuario.id_usuario))
+            .join(Usuario, (Receita.id_usuario == Usuario.id_usuario))
             .where(Usuario.id_usuario == usuario)
             .limit(10)
             .all()
@@ -178,8 +182,8 @@ class RecipeService:
                 Receita.nome_receita,
                 Receita.imagem_receita
             )
-            .innerjoin(Favorito, (Receita.id_usuario == Favorito.id_usuario))
-            .where(Usuario.id_usuario == usuario)
+            .join(Favorito, Receita.id_receita == Favorito.id_receita)
+            .filter(Favorito.id_usuario == usuario)
             .limit(10)
             .all()
         )

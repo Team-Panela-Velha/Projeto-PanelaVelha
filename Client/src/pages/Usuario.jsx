@@ -30,14 +30,14 @@ const Usuario = () => {
 
 
     async function fetchReceitasUsuario() {
-        axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_usuario/${usuario.id}`)
+        axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_usuario/${usuario.id_usuario}`)
             .then(response => {
                 setReceitasUsuario(response.data.receitas);
             })
     }
 
     async function fetchReceitasFavoritas() {
-        axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_favoritas/${usuario.id}`)
+        axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_favoritas/${usuario.id_usuario}`)
             .then(response => {
                 setReceitasFavoritas(response.data.receitas);
             })

@@ -46,13 +46,13 @@ def slider_categoria(categoria):
     return jsonify(response), status
 
 
-@recipe_route.route("/api/mostrar_receitas_usuario/<id_usuario>", methods=["GET"])      # Testar
+@recipe_route.route("/api/mostrar_receitas_usuario/<id_usuario>", methods=["GET"])      # ok
 def mostrar_receitas_usuario(id_usuario):
     response, status = RecipeService.mostrar_receitas_usuario(id_usuario)
     return jsonify(response), status
 
 
-@recipe_route.route("/api/mostrar_receitas_favoritas/<id_usuario>", methods=["GET"])    # Testar
+@recipe_route.route("/api/mostrar_receitas_favoritas/<id_usuario>", methods=["GET"])    # ok
 def mostrar_receitas_favoritas(id_usuario):
     response, status = RecipeService.mostrar_receitas_favoritas(id_usuario)
     return jsonify(response), status
