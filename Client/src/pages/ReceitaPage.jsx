@@ -101,13 +101,13 @@ const ReceitaPage = () => {
                                 </div>
                             ))}
                         </div>
-                        <div>
+                        {/* <div>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
                             <i class="bi bi-star-fill"></i>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="flex max-lg:flex-col justify-around items-center mt-5 mb-10 mr-3 bg-red-100 shadow-xl pt-3 pb-3">
                         <div className="flex flex-col m-2" >

@@ -61,6 +61,8 @@ function GerenciadorUsuarios() {
                         <h2 className="text-redwood text-sm uppercase font-bold p-5 ">Lista de Úsuario :</h2>
                         <div>
                             {usuarios.map((usuario) => (
+                                usuario.id === user.id_usuario ? null : (  
+                                
                                 <div 
                                     key={usuario.id} 
                                     className="flex justify-between px-5 py-2 border-b border-gray-300"
@@ -75,7 +77,7 @@ function GerenciadorUsuarios() {
                                         />
                                     </div>
                                 </div>
-                            ))}
+                            )))}
                         </div>
                     </div>
                 </div>
