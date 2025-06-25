@@ -10,25 +10,25 @@ recipe_route = Blueprint("receita", __name__)
 # ROTAS DE RECEITA (GET)
 
 
-@recipe_route.route("/api/mostrar_receitas", methods=["GET"]) #fazendo
+@recipe_route.route("/api/mostrar_receitas", methods=["GET"]) #ok
 def mostrar_receitas():
     response, status = RecipeService.mostrar_receitas()
     return jsonify(response), status
 
 
-@recipe_route.route("/api/mostrar_receitas_populares", methods=["GET"])     
+@recipe_route.route("/api/mostrar_receitas_populares", methods=["GET"])     #ok
 def mostrar_receitas_populares():
     response, status = RecipeService.mostrar_receitas_populares()
     return jsonify(response), status
 
 
-@recipe_route.route("/api/mostrar_receitas_mais", methods=["GET"])
+@recipe_route.route("/api/mostrar_receitas_mais", methods=["GET"]) #ok
 def mostrar_receitas_mais():
     response, status = RecipeService.mostrar_receitas_mais()
     return jsonify(response), status
 
 
-@recipe_route.route("/api/mostrar_receitas/<pesquisa>", methods=["GET"])
+@recipe_route.route("/api/mostrar_receitas/<pesquisa>", methods=["GET"]) #verificar o por que não funciona
 def mostrar_receita_pesquisa(pesquisa):
     response, status = RecipeService.mostrar_receita_pesquisa(pesquisa)
     return jsonify(response), status

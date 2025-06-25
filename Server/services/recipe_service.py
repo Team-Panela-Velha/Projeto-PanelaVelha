@@ -60,7 +60,8 @@ class RecipeService:
                 Receita.imagem_receita,
                 func.count(Avaliacao.id_avaliacao).label("avaliacoes_positivas")
             )
-            .outerjoin(Avaliacao, (Receita.id_receita == Avaliacao.id_receita) & (Avaliacao.estrela_avaliacao > 3))
+            .outerjoin(Avaliacao, Receita.id_receita == Avaliacao.id_receita)
+            .filter((Avaliacao.estrela_avaliacao == None) | (Avaliacao.estrela_avaliacao > 3))
             .group_by(Receita.id_receita, Receita.nome_receita, Receita.imagem_receita)
             .order_by(func.count(Avaliacao.id_avaliacao).desc())
             .limit(10)
