@@ -83,7 +83,8 @@ function Aside() {
                                 </Link>
                             )}
                         </li>
-                        <li>
+
+                        <li className='pb-2 duration-100 hover:text-chocolate-cosmos'>  
                             {user && user.admin == 1 && (
                                 <Link to="/gerenciador" className={`flex items-center ${!isAsideOpen && 'justify-center w-full pb-3'}`}>
                                     {isAsideOpen ? 'Gerenciador' : <i class="bi bi-gear-fill"></i>}
