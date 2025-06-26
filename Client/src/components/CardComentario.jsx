@@ -1,7 +1,8 @@
 const CardComentario = ({ nome, comentario, aval }) => {
     return (
         <div className="p-4 border-b border-gray-300">
-            <div className="flex items-center justify-between">
+            <div className="flex justify-between">
+                <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold">
                     {nome}
                 </h3>
@@ -20,10 +21,14 @@ const CardComentario = ({ nome, comentario, aval }) => {
                     </svg>
                 ))}
             </div>
-            <p className="mt-2">
-                {comentario}
-            </p>
+            </div>
+            <div>
+                <p className="mt-2">
+                    {comentario}
+                </p>
+            </div>
         </div>
+
     );
 };
 

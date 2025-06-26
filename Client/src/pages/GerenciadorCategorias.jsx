@@ -152,7 +152,7 @@ function GerenciadorCategorias() {
                                                         <div className="flex justify-end gap-2">
                                                             <button
                                                                 onClick={() => setShowEditModal(false)}
-                                                                className="px-4 py-2 rounded bg-yellow-400 hover:bg-yellow-500 text-black"
+                                                                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-black"
                                                             >
                                                                 Cancelar
                                                             </button>
@@ -186,7 +186,7 @@ function GerenciadorCategorias() {
                                                         <div className="flex justify-center gap-2">
                                                             <button
                                                                 onClick={() => setShowModalDeletar(false)}
-                                                                className="px-4 py-2 rounded bg-yellow-400 hover:bg-yellow-500 text-black"
+                                                                className="px-4 py-2 rounded  bg-gray-300 hover:bg-gray-400 text-black"
                                                             >
                                                                 Cancelar
                                                             </button>
@@ -233,7 +233,7 @@ function GerenciadorCategorias() {
                                                     setCategoria("",
                                                     setShowModalCriar(false));
                                                 }}
-                                                className="px-4 py-2 rounded bg-butterscotch hover:bg-gray-400"
+                                                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
                                             >
                                                 Cancelar
                                             </button>

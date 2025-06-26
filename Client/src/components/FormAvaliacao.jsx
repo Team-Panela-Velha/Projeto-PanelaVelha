@@ -9,28 +9,28 @@ const FormAvaliacao = ({ id_receita, id_usuario, nome_usuario }) => {
     const [comentarios, setComentarios] = useState([]);
 
     async function fetchComentarios() {
-      try {
-        const response = await axios.get(`http://127.0.0.1:5000/api/avaliacoes/${id_receita}`);
+        try {
+            const response = await axios.get(`http://127.0.0.1:5000/api/avaliacoes/${id_receita}`);
 
-        setComentarios(response.data.avaliacoes);
-      } catch (err) {
-        console.log(err);
-      }
-    } 
-    
+            setComentarios(response.data.avaliacoes);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
-      fetchComentarios();
+        fetchComentarios();
     }, []);
 
     async function enviarComentario() {
-      axios.post("http://127.0.0.1:5000/api/criar_avaliacao", 
-        {
-          "id_usuario": formData.usuario,
-          "comentario": formData.comentario,
-          "avaliacao": formData.avaliacao,
-          "id_receita": id_receita
-        }
-      );
+        axios.post("http://127.0.0.1:5000/api/criar_avaliacao",
+            {
+                "id_usuario": formData.usuario,
+                "comentario": formData.comentario,
+                "avaliacao": formData.avaliacao,
+                "id_receita": id_receita
+            }
+        );
     }
 
     const handleChange = (e) => {
@@ -86,7 +86,7 @@ const FormAvaliacao = ({ id_receita, id_usuario, nome_usuario }) => {
                 <div className="flex w-full justify-start">
                     <div className="flex max-sm:flex-col w-full sm:w-10/12 h-full">
                         <div className="w-full sm:w-1/4 flex flex-col justify-start items-center text-center max-sm:mb-3 sm:m-6">
-                            <img className="rounded-full w-14 h-14 mb-2" src={ Logo } alt="Logo Panela Velha" />
+                            <img className="rounded-full w-14 h-14 mb-2" src={Logo} alt="Logo Panela Velha" />
                             <p className="text-lg">{nome_usuario}</p>
                         </div>
                         <div className="flex flex-col items-center w-full sm:w-3/4">
@@ -115,24 +115,24 @@ const FormAvaliacao = ({ id_receita, id_usuario, nome_usuario }) => {
                                 />
                             </div> */}
                             <div className="mb-4 max-sm:w-[90%] w-full">
-                              <textarea
-                                  id="comentario"
-                                  name="comentario"
-                                  value={formData.comentario}
-                                  onChange={handleChange}
-                                  className="mt-1 bg-transparent block w-full h-44 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood"
-                                  placeholder="Sua opinião sobre a receita"
-                                  rows="4"
-                                  required
-                              ></textarea>
+                                <textarea
+                                    id="comentario"
+                                    name="comentario"
+                                    value={formData.comentario}
+                                    onChange={handleChange}
+                                    className="mt-1 bg-transparent block w-full h-44 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-redwood focus:border-redwood"
+                                    placeholder="Sua opinião sobre a receita"
+                                    rows="4"
+                                    required
+                                ></textarea>
                             </div>
                             <div className="w-full text-center">
-                              <button
-                                  type="submit"
-                                  className="w-44 text-center bg-redwood text-white py-2 px-4 mb-10 rounded-full shadow hover:bg-butterscotch focus:outline-none focus:ring-2 focus:ring-redwood"
-                              >
-                                  Enviar Avaliação
-                              </button>
+                                <button
+                                    type="submit"
+                                    className="w-44 text-center bg-redwood text-white py-2 px-4 mb-10 rounded-full shadow hover:bg-butterscotch focus:outline-none focus:ring-2 focus:ring-redwood"
+                                >
+                                    Enviar Avaliação
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -140,11 +140,11 @@ const FormAvaliacao = ({ id_receita, id_usuario, nome_usuario }) => {
             </form>
             {/* Exibindo o comentário postado, caso exista */}
             {comentarios.map((avaliacao) => (
-                <CardComentario 
-                key={avaliacao.id_avaliacao} 
-                nome={avaliacao.nome_usuario} 
-                comentario={avaliacao.comentario_avaliacao}
-                aval={avaliacao.estrela_avaliacao}/>
+                <CardComentario
+                    key={avaliacao.id_avaliacao}
+                    nome={avaliacao.nome_usuario}
+                    comentario={avaliacao.comentario_avaliacao}
+                    aval={avaliacao.estrela_avaliacao} />
             ))}
         </div>
     );
