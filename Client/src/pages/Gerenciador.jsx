@@ -48,14 +48,14 @@ function Gerenciador() {
                                 <h3 className="text-3xl uppercase">Categorias</h3>
                             </div>
                         </Link>
-                        <Link 
+                        {/* <Link 
                             to="/gerenciadorHistorico"
                         >
                             <div className="flex flex-col justify-center items-center bg-redwood w-64 h-48  rounded-xl transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg">
                                 <i class="bi bi-hourglass-bottom text-4xl"></i>
                                 <h3 className="text-3xl uppercase">Historico</h3>
                             </div>
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             )}
