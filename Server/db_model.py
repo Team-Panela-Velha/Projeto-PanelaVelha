@@ -20,7 +20,7 @@ class Receita(db.Model):
     dificuldade = db.Column(db.String(45))
     tempo_hora = db.Column(db.Integer)
     tempo_min = db.Column(db.Integer)
-    desc = db.Column(db.String(100))
+    desc = db.Column(db.Text)
     id_categoria = db.Column(db.String(255))
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuarios.id_usuario'))
     usuario = db.relationship("Usuario", backref="receitas")
