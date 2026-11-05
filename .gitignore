@@ -4,6 +4,7 @@ venv/
 .env
 .env.local
 .env.*.local
+Docs/
 
 # Ignorar arquivos de cache
 __pycache__/
