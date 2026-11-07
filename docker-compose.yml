@@ -1,0 +1,47 @@
+# Ambiente local completo: docker compose up -d --build  →  http://localhost
+# Variáveis em .env (modelo: .env.example)
+
+name: panela-velha
+
+services:
+  mysql:
+    build: ./infra/mysql
+    image: ${REGISTRY:-127.0.0.1:5000}/panela-mysql:${TAG:-latest}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?defina MYSQL_ROOT_PASSWORD no .env}
+      MYSQL_USER: ${DB_USER:-panela}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?defina DB_PASSWORD no .env}
+      MYSQL_VISITANTE_PASSWORD: ${VISITANTE_PASSWORD:-}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "127.0.0.1:${MYSQL_PORT:-3307}:3306"
+    restart: unless-stopped
+
+  backend:
+    build: ./Server
+    image: ${REGISTRY:-127.0.0.1:5000}/panela-backend:${TAG:-latest}
+    environment:
+      DB_HOST: mysql
+      DB_USER: ${DB_USER:-panela}
+      DB_PASSWORD: ${DB_PASSWORD:?defina DB_PASSWORD no .env}
+      SECRET_KEY: ${SECRET_KEY:?defina SECRET_KEY no .env}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build: ./Client
+    image: ${REGISTRY:-127.0.0.1:5000}/panela-frontend:${TAG:-latest}
+    environment:
+      BACKEND_HOST: backend:5000
+    ports:
+      - "${APP_PORT:-80}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
