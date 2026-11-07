@@ -10,7 +10,7 @@ function GerenciadorUsuarios() {
     async function fetchUser() {
         const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
 
-        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
+        axios.get('/api/verificar_usuario', {
             headers: {
                 "Authorization": token, // Passa o token no cabeçalho Authorization
             },
@@ -21,7 +21,7 @@ function GerenciadorUsuarios() {
     }
 
     async function fetchUsuarios() {
-        axios.get("http://127.0.0.1:5000/api/listar_usuarios")
+        axios.get("/api/listar_usuarios")
         .then(response => {
             setUsuarios(response.data.usuarios);
         })
@@ -37,7 +37,7 @@ function GerenciadorUsuarios() {
         e.preventDefault();
 
         try {
-            await axios.post("http://127.0.0.1:5000/api/is_admin",         // realiza a requisicao e pausa a continuacao do codigo ate receber uma resposta
+            await axios.post("/api/is_admin",         // realiza a requisicao e pausa a continuacao do codigo ate receber uma resposta
             {
                 "id_usuario": id,
                 "admin": admin

@@ -8,7 +8,7 @@ const ReceitasPopulares = () => {
   
   async function fetchReceitas() {
     axios
-      .get("http://127.0.0.1:5000/api/mostrar_receitas_populares")
+      .get("/api/mostrar_receitas_populares")
       .then((response) => {
         setReceitas(response.data.receitas);
       })

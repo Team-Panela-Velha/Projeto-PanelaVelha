@@ -8,7 +8,7 @@ const CardReceitas = ({ receita }) => {
   const [deleteScreen, setDeleteScreen] = useState(false)
 
   async function deletarReceita() {
-    axios.delete(`http://127.0.0.1:5000/api/deletar_receita/${id_receita}`)
+    axios.delete(`/api/deletar_receita/${id_receita}`)
       .then(response => {
         console.log(response);
         alert("Receita deletada");

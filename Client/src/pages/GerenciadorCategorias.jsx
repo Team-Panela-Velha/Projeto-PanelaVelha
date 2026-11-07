@@ -12,7 +12,7 @@ function GerenciadorCategorias() {
     async function fetchUser() {
         const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
 
-        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
+        axios.get('/api/verificar_usuario', {
             headers: {
                 "Authorization": token, // Passa o token no cabeçalho Authorization
             },
@@ -30,7 +30,7 @@ function GerenciadorCategorias() {
     async function fetchCategorias() {
         try {
             setLoading(true);
-            const response = await axios.get("http://127.0.0.1:5000/api/mostrar_categorias");
+            const response = await axios.get("/api/mostrar_categorias");
             setCategorias(response.data.categorias);
         } catch (err) {
             console.error(err);
@@ -44,7 +44,7 @@ function GerenciadorCategorias() {
     async function fetchPesquisaCategorias(pesquisa) {
         try {
             setLoading(true);
-            const response = await axios.get(`http://127.0.0.1:5000/api/pesquisar_categoria/${pesquisa}`);
+            const response = await axios.get(`/api/pesquisar_categoria/${pesquisa}`);
             setCategorias(response.data.categorias);
         } catch (err) {
             console.error(err);
@@ -66,7 +66,7 @@ function GerenciadorCategorias() {
     // Other CRUD operations...
     async function criarCategoria(e, nome) {
         e.preventDefault();
-        await axios.post("http://127.0.0.1:5000/api/criar_categoria", { nome_categoria: nome });
+        await axios.post("/api/criar_categoria", { nome_categoria: nome });
         setSearchTerm("");
 
         fetchCategorias();
@@ -74,7 +74,7 @@ function GerenciadorCategorias() {
 
     async function editarCategoria(e, id, nome) {
         e.preventDefault();
-        await axios.patch("http://127.0.0.1:5000/api/editar_categoria", { id_categoria: id, nome_categoria: nome });
+        await axios.patch("/api/editar_categoria", { id_categoria: id, nome_categoria: nome });
         setSearchTerm("");
 
         fetchCategorias();
@@ -82,7 +82,7 @@ function GerenciadorCategorias() {
 
     async function excluirCategoria(e, id) {
         e.preventDefault();
-        await axios.delete("http://127.0.0.1:5000/api/excluir_categoria", { data: { id_categoria: id } });
+        await axios.delete("/api/excluir_categoria", { data: { id_categoria: id } });
         setCategorias(prev => prev.filter(categoria => categoria.id !== id));
     }
 

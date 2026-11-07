@@ -10,7 +10,7 @@ const EditarReceita = () => {
     const [categoria, setCategoria] = useState([]);
 
     async function fetchReceita() {
-        axios.get(`http://127.0.0.1:5000/api/receita/${id}`)         // puxando as informaçoes ja existentes da receita
+        axios.get(`/api/receita/${id}`)         // puxando as informaçoes ja existentes da receita
         .then(response => {
             console.log(response)
             setReceita(response.data.receita);
@@ -20,7 +20,7 @@ const EditarReceita = () => {
     };
     
     async function fetchCategorias() {        // pegar todas as categorias do banco de dados
-        axios.get("http://127.0.0.1:5000/api/categorias")
+        axios.get("/api/categorias")
         .then(response => {
             setTiposCategoria(response.data.categorias)
         })
@@ -73,7 +73,7 @@ const EditarReceita = () => {
 
 
     async function fetchUsuario(){            // pegando nome e id do usuario
-        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {      
+        axios.get('/api/verificar_usuario', {      
             headers: {
             "Authorization": token, // Passa o token no cabeçalho Authorization
             },
@@ -96,14 +96,14 @@ const EditarReceita = () => {
             return;
         }
 
-        axios.patch(`http://127.0.0.1:5000/api/editar_categoria/${id}`, {
+        axios.patch(`/api/editar_categoria/${id}`, {
             "categoria": categoria
         })
         .then(response => {
             console.log(response);
         })
 
-        axios.patch(`http://127.0.0.1:5000/api/editar_receita/${id}`, {
+        axios.patch(`/api/editar_receita/${id}`, {
             "nome_receita": formReceita.titulo, 
             "imagem_receita": formReceita.imagemReceita, 
             "ingredientes": items,

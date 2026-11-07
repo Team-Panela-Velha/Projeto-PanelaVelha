@@ -15,7 +15,7 @@ function Aside() {
     async function fetchUser() {
         const token = localStorage.getItem('jwtToken'); // Obter o token do localStorage
 
-        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
+        axios.get('/api/verificar_usuario', {
             headers: {
                 "Authorization": token, // Passa o token no cabeçalho Authorization
             },

@@ -10,7 +10,7 @@ const Pesquisa = () => {
     const { pesquisa } = useParams();
 
     async function fetchReceitas() {
-        axios.get(`http://127.0.0.1:5000/api/mostrar_receitas/${pesquisa}`)
+        axios.get(`/api/mostrar_receitas/${pesquisa}`)
         .then(response => {
             setReceitas(response.data.receitas);
         })

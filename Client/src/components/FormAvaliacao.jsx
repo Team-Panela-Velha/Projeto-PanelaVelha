@@ -10,7 +10,7 @@ const FormAvaliacao = ({ id_receita, id_usuario, nome_usuario }) => {
 
     async function fetchComentarios() {
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/api/avaliacoes/${id_receita}`);
+            const response = await axios.get(`/api/avaliacoes/${id_receita}`);
 
             setComentarios(response.data.avaliacoes);
         } catch (err) {
@@ -23,7 +23,7 @@ const FormAvaliacao = ({ id_receita, id_usuario, nome_usuario }) => {
     }, []);
 
     async function enviarComentario() {
-        axios.post("http://127.0.0.1:5000/api/criar_avaliacao",
+        axios.post("/api/criar_avaliacao",
             {
                 "id_usuario": formData.usuario,
                 "comentario": formData.comentario,

@@ -22,7 +22,7 @@ const CriarReceita = () => {
     const [categoria, setCategoria] = useState([]);
 
     async function fetchUsuario(){            // pegando nome e id do usuario
-        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {      
+        axios.get('/api/verificar_usuario', {      
             headers: {
             "Authorization": token, // Passa o token no cabeçalho Authorization
             },
@@ -35,7 +35,7 @@ const CriarReceita = () => {
     };    
 
     async function fetchCategorias() {                 // pegar as todas as acategorias do banco de dados
-        axios.get("http://127.0.0.1:5000/api/categorias")
+        axios.get("/api/categorias")
         .then(response => {
             setTiposCategoria(response.data.categorias)
         })
@@ -55,7 +55,7 @@ const CriarReceita = () => {
         //     return;
         // }
 
-        axios.post("http://127.0.0.1:5000/api/postar_receita", 
+        axios.post("/api/postar_receita", 
             {
                 "nome_receita": formReceita.titulo, 
                 "imagem_receita": formReceita.imagemReceita, 

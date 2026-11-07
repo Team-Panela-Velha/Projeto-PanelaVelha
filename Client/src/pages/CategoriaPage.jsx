@@ -10,7 +10,7 @@ const ReceitasCategoria = () => {
     const { categoria } = useParams();
 
     async function fetchReceitas(){
-        axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_categoria/${categoria}`)
+        axios.get(`/api/mostrar_receitas_categoria/${categoria}`)
         .then(response => {
             setReceitas(response.data.receitas);
         })
@@ -18,7 +18,7 @@ const ReceitasCategoria = () => {
     }
 
     async function fetchSliderReceitas() {
-        axios.get(`http://127.0.0.1:5000/api/slider_categoria/${categoria}`)
+        axios.get(`/api/slider_categoria/${categoria}`)
         .then(response => {
             setReceitasSlider(response.data.receitas);
             console.log(response.data.receitas)

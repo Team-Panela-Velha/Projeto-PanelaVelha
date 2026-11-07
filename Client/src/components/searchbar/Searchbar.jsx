@@ -12,7 +12,7 @@ function Searchbar() {
     useEffect(() => {
         const fetchNomeReceitas = async () => {
             try {
-                axios.get("http://127.0.0.1:5000/api/mostrar_receitas")  // usando a msm rota das receitas
+                axios.get("/api/mostrar_receitas")  // usando a msm rota das receitas
                 .then(response => {
                     setNomeReceitas(response.data.receitas.map(r => r.nome_receita));     // fazendo map pq so precisa do nome_receita
                 })

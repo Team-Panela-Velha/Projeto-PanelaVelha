@@ -13,7 +13,7 @@ const Login = () => {
         e.preventDefault();
         setIsLoaging(true);
         
-        axios.post("http://127.0.0.1:5000/api/login", {"nome": nome, "senha": senha,})
+        axios.post("/api/login", {"nome": nome, "senha": senha,})
         .then(response => {
             if (response.data) {
                 localStorage.setItem("jwtToken", response.data.token)

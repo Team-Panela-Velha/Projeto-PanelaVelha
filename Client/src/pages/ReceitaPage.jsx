@@ -18,7 +18,7 @@ const ReceitaPage = () => {
 
     async function fetchUsuario() {           // para favoritar e avaliar receitas
         try {
-            const response = await axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
+            const response = await axios.get('/api/verificar_usuario', {
                 headers: {
                     "Authorization": token,
                 },
@@ -41,7 +41,7 @@ const ReceitaPage = () => {
     }, []);
     
     async function fetchReceita() {
-        axios.get(`http://127.0.0.1:5000/api/receita/${id}`)
+        axios.get(`/api/receita/${id}`)
             .then(response => {
                 console.log(response.data)
                 setReceitaData(response.data.receita);
@@ -57,7 +57,7 @@ const ReceitaPage = () => {
         e.preventDefault()
         setFavorito(!favorito);
         if (usuario) {
-            axios.post(`http://127.0.0.1:5000/api/favorito/${id}`, {
+            axios.post(`/api/favorito/${id}`, {
                 "id_usuario": usuario.id_usuario
             })
                 .then(response => {
@@ -70,7 +70,7 @@ const ReceitaPage = () => {
     }
     
     async function checarFavorito() {         // para verificar quando o usuario acessar a pag
-        axios.get(`http://127.0.0.1:5000/api/checar_favorito/${id}`, {
+        axios.get(`/api/checar_favorito/${id}`, {
             headers: {
                 "Authorization": token, // Passa o token no cabeçalho Authorization
             },

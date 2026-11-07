@@ -13,7 +13,7 @@ const Usuario = () => {
     const [receitasFavoritas, setReceitasFavoritas] = useState([]);
 
     async function fetchUsuario() {
-        axios.get('http://127.0.0.1:5000/api/verificar_usuario', {
+        axios.get('/api/verificar_usuario', {
             headers: {
                 "Authorization": token, // Passa o token no cabeçalho Authorization
             },
@@ -30,14 +30,14 @@ const Usuario = () => {
 
 
     async function fetchReceitasUsuario() {
-        axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_usuario/${usuario.id_usuario}`)
+        axios.get(`/api/mostrar_receitas_usuario/${usuario.id_usuario}`)
             .then(response => {
                 setReceitasUsuario(response.data.receitas);
             })
     }
 
     async function fetchReceitasFavoritas() {
-        axios.get(`http://127.0.0.1:5000/api/mostrar_receitas_favoritas/${usuario.id_usuario}`)
+        axios.get(`/api/mostrar_receitas_favoritas/${usuario.id_usuario}`)
             .then(response => {
                 setReceitasFavoritas(response.data.receitas);
             })

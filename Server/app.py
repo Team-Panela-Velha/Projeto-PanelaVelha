@@ -1,15 +1,35 @@
-from flask import Flask
+import os
+from urllib.parse import quote_plus
+
+from dotenv import load_dotenv
+from flask import Flask, jsonify
 from flask_cors import CORS
+from sqlalchemy import text
 from extensions import db, migrate
+
+load_dotenv()  # carrega Server/.env em desenvolvimento local (no container as variáveis vêm do ambiente)
+
+def ler_config(nome, padrao=None):
+    # Docker secrets: se existir NOME_FILE, lê o valor do arquivo (ex.: /run/secrets/db_password)
+    arquivo = os.getenv(f"{nome}_FILE")
+    if arquivo:
+        with open(arquivo) as f:
+            return f.read().strip()
+    return os.getenv(nome, padrao)
 
 def create_app():
     app = Flask(__name__)
 
-    app.secret_key = "a31f6cf0dec107d67ab60dd2bd08c78998cdcf3f58cf79d3713e7812b01c1e1f"
-    app.config["SECRET_KEY"] = "a31f6cf0dec107d67ab60dd2bd08c78998cdcf3f58cf79d3713e7812b01c1e1f"
-    
+    app.config["SECRET_KEY"] = ler_config("SECRET_KEY", "dev-secret-key")
+
     # Configuração do banco de dados MySQL
-    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:8609m@localhost:3306/db_panela_velha"
+    db_user = ler_config("DB_USER", "root")
+    db_password = quote_plus(ler_config("DB_PASSWORD", ""))
+    db_host = ler_config("DB_HOST", "localhost")
+    db_port = ler_config("DB_PORT", "3306")
+    db_name = ler_config("DB_NAME", "db_panela_velha")
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"pool_pre_ping": True}  # reconecta se o MySQL reiniciar
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)  # Inicializa o banco com o app
@@ -31,6 +51,14 @@ def create_app():
         app.register_blueprint(review_route)
 
     registrar_rotas(app)
+
+    @app.route("/api/health", methods=["GET"])      # usado pelo healthcheck do Docker
+    def health():
+        try:
+            db.session.execute(text("SELECT 1"))
+            return jsonify({"status": "ok"}), 200
+        except Exception:
+            return jsonify({"status": "erro", "detalhe": "banco indisponível"}), 503
 
     return app
 
