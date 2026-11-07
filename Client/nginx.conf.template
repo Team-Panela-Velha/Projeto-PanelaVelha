@@ -1,0 +1,32 @@
+# Processado pelo envsubst da imagem nginx na inicialização (${BACKEND_HOST} vem do ambiente)
+server {
+    listen 80;
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # DNS interno do Docker; resolver em tempo de requisição permite subir o front antes
+    # do backend e acompanhar as réplicas do Swarm
+    resolver 127.0.0.11 valid=10s ipv6=off;
+
+    location /api/ {
+        set $backend http://${BACKEND_HOST};
+        proxy_pass $backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # arquivos gerados pelo Vite têm hash no nome: podem ficar em cache
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # SPA (BrowserRouter): rotas como /receita/3 caem no index.html
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
