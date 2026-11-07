@@ -4,6 +4,13 @@
 -- ids 8 e 11 de usuarios tambem foram descartados: duplicavam nome_usuario ("Matheus Lopes" e "teste_admin")
 -- de outras contas e violam o unique=True de db_model.py; nenhum dos dois tinha receita, favorito ou avaliacao vinculados.
 
+-- Os textos de receitas são JSON com escapes (\u00e3, \n) que precisam ser gravados literalmente,
+-- iguais aos gerados pelo json.dumps da API. Sem NO_BACKSLASH_ESCAPES o MySQL converteria '\u' em 'u'.
+-- Os AUTO_INCREMENT continuam a partir do maior id inserido (comportamento padrão do InnoDB).
+USE db_panela_velha;
+SET NAMES utf8mb4;
+SET SESSION sql_mode = CONCAT(@@SESSION.sql_mode, ',NO_BACKSLASH_ESCAPES');
+
 -- usuarios
 INSERT INTO usuarios (id_usuario, nome_usuario, senha_usuario, adm_usuario) VALUES (1,'Administrador','123',1);
 INSERT INTO usuarios (id_usuario, nome_usuario, senha_usuario, adm_usuario) VALUES (2,'Matheus Lopes','m123',0);
