@@ -34,25 +34,17 @@ Os principais recursos incluem:
 O site utiliza uma arquitetura moderna, combinando **React** no front-end, **Flask** no back-end e **MySQL** como banco de dados, com toda a infraestrutura em containers **Docker**, orquestrada por **Docker Swarm**.
 
 # Instruções
-Pré-requisito: [Docker](https://docs.docker.com/engine/install/) com o plugin Compose. Antes de tudo, crie o arquivo de configuração na raiz e troque as senhas:
+O projeto roda em um **cluster Docker Swarm** de 4 nós simulados com **Docker-in-Docker** (quatro containers `docker:dind`).
+Pré-requisito: [Docker](https://docs.docker.com/engine/install/). Antes de tudo, crie o arquivo de configuração na raiz e troque as senhas:
 
 ```bash
 cp .env.example .env
 ```
 
-### Opção 1 — Docker Compose (ambiente local)
-```bash
-docker compose up -d --build
-```
-  - Aplicação: http://localhost
-  - MySQL (HeidiSQL/DBeaver): `127.0.0.1:3307`, usuário `panela` ou `root`, senhas do `.env`
-  - Parar: `docker compose down` (os dados ficam no volume; `docker compose down -v` apaga o banco)
-
-### Opção 2 — Cluster Docker Swarm (Docker-in-Docker)
-Quatro containers `docker:dind` fazem o papel dos nós do cluster:
+Depois, suba o cluster e a aplicação:
 ```bash
 infra/swarm/dind-up.sh      # cria pv-manager-01 e pv-worker-01..03 e monta o Swarm
-infra/swarm/build-push.sh   # sobe o registry, faz o build e envia as imagens
+infra/swarm/build-push.sh   # sobe o registry, faz o build dos Dockerfiles e envia as imagens
 infra/swarm/deploy.sh       # cria os secrets e faz o deploy da stack (docker-stack.yml)
 ```
   - Aplicação: http://localhost
@@ -61,10 +53,9 @@ infra/swarm/deploy.sh       # cria os secrets e faz o deploy da stack (docker-st
   - Escalar: `infra/swarm/scale.sh backend 6` (sem argumentos mostra as réplicas por nó)
   - Comandos no manager: `infra/swarm/node.sh docker service ls`
   - Desligar: `infra/swarm/dind-down.sh` (mantém dados) ou `infra/swarm/dind-down.sh --volumes` (apaga tudo)
+  - Religar depois de desligar o PC/Docker: `infra/swarm/dind-up.sh` (o Swarm leva ~2 min para reorganizar os serviços)
 
-> O Compose e o cluster usam a porta 80: desligue um antes de subir o outro (ou mude `APP_PORT` no `.env`).
-
-### Opção 3 — Desenvolvimento sem Docker
+### Desenvolvimento sem Docker (para programar)
 **Servidor (Back-End):** requer um MySQL local com o banco criado pelos scripts de `infra/mysql/init/`.
   - Acesse a pasta Server pelo terminal.
   - Crie o ambiente virtual: python -m venv venv
@@ -173,7 +164,7 @@ Nós do cluster (definidos em `infra/swarm/dind-up.sh`):
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" width= "685px" heigth="30px"> <th><p align="justify">Docker é uma plataforma de containers que empacota cada serviço com tudo o que ele precisa para rodar, garantindo o mesmo comportamento em qualquer máquina. O Panela Velha tem uma imagem para cada serviço (front-end, back-end e banco), usa o Docker Compose para descrever a infraestrutura como código e o Docker Swarm para distribuir os serviços em um cluster, com réplicas, balanceamento de carga e atualização sem interrupção.</p></th>
+      <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" width= "685px" heigth="30px"> <th><p align="justify">Docker é uma plataforma de containers que empacota cada serviço com tudo o que ele precisa para rodar, garantindo o mesmo comportamento em qualquer máquina. O Panela Velha tem uma imagem para cada serviço (front-end, back-end e banco), descreve toda a infraestrutura como código em um arquivo no formato Docker Compose (docker-stack.yml) e usa o Docker Swarm para distribuir os serviços em um cluster, com réplicas, balanceamento de carga e atualização sem interrupção.</p></th>
     </td>
   </tr>
   <tr>

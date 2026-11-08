@@ -12,7 +12,7 @@ RUN npm run build
 # Etapa 2: Nginx serve os arquivos estáticos e repassa /api para o backend
 FROM nginx:alpine
 
-# endereço do backend na rede do Docker (nome do serviço no compose/stack)
+# endereço do backend na rede do Docker (nome do serviço no docker-stack.yml)
 ENV BACKEND_HOST=backend:5000
 
 COPY nginx.conf.template /etc/nginx/templates/default.conf.template
