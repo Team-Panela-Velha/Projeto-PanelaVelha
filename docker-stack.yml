@@ -1,0 +1,126 @@
+# Stack do Panela Velha para o Docker Swarm (cluster DinD de infra/swarm).
+# Deploy: infra/swarm/deploy.sh  (cria os secrets a partir do .env e roda docker stack deploy)
+#
+# Nós e labels (infra/swarm/dind-up.sh):
+#   pv-manager-01  role=manager  visualizer, portainer (+ registry, fora da stack)
+#   pv-worker-01   role=db       mysql
+#   pv-worker-02   role=app      backend, frontend
+#   pv-worker-03   role=app      backend, frontend
+
+services:
+  mysql:
+    image: ${REGISTRY:-127.0.0.1:5000}/panela-mysql:${TAG:-latest}
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      MYSQL_USER: ${DB_USER:-panela}
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_VISITANTE_PASSWORD_FILE: /run/secrets/visitante_password
+    secrets: [db_root_password, db_password, visitante_password]
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks: [panela_net]
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.labels.role == db]   # volume local: o banco fica sempre no mesmo nó
+      restart_policy:
+        condition: any
+
+  backend:
+    image: ${REGISTRY:-127.0.0.1:5000}/panela-backend:${TAG:-latest}
+    environment:
+      DB_HOST: mysql
+      DB_USER: ${DB_USER:-panela}
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      SECRET_KEY_FILE: /run/secrets/secret_key
+    secrets: [db_password, secret_key]
+    networks: [panela_net]
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.labels.role == app]
+      update_config:              # atualização gradual: 1 réplica por vez, nova sobe antes da antiga sair
+        parallelism: 1
+        delay: 5s
+        order: start-first
+        failure_action: rollback
+      rollback_config:
+        parallelism: 1
+        order: start-first
+      restart_policy:
+        condition: any
+
+  frontend:
+    image: ${REGISTRY:-127.0.0.1:5000}/panela-frontend:${TAG:-latest}
+    environment:
+      BACKEND_HOST: backend:5000
+    ports:
+      - "80:80"
+    networks: [panela_net]
+    deploy:
+      replicas: 2
+      placement:
+        constraints: [node.labels.role == app]
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+        failure_action: rollback
+      restart_policy:
+        condition: any
+
+  # Representação gráfica do cluster: containers por nó (http://localhost:8080)
+  visualizer:
+    image: dockersamples/visualizer:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  # Gerenciamento do Swarm pela interface (http://localhost:9000, usuário admin)
+  portainer:
+    image: portainer/portainer-ce:lts
+    command: -H tcp://tasks.portainer-agent:9001 --tlsskipverify --admin-password-file /run/secrets/portainer_password
+    secrets: [portainer_password]
+    ports:
+      - "9000:9000"
+    volumes:
+      - portainer_data:/data
+    networks: [portainer_net]
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  portainer-agent:
+    image: portainer/agent:lts
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks: [portainer_net]
+    deploy:
+      mode: global                # um agente em cada nó
+
+networks:
+  panela_net:
+    driver: overlay
+  portainer_net:
+    driver: overlay
+
+volumes:
+  mysql_data:
+  portainer_data:
+
+secrets:
+  db_root_password:
+    external: true
+  db_password:
+    external: true
+  visitante_password:
+    external: true
+  secret_key:
+    external: true
+  portainer_password:
+    external: true

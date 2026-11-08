@@ -18,7 +18,10 @@ NODES=(
   "pv-worker-03  172.30.0.13 app"
 )
 
-# portas do host -> manager (o routing mesh do Swarm entrega para qualquer nó)
+# portas do host -> manager (o routing mesh do Swarm entrega para qualquer nó); lidas do .env, se existir
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+ENV_FILE="${ENV_FILE:-$ROOT/.env}"
+if [ -f "$ENV_FILE" ]; then set -a; . "$ENV_FILE"; set +a; fi
 APP_PORT="${APP_PORT:-80}"
 VISUALIZER_PORT="${VISUALIZER_PORT:-8080}"
 PORTAINER_PORT="${PORTAINER_PORT:-9000}"
