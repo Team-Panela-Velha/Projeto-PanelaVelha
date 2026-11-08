@@ -6,12 +6,16 @@
                 <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"> 
                 <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
                 <img src="https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white">
-                <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white">
+                <img src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white">
+                <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
+                <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
               </p>  
             </body>
 
   - [Descrição](#descrição)
-  - [Instruções](#intruções)
+  - [Instruções](#instruções)
+  - [Arquitetura com Docker](#arquitetura-com-docker)
+  - [Roteiro de demonstração](#roteiro-de-demonstração)
   - [Desenvolvedores](#desenvolvedores)
   - [Ferramentas Utilizadas](#tecnologias-utilizadas)
 
@@ -27,23 +31,86 @@ Os principais recursos incluem:
        - Tempo de preparo;
        - Quantidade de porções.
 
-O site utiliza uma arquitetura moderna, combinando **React** no front-end, **Flask** no back-end e **SQLite** como banco de dados.
+O site utiliza uma arquitetura moderna, combinando **React** no front-end, **Flask** no back-end e **MySQL** como banco de dados, com toda a infraestrutura em containers **Docker**, orquestrada por **Docker Swarm**.
 
 # Instruções
-**Configuração do Servidor (Back-End):**
+Pré-requisito: [Docker](https://docs.docker.com/engine/install/) com o plugin Compose. Antes de tudo, crie o arquivo de configuração na raiz e troque as senhas:
+
+```bash
+cp .env.example .env
+```
+
+### Opção 1 — Docker Compose (ambiente local)
+```bash
+docker compose up -d --build
+```
+  - Aplicação: http://localhost
+  - MySQL (HeidiSQL/DBeaver): `127.0.0.1:3307`, usuário `panela` ou `root`, senhas do `.env`
+  - Parar: `docker compose down` (os dados ficam no volume; `docker compose down -v` apaga o banco)
+
+### Opção 2 — Cluster Docker Swarm (Docker-in-Docker)
+Quatro containers `docker:dind` fazem o papel dos nós do cluster:
+```bash
+infra/swarm/dind-up.sh      # cria pv-manager-01 e pv-worker-01..03 e monta o Swarm
+infra/swarm/build-push.sh   # sobe o registry, faz o build e envia as imagens
+infra/swarm/deploy.sh       # cria os secrets e faz o deploy da stack (docker-stack.yml)
+```
+  - Aplicação: http://localhost
+  - Docker Visualizer: http://localhost:8080
+  - Portainer: http://localhost:9000 (usuário `admin`, senha `PORTAINER_PASSWORD` do `.env`)
+  - Escalar: `infra/swarm/scale.sh backend 6` (sem argumentos mostra as réplicas por nó)
+  - Comandos no manager: `infra/swarm/node.sh docker service ls`
+  - Desligar: `infra/swarm/dind-down.sh` (mantém dados) ou `infra/swarm/dind-down.sh --volumes` (apaga tudo)
+
+> O Compose e o cluster usam a porta 80: desligue um antes de subir o outro (ou mude `APP_PORT` no `.env`).
+
+### Opção 3 — Desenvolvimento sem Docker
+**Servidor (Back-End):** requer um MySQL local com o banco criado pelos scripts de `infra/mysql/init/`.
   - Acesse a pasta Server pelo terminal.
   - Crie o ambiente virtual: python -m venv venv
   - Ative o ambiente virtual:
       - Windows: .\venv\Scripts\activate
       - Linux/MacOS: source venv/bin/activate
   - Instale as dependências: pip install -r requirements.txt
+  - Crie o arquivo de configuração: copie `Server/.env.example` para `Server/.env` e informe a senha do seu MySQL
   - Inicie o servidor Flask: python app.py
 
-**Configuração do Cliente (FrontEnd):**
-  - Acesse a pasta cliente pelo terminal.
+**Cliente (Front-End):**
+  - Acesse a pasta Client pelo terminal.
   - Instale as dependências do projeto: npm install
-  - Inicie o ambiente de desenvolvimento: npm run dev
+  - Inicie o ambiente de desenvolvimento: npm run dev (o Vite repassa `/api` para o Flask em `127.0.0.1:5000`)
   - Abra seu navegador e vá para o endereço indicado no terminal.
+
+# Arquitetura com Docker
+| Serviço | Imagem | Função |
+|---|---|---|
+| `frontend` | `Client/Dockerfile` (build Vite → Nginx) | Serve o React e repassa `/api` para o backend |
+| `backend` | `Server/Dockerfile` (Python + Gunicorn) | API Flask |
+| `mysql` | `infra/mysql/Dockerfile` (MySQL 8.4) | Banco com schema, dados, views, triggers e procedures embutidos |
+| `visualizer` | `dockersamples/visualizer` | Representação gráfica dos containers por nó |
+| `portainer` + `portainer-agent` | `portainer/portainer-ce`, `portainer/agent` | Gerenciamento do Swarm pela interface |
+| `registry` | `registry:2` | Registry local de onde os nós baixam as imagens da aplicação |
+
+Nós do cluster (definidos em `infra/swarm/dind-up.sh`):
+
+| Nó | IP | Label | Serviços |
+|---|---|---|---|
+| `pv-manager-01` | 172.30.0.10 | `role=manager` | visualizer, portainer, registry |
+| `pv-worker-01` | 172.30.0.11 | `role=db` | mysql |
+| `pv-worker-02` | 172.30.0.12 | `role=app` | backend, frontend |
+| `pv-worker-03` | 172.30.0.13 | `role=app` | backend, frontend |
+
+  - Só o manager publica portas no host; o *routing mesh* do Swarm entrega cada requisição a uma réplica em qualquer nó.
+  - Senhas e chave JWT são **Docker secrets** criados a partir do `.env` (nada de senha no código).
+  - Backend e frontend fazem *rolling update* (uma réplica por vez, a nova sobe antes da antiga sair) com rollback automático.
+
+# Roteiro de demonstração
+1. `infra/swarm/dind-up.sh`, `infra/swarm/build-push.sh` e `infra/swarm/deploy.sh`; abrir o Visualizer (http://localhost:8080), o Portainer (http://localhost:9000) e a aplicação (http://localhost).
+2. Aumentar as réplicas: `infra/swarm/scale.sh backend 6` → as novas réplicas aparecem no Visualizer, distribuídas entre `pv-worker-02` e `pv-worker-03`.
+3. Reduzir: `infra/swarm/scale.sh backend 3`.
+4. Simular manutenção de um nó: `infra/swarm/node.sh docker node update --availability drain pv-worker-02` → os containers migram para `pv-worker-03` e a aplicação continua no ar.
+5. Devolver o nó: `infra/swarm/node.sh docker node update --availability active pv-worker-02`.
+6. Atualização sem parar a aplicação: `infra/swarm/node.sh docker service update --force panela_backend` → as réplicas são trocadas uma a uma.
 
 # Desenvolvedores
 
@@ -101,7 +168,17 @@ O site utiliza uma arquitetura moderna, combinando **React** no front-end, **Fla
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white" width= "685px" heigth="30px"> <th><p align="justify">SQLite é um banco de dados relacional leve e embutido, amplamente utilizado em aplicações que requerem simplicidade e eficiência. Ele armazena dados em arquivos locais, eliminando a necessidade de um servidor de banco de dados separado. Isso o torna ideal para projetos de menor escala ou para desenvolvimento rápido, como o Panela Velha. Apesar de sua simplicidade, o SQLite suporta a maioria das funcionalidades do SQL e é altamente confiável.</p></th>
+      <img src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white" width= "685px" heigth="30px"> <th><p align="justify">MySQL é um sistema gerenciador de banco de dados relacional de código aberto, amplamente utilizado em aplicações web. No Panela Velha ele armazena usuários, receitas, categorias, favoritos e avaliações, e também concentra regras no próprio banco por meio de views, triggers, functions e procedures, como o histórico de alterações e a média das avaliações de cada receita.</p></th>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" width= "685px" heigth="30px"> <th><p align="justify">Docker é uma plataforma de containers que empacota cada serviço com tudo o que ele precisa para rodar, garantindo o mesmo comportamento em qualquer máquina. O Panela Velha tem uma imagem para cada serviço (front-end, back-end e banco), usa o Docker Compose para descrever a infraestrutura como código e o Docker Swarm para distribuir os serviços em um cluster, com réplicas, balanceamento de carga e atualização sem interrupção.</p></th>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white" width= "685px" heigth="30px"> <th><p align="justify">Nginx é um servidor web de alto desempenho. No projeto ele entrega os arquivos do React já compilados e funciona como proxy reverso, repassando as requisições da API para as réplicas do back-end, o que permite servir toda a aplicação por uma única porta.</p></th>
     </td>
   </tr>
  </table>
